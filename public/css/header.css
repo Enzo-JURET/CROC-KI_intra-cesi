@@ -1,15 +1,20 @@
 .NavBar {
+    visibility: hidden;
     background-color: #ffd88a;
     color:white;
     width: 50%;
     height: auto;
     left: 25%;
-    position:absolute;
-    top: 0%;
-    opacity: 50%;
 }
 
 .iconeBarre {
     width: 2em;
+    height: auto;
+}
+
+.iconeCentral {
+    position: absolute;
+    left: 47.5%;
+    width: 3%;
     height: auto;
 }

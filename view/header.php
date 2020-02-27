@@ -1,3 +1,5 @@
-<nav class="navbar NavBar">
-    <img id="iconeProfil" class="iconeBarre" src="../public/images/icones/profil.png" alt="Profil">
+<img id="iconeCentral" class="iconeCentral" src="../public/images/icones/menu.png">
+<nav id="NavBar" class="navbar NavBar">
+    <img class="iconeBarre" src="../public/images/icones/profil.png" alt="Profil">
 </nav>
+
