@@ -7,6 +7,9 @@
         <link rel="stylesheet" href="public/css/header.css" type="text/css" />
     </head>
     <body>
-        ceci est un entête
+        <nav class="navbar NavBar">
+            <img id="iconeProfil" class="iconeBarre" src="./public/images/icones/profil.png" alt="Profil">
+
+        </nav>
     </body>
 </html>

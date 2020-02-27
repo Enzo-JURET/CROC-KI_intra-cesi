@@ -1,0 +1,12 @@
+.NavBar {
+    background-color: #ffd88a;
+    color:white;
+    width: 50%;
+    height: auto;
+    left: 25%;
+}
+
+.iconeBarre {
+    width: 2em;
+    height: auto;
+}
