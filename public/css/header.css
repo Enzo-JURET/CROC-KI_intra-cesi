@@ -1,11 +1,17 @@
 .NavBar {
     visibility: hidden;
+    position: absolute;
     background-color: #ffd88a;
     color:white;
     width: 50%;
     height: auto;
     left: 25%;
 }
+
+/*
+.NavBar:hover {
+    zoom: 160%;
+}*/
 
 .iconeBarre {
     width: 2em;
