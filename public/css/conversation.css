@@ -8,3 +8,13 @@
     margin-top: 1em;
     border-radius: 5px;
 }
+
+#bandeauMessage {
+    width: 50%;
+    height: auto;
+    left: 25%;
+    background-color: #428aff;
+    color: white;
+    border-radius: 5px 5px 5px;
+
+}
