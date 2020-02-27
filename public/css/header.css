@@ -4,6 +4,9 @@
     width: 50%;
     height: auto;
     left: 25%;
+    position:absolute;
+    top: 0%;
+    opacity: 50%;
 }
 
 .iconeBarre {
