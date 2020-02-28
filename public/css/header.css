@@ -12,6 +12,7 @@
 }
 
 .iconeCentral {
+    z-index: 19;
     position: absolute;
     top: 0;
     left: 48.25%;
@@ -20,7 +21,6 @@
 }
 
 .iconeBarre {
-    z-index: 19;
     width: 2em;
     height: auto;
 }
