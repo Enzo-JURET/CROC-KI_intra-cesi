@@ -1,0 +1,44 @@
+.page-profil {
+	margin-top: 4%;
+}
+
+#block-profil {
+	background: rgb(255, 255, 255, 0.95);
+	width: 100%;
+	padding-left: 0!important;
+	padding-right: 0!important;
+	height: 800px;
+	border-radius: 15px;
+	border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+#image-banniere {
+	width: 100%;
+	height: auto;
+}
+
+.bandeau-profil {
+	background: rgb(0,0,0, 0.7);
+    color: white;
+    border-radius: 10px;
+    padding: 1em;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    text-align: center;
+    font-family: 'Courier';
+}
+
+#image-profil {
+	border-radius: 50%;
+	border: 5px solid rgba(255, 255, 255, .9);
+	height: 30%;
+	width: auto;
+	position: absolute;
+    top: 31%;
+    right: 74%;
+}
+
+#pseudo-info {
+	font-size: 200%;
+}
