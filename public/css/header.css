@@ -20,6 +20,7 @@
 }
 
 .iconeBarre {
+    z-index: 19;
     width: 2em;
     height: auto;
 }
