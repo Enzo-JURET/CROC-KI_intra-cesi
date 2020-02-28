@@ -9,10 +9,11 @@
         <link rel="stylesheet" href="../public/css/conversation.css" type="text/css" />
 
         <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="../public/js/header.js"></script>
         <script type="text/javascript" src="../public/js/conversation.js"></script>
     </head>
     <body>
-    <?php require('header.php'); ?>
+    <?php require('../view/header.php'); ?>
 
     <div id="boiteFenetre" class="col-sm-12">
         <div id="boiteContact" class="col-sm-3 boitesPrincipales">
@@ -28,10 +29,10 @@
                 <div id="corpsConteneurMessage">
 
                 </div>
-                <div id="footerConteneurMessage">
+            </div>
+            <div id="barreConteneurMessage">
                     coucou
                 </div>
-            </div>
         </div>
 
         <div id ="boiteGroupe" class="col-sm-3 boitesPrincipales">
