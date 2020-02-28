@@ -1,15 +1,12 @@
 .NavBar {
     visibility: hidden;
-    background-color: #ffd88a;
+    display: list-item;
+    background: rgb(82, 144, 147, 0.3);
+    position: absolute;
     color:white;
     width: 50%;
     height: auto;
     left: 25%;
-}
-
-.iconeBarre {
-    width: 2em;
-    height: auto;
 }
 
 .iconeCentral {
@@ -17,4 +14,21 @@
     left: 47.5%;
     width: 3%;
     height: auto;
+}
+
+.iconeBarre {
+    width: 2em;
+    height: auto;
+}
+
+#iconeProfil {
+
+}
+
+#iconeGroupe {
+    margin-left: 40%;
+}
+
+#iconeActualite {
+    
 }
