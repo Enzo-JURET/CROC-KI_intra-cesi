@@ -21,6 +21,7 @@
 						Enzo JURET
 					</p>
 					<p id="promo-info">	
+						Promotion : 
 						<a href="../view/index.php">RIL-PROMO-201</a>
 					</p>
 				</div>
@@ -79,6 +80,16 @@
 					</p>
 					<p id="info-contact-profil">
 						<a href="../view/profil.php">0663865914</a>
+					</p>
+					<p class="titre-reseaux-sociaux">
+						Réseaux Sociaux :
+					</p>
+					<hr id="ligne-reseaux-sociaux">
+					<p>
+						<a href="../view/profil.php"><img class="premier-icones-reseaux-sociaux" src="../public/images/icones/linkedin.png"></a>
+						<a href="../view/profil.php"><img class="icones-reseaux-sociaux" src="../public/images/icones/facebook.png"></a>
+						<a href="../view/profil.php"><img class="icones-reseaux-sociaux" src="../public/images/icones/instagram.png"></a>
+						<a href="../view/profil.php"><img class="icones-reseaux-sociaux" src="../public/images/icones/twitter.png"></a>
 					</p>
 				</div>
 				<div class="col-sm-6 offset-sm-1">
