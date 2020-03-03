@@ -7,8 +7,6 @@ body {
 
 #boiteFenetre {
     display: inline-flex;
-    height: -webkit-fill-available;
-    
 }
 
 .bandeauTitre {
@@ -39,7 +37,7 @@ body {
     overflow-y: auto;
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
-    opacity: 50%;
+
 }
 
 /*** Menu amis***/
@@ -56,6 +54,18 @@ body {
 
 }
 
+.titreTypeContact {
+    margin-left: 1em;
+    font-family: "Calibri";   
+}
+
+.bandeauTypeContact {
+    border-bottom: 2px solid white;
+    width: 100%;
+    top: 50%;
+    padding: 3px;
+    margin-bottom: 1em;
+}
 
 /*** Menu messages ***/
 
@@ -76,7 +86,7 @@ body {
 }
 
 #barreConteneurMessage {
-    
+    background-color : lightgrey;
 }
 
 

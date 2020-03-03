@@ -10,7 +10,7 @@
 
         <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
         <script type="text/javascript" src="../public/js/header.js"></script>
-        <script type="text/javascript" src="../public/js/conversation.js"></script>
+        <script type="text/javascript" src="../model/conversation.js"></script>
     </head>
     <body>
     <?php require('../view/header.php'); ?>
@@ -19,7 +19,18 @@
         <div id="boiteContact" class="col-sm-3 boitesPrincipales">
             <div id="bandeauContact" class="bandeauTitre">Contacts</div>
             <div id="conteneurContact" class="conteneur">
-                
+                <div id="bandeauAmis" class="bandeauTypeContact">
+                    <div id="titreAmis" class="titreTypeContact">Amis</div>
+                </div>
+                <div id="amis">
+                    
+                </div>
+                <div id="bandeauAmis" class="bandeauTypeContact"> 
+                    <div id="titrePromotion" class="titreTypeContact">Promotion</div>
+                </div>
+                <div id="promotion">
+
+                </div>
             </div>
         </div>
 
@@ -31,8 +42,8 @@
                 </div>
             </div>
             <div id="barreConteneurMessage">
-                    coucou
-                </div>
+                <input id="barreEnvoiMessage" class="form-control" type="text" placeholder="Aller hop un ptit message">
+            </div>
         </div>
 
         <div id ="boiteGroupe" class="col-sm-3 boitesPrincipales">
@@ -48,7 +59,7 @@
                 </div>
                 <div id="divGroupePublic">
                     <div id="bandeauGroupePublic" class="bandeauTypeGroupe">
-                        <b class="titreTypeGroupe">Groupes publics</b>
+                        <div class="titreTypeGroupe">Groupes publics</div>
                     </div>
                     <div id="conteneurGroupePublic" class="conteneurTypeGroupe">
 
@@ -57,6 +68,5 @@
             </div>
         </div>
     </div>
-        
     </body>
 </html>
