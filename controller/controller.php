@@ -1,21 +1,32 @@
 <?php
-    require_once '../config/config.php';
+    require_once 'bdd.php';
 
-    var_dump( conf::getLogin() ) ;
-    
-    function connect_db()
+    class Handler
     {
-        $dsn="mysql:dbname=".conf::getDatabase().";host=".conf::getHostname();
-        try
+        
+        function HandlerController($type)
         {
-            $connexion=new PDO($dsn,conf::getLogin(),conf::getPassword());
+            switch($type) {
+                case "amis":
+                    if($_SERVER['REQUEST_METHOD'] === 'POST')
+                    {
+                        $result = $this->getFriends();
+                    }
+                break;
+            }
+            return $result;
         }
-        catch(PDOException $e)
+
+        function getFriends()
         {
-            printf("Echec connexion : %s\n",
-            $e->getMessage());
-            exit();
+            $dbcontroller = new dbController();
+
+            $stmt = mysqli_prepare($dbcontroller->getConn(),
+                "SELECT *
+                FROM personne");
+            $personne = $dbcontroller->executeSelectQuery($stmt);
+            $dbcontroller->closeQuery();
+            return json_encode($personne);
         }
-        return $connexion;
     }
 ?>

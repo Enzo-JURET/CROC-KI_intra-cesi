@@ -4,7 +4,7 @@ $( document ).ready(function() {
 
     keyEnterListenerOnMessageInput();
     
-
+    recupererAmis();
 });
 
 function keyEnterListenerOnMessageInput()
@@ -38,5 +38,26 @@ function resizeContainers()
 }
 
 function recupererAmis (){
-    
+    $email = "kevin.lehoux@viacesi.fr";
+    console.log("passage");
+    var donnees = [];
+    $.ajax({
+        cache : false,
+        url : "../data/amis",
+        type : "POST",
+        async:false,
+        data: ({
+            //type:'amis',
+            table: 'amis'
+       }),
+
+        success : function(retVal, statut){
+            donnees = JSON.parse(retVal);
+            console.log(donnees);
+        },
+ 
+        error : function(retVal, statut, erreur){
+ 
+        }
+     });
 }
