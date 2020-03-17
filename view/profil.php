@@ -9,12 +9,12 @@
     <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="../public/js/header.js"></script>
 </head>
-<body>
+<body class="background">
 	<?php require('../view/header.php'); ?>
 	<div class="row page-profil">
 		<div id="block-profil" class="col-sm-10 offset-sm-1">
 			<img id="image-banniere" class="img-fluid" src="../public/images/banniere-test.jpg">
-			<img id="image-profil" src="../public/images/avatar-test.jpg"><
+			<img id="image-profil" src="../public/images/avatar-test.jpg">
 			<div class="row">
 				<div class="col-sm-3 offset-sm-3">
 					<p id="pseudo-info">

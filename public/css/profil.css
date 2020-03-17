@@ -1,3 +1,7 @@
+.background {
+	background-image: url("../images/fond-body.jpg");
+}
+
 * {
 outline: 0;
 }
@@ -15,6 +19,7 @@ outline: 0;
 	border-radius: 15px;
 	border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
+    margin-bottom: 2%;
 }
 
 #image-banniere {
@@ -130,6 +135,7 @@ outline: 0;
 	padding: 5%;
 	text-align: center;
 	overflow-y: scroll;
+	margin-bottom: 5%
 }
 
 .barre-progress-info {
