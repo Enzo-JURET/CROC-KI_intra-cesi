@@ -48,7 +48,7 @@ function recupererAmis (){
         async:false,
         data: ({
             //type:'amis',
-            table: 'amis'
+            //table: 'amis'
        }),
 
         success : function(retVal, statut){
