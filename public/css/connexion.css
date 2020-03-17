@@ -1,0 +1,51 @@
+.background {
+	background-image: url("../images/fonds/background-connexion.jpg");
+	background-size: 100%;
+}
+
+* {
+outline: 0;
+}
+
+.page-profil {
+	margin-top: 4%;
+}
+
+#block-profil {
+	border:1px solid #000;
+	margin-top: 6%;
+	background: rgb(255, 255, 255, 0.85);
+	width: 100%;
+	padding-left: 0!important;
+	padding-right: 0!important;
+	height: 100%;
+	border-radius: 20px;
+    height: auto;
+    margin-bottom: 2%;
+}
+
+.title {
+	text-align: center;
+}
+
+.champ {
+	margin-top: 1%;
+	padding: 3%;
+	border:1px solid #000;
+	border-radius: 1%;
+	width: 100%;
+}
+
+.bouton-login {
+	background: rgb(0, 0, 0, 0.85);
+	color: white;
+	border:1px solid #000;
+	padding: 3%;
+	width: 100%;
+	margin-bottom: 10%;
+}
+
+.bouton-login:hover {
+	background: rgb(255, 255, 255, 0.85);
+	color: black;
+}
