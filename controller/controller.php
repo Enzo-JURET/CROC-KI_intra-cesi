@@ -19,6 +19,12 @@
                         $result = $this->Authentification();
                     }
                 break;
+                case "modification_profil":
+                    if($_SERVER['REQUEST_METHOD'] === 'POST')
+                    {
+                        $result = $this->Modification_profil();
+                    }
+                break;
             }
             return $result;
         }
@@ -65,6 +71,34 @@
             }
 
             return json_encode($retour);
+        }
+
+        //À modifier
+        function Modification_profil()
+        {
+            $retour=[];
+            $id_personne = $_POST["id"];
+            $description = $_POST["description"];
+            $telephone = $_POST["telephone"];
+            $linkedin = $_POST["linkedin"];
+            $facebook = $_POST["facebook"];
+            $instagram = $_POST["instagram"];
+            $twitter = $_POST["twitter"];
+
+            // Effectue la modification
+            $dbcontroller = new dbController();
+            $stmt = mysqli_prepare($dbcontroller->getConn(),
+                "UPDATE personne
+                 SET description_peronne = ?,
+                 SET telephone_personne = ?,
+                 SET lienLinkIn_personne = ?,
+                 SET lienInstagram_personne = ?,
+                 SET lienTwitter_personne = ?,
+                 SET lienFacebook_personne = ?
+                 WHERE id_personne = ?");
+            mysqli_stmt_bind_param($stmt,'sssssss',$description, $email, $telephone, $linkedin, $instagram, $twitter, $facebook, $id_personne);
+            $dbcontroller->executeQuery($stmt);
+            $dbcontroller->closeQuery();
         }
     }
 ?>

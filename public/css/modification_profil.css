@@ -25,11 +25,8 @@ outline: 0;
 	margin-bottom: -2%;
 }
 
-#story {
+.story {
 	width: 90%;
-}
-
-.champ_info_supp {
 }
 
 #titre_rs {
@@ -61,12 +58,15 @@ outline: 0;
 	border:1px solid #000;
 	padding: 3%;
 	width: 100%;
-	margin-bottom: 10%;
 }
 
+.raccourcis {
+	margin-bottom: 3%;
+}
 
 input {
 	width: 70%;
+	padding: 1%;
 }
 
 label,
