@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="../public/css/conversation.css" type="text/css" />
 
         <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="../public/js/bootstrap/bootstrap.js"></script>
         <script type="text/javascript" src="../public/js/header.js"></script>
         <script type="text/javascript" src="../model/conversation.js"></script>
         <script type="text/javascript" src="../model/test_connexion.js"></script>
