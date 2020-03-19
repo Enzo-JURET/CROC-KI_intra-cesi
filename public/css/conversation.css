@@ -67,6 +67,37 @@ body {
     margin-bottom: 1em;
 }
 
+.labelAmi {
+    padding-left: 1em;
+}
+
+.labelAmi:hover {
+    color:#091021;
+}
+
+.personTooltip{
+    position:absolute;
+    width: auto;
+    height: -webkit-fill-available;
+    background-color:#091021;
+    color:white;
+}
+
+#identiteAmi {
+    padding: 1em;
+    width: 60%;
+}
+
+.avatarAmi {
+    height: 50%;
+    width: auto;
+    
+}
+
+#conteneurTooltip {
+    width:100%;
+    display:inline-flex;
+}
 /*** Menu messages ***/
 
 #conteneurMessage {
