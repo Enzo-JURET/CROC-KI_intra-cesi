@@ -1,5 +1,5 @@
-.background {
-	background-image: url("../images/fond-body.jpg");
+.background_profil {
+	background-image: url("../images/fonds/fond-body.jpg");
 }
 
 * {
@@ -39,11 +39,12 @@ outline: 0;
 }
 
 #image-profil {
+	margin-top: -10%;
+	margin-left: 10%;
 	border-radius: 50%;
 	border: 5px solid rgba(255, 255, 255, .9);
 	height: 200px;
 	width: auto;
-	position: absolute;
     top: 22%;
     right: 74%;
 }
@@ -55,6 +56,7 @@ outline: 0;
 
 #promo-info {
 	margin-left: 10%;
+	margin-bottom: 10%;
 }
 
 #titre-description {
@@ -118,6 +120,21 @@ outline: 0;
 	height: auto;
 }
 
+.image-modifier_profil {
+	background-image: url("../images/icones/parametre.png");
+	background-size: 60%;
+	background-repeat: no-repeat;
+	width: 55%;
+	height: auto;
+}
+
+.image-modifier_profil:hover {
+	background-image: url("../images/icones/parametre-color.png");
+	background-repeat: no-repeat;
+	width: 50%;
+	height: auto;
+}
+
 #bandeau-info {
 	background-color: #091021;
     color: white;
@@ -170,4 +187,8 @@ outline: 0;
 	margin-left: 10%;
 	width: 10%;
 	height: auto;
+}
+
+.icones-outils {
+	height: 70%;
 }

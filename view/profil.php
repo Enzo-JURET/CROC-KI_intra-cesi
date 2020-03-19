@@ -14,7 +14,7 @@
     </script>
 
 </head>
-<body class="background">
+<body class="background_profil">
 	<?php require('../view/header.php'); ?>
 	<div class="row page-profil">
 		<div id="block-profil" class="col-sm-10 offset-sm-1">
@@ -30,8 +30,21 @@
 						<a href="../view/index.php">RIL-PROMO-201</a>
 					</p>
 				</div>
-				<div class="image-envoi-message col-sm-1 offset-sm-1 boutons-info-profil-demander-en"></div>
-				<div class="image-ajouter-ami col-sm-1 offset-sm-1 boutons-info-profil-demander-en"></div>
+				<div class="col-sm-1 boutons-info-profil-demander-en">
+					<a href="conversation.php">
+						<img class="icones-outils" src="../public/images/icones/ajouter-ami-color.png"></a>
+					</a>
+				</div>
+				<div class="col-sm-1 offset-sm-1 boutons-info-profil-demander-en">
+					<a href="conversation.php">
+						<img class="icones-outils" src="../public/images/icones/avion-papier-color.png"></a>
+					</a>
+				</div>
+				<div class="col-sm-1 offset-sm-1 boutons-info-profil-demander-en">
+					<a href="modification_profil.php">
+						<img class="icones-outils" src="../public/images/icones/parametre-color.png"></a>
+					</a>
+				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-4 offset-sm-1">
