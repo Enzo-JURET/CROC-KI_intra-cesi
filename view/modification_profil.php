@@ -116,6 +116,11 @@
             </div>
             <div class="row ligne_bouton-modifier">
                 <div class="col-sm-8 offset-sm-2">
+                    <div id="message_reussite" class="alert alert-success" role="alert">
+                        <center>
+                            Les modifications ont bien été effectuées !
+                        </center>
+                    </div>
                     <p>
                         <input type="submit" id="valider_modification" class="bouton-modifier" value='MODIFIER'>
                         <div class="raccourcis">

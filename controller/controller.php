@@ -78,6 +78,19 @@
                         $dbcontroller->closeQuery();
                         return json_encode($tabRetour);
                     break;
+                    case "infos_utilisateur":
+
+                        $idUser = $_POST["idUser"];
+
+                        $dbcontroller = new dbController();
+                        $stmt = mysqli_prepare($dbcontroller->getConn(),
+                            "SELECT description_personne, telephone_personne, lienLinkIn_personne, lienInstagram_personne, lienTwitter_personne, lienFacebook_personne FROM personne WHERE id_personne = ?");
+                        mysqli_stmt_bind_param($stmt,'s',$idUser);
+                        $resultat = $dbcontroller->executeSelectQuery($stmt);
+                        $dbcontroller->closeQuery();
+                        return json_encode($resultat);
+
+                    break;
                 }
                 return $result;
             }
@@ -131,16 +144,17 @@
             $dbcontroller = new dbController();
             $stmt = mysqli_prepare($dbcontroller->getConn(),
                 "UPDATE personne
-                 SET description_peronne = ?,
-                 SET telephone_personne = ?,
-                 SET lienLinkIn_personne = ?,
-                 SET lienInstagram_personne = ?,
-                 SET lienTwitter_personne = ?,
-                 SET lienFacebook_personne = ?
+                 SET description_personne = ?,
+                 telephone_personne = ?,
+                 lienLinkIn_personne = ?,
+                 lienInstagram_personne = ?,
+                 lienTwitter_personne = ?,
+                 lienFacebook_personne = ?
                  WHERE id_personne = ?");
-            mysqli_stmt_bind_param($stmt,'sssssss',$description, $email, $telephone, $linkedin, $instagram, $twitter, $facebook, $id_personne);
+            mysqli_stmt_bind_param($stmt,'sssssss',$description, $telephone, $linkedin, $instagram, $twitter, $facebook, $id_personne);
             $dbcontroller->executeQuery($stmt);
             $dbcontroller->closeQuery();
+            //return $stmt;
         }
     }
 ?>
