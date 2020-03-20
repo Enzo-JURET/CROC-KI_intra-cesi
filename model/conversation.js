@@ -1,4 +1,5 @@
 var amis = [];
+var promotion = [];
 
 $( document ).ready(function() {
     containerInit();
@@ -7,7 +8,39 @@ $( document ).ready(function() {
     keyEnterListenerOnMessageInput();
     
     recupererAmis();
+    recupererPromotion();
 });
+
+function recupererPromotion()
+{
+    $idUtilisateur = getCookie("id");
+    var donnees = [];
+    $.ajax({
+        cache : false,
+        url : "../data/getSomething",
+        type : "POST",
+        async:false,
+        data: ({
+            clef:'promotion',
+            idUser: $idUtilisateur
+       }),
+
+        success : function(retVal, statut){
+            promotion = JSON.parse(retVal);           
+            console.log(promotion);
+            for(var i=0;i<promotion.length;i++)
+            {
+                document.getElementById("amis").innerHTML += "<p id='ami_"+promotion[i].id_promotion+"' class='labelAmi'>" + promotion[i].prenom_promotion + " " + promotion[i].nom_promotion + "</p>";
+            }
+            $(".labelAmi").mouseenter(openPersonTooltipAmi).mouseleave(closePersonTooltipAmi);
+
+        },
+ 
+        error : function(retVal, statut, erreur){
+ 
+        }
+     });
+}
 
 function recupererAmis (){
     $idUtilisateur = getCookie("id");
@@ -29,7 +62,7 @@ function recupererAmis (){
             {
                 document.getElementById("amis").innerHTML += "<p id='ami_"+amis[i].id_ami+"' class='labelAmi'>" + amis[i].prenom_ami + " " + amis[i].nom_ami + "</p>";
             }
-            $(".labelAmi").mouseenter(openPersonTooltip).mouseleave(closePersonTooltip);
+            $(".labelAmi").mouseenter(openPersonTooltipAmi).mouseleave(closePersonTooltipAmi);
 
         },
  
@@ -40,7 +73,7 @@ function recupererAmis (){
 }
 
 
-function openPersonTooltip(event)
+function openPersonTooltipAmi(event)
 {
     var target = $(event.target);
     var elId = target.attr('id');
@@ -72,7 +105,7 @@ function openPersonTooltip(event)
     div = $("<div />");
     div.attr({id: 'customTooltip', class: 'personTooltip'});
     div.css({top: event.pageY, left: posX});
-    div.html("<div id='conteneurTooltip'><div id='identiteAmi'>"+ prenomAmi + " " + nomAmi +"</div><div id='containerAvatar'><img class='avatarAmi' src='../"+ avatarAmi +"' alt=''></div></div>");
+    div.html("<div id='conteneurTooltip'><div><div class='textLabelAmi'>"+prenomAmi + " " + nomAmi +"</div><div class='textLabelAmi'>"+emailAmi+"</div></div><div><img class='avatarAmi' src='../"+avatarAmi+"' alt=''/></div></div>");
     $("#boiteFenetre").append(div);
         
     //$("#customTooltip").mouseleave(supPopUp);
@@ -83,7 +116,7 @@ function openPersonTooltip(event)
     }
 }
 
-function closePersonTooltip()
+function closePersonTooltipAmi()
 {
     if(!$('#customTooltip').is(":hover"))
     {

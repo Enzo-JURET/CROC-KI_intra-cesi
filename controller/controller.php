@@ -7,12 +7,6 @@
         function HandlerController($type)
         {
             switch($type) {
-                case "amis":
-                    if($_SERVER['REQUEST_METHOD'] === 'POST')
-                    {
-                        $result = $this->getFriends();
-                    }
-                break;
                 case "getSomething":
                     if($_SERVER['REQUEST_METHOD'] === 'POST')
                     {
