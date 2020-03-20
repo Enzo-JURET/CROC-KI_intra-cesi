@@ -64,6 +64,10 @@ outline: 0;
 	margin-bottom: 3%;
 }
 
+#message_reussite{
+display:none;
+}
+
 input {
 	width: 70%;
 	padding: 1%;

@@ -1,7 +1,6 @@
 $( document ).ready(function(){
 	
-	$("#description").val("coucou");
-	//document.getElementById("description").innerHTML="coucou";
+	chargement_page();
 
     $(document).on('keypress',function(e) {
         if(e.which == 13) {
@@ -18,20 +17,41 @@ $( document ).ready(function(){
 		$facebook = $("#facebook").val();
 		$instagram = $("#instagram").val();
 		$twitter = $("#twitter").val();
-		modification_donnees_profil($description, $email, $telephone, $linkedin, $facebook, $instagram, $twitter);
+		modification_profil($description, $telephone, $linkedin, $facebook, $instagram, $twitter);
 	});
 
 });
 
 function chargement_page() {
+	$id = getCookie("id");
 	$.ajax({
-		
-    });	
+        cache : false,
+        url : "../data/getSomething",
+        type : "POST",
+        async:false,
+        data: ({
+            clef:'infos_utilisateur',
+            idUser:$id
+       }),
+
+        success : function(retVal, statut){
+        	donnees = JSON.parse(retVal);
+        	$("#description").val(donnees[0]["description_personne"]);
+        	$("#telephone").val(donnees[0]["telephone_personne"]);
+        	$("#linkedin").val(donnees[0]["lienLinkIn_personne"]);
+        	$("#facebook").val(donnees[0]["lienFacebook_personne"]);
+        	$("#instagram").val(donnees[0]["lienInstagram_personne"]);
+        	$("#twitter").val(donnees[0]["lienTwitter_personne"]);
+        },
+ 
+        error : function(retVal, statut, erreur){
+        }
+     });
 }
 
-function modification_profil($description, $email, $telephone, $linkedin, $facebook, $instagram, $twitter) {
+function modification_profil($description, $telephone, $linkedin, $facebook, $instagram, $twitter) {
 	
-	$id_personne = getCookieID("id");
+	$id_personne = getCookie("id");
 
 	$.ajax({
 	        cache : false,
@@ -45,11 +65,14 @@ function modification_profil($description, $email, $telephone, $linkedin, $faceb
 	            linkedin:$linkedin,
 	            facebook:$facebook,
 	            instagram:$instagram,
-	            twitter:$twitter,
+	            twitter:$twitter
 	       }),
 
 	        success : function(retVal, statut){
-	        	window.location.href="../view/profil.php";
+	        	document.querySelector("#message_reussite").style.display="block";
+	        	setTimeout(function() {
+	        		window.location.href="../view/profil.php";
+	        	}, 1500);     	
 	        },
 	 
 	        error : function(retVal, statut, erreur){
@@ -57,7 +80,7 @@ function modification_profil($description, $email, $telephone, $linkedin, $faceb
      });
 }
 
-function getCookieID(cname) {
+function getCookie(cname) {
 	var name = cname + "=";
 	var decodedCookie = decodeURIComponent(document.cookie);
 	var ca = decodedCookie.split(';');
