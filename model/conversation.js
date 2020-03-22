@@ -14,6 +14,7 @@ $( document ).ready(function() {
 function recupererPromotion()
 {
     $idUtilisateur = getCookie("id");
+    $promotion = getCookie("promotion_personne");
     var donnees = [];
     $.ajax({
         cache : false,
@@ -22,7 +23,8 @@ function recupererPromotion()
         async:false,
         data: ({
             clef:'promotion',
-            idUser: $idUtilisateur
+            idUser: $idUtilisateur,
+            promotionUser: $promotion
        }),
 
         success : function(retVal, statut){
@@ -30,9 +32,9 @@ function recupererPromotion()
             console.log(promotion);
             for(var i=0;i<promotion.length;i++)
             {
-                document.getElementById("amis").innerHTML += "<p id='ami_"+promotion[i].id_promotion+"' class='labelAmi'>" + promotion[i].prenom_promotion + " " + promotion[i].nom_promotion + "</p>";
+                document.getElementById("promotion").innerHTML += "<p id='promotion_"+promotion[i].id_personne+"' class='labelAmi'>" + promotion[i].prenom_personne + " " + promotion[i].nom_personne + "</p>";
             }
-            $(".labelAmi").mouseenter(openPersonTooltipAmi).mouseleave(closePersonTooltipAmi);
+            //$(".labelAmi").mouseenter(openPersonTooltipAmi).mouseleave(closePersonTooltipAmi);
 
         },
  

@@ -91,6 +91,46 @@
                         return json_encode($resultat);
 
                     break;
+                    case "promotion":
+                        $idUser = $_POST["idUser"];
+                        $promotionUser = $_POST["promotionUser"];
+
+                        $dbcontroller = new dbController();
+                        $stmt = mysqli_prepare($dbcontroller->getConn(),
+                            "SELECT id_personne_ami
+                            FROM personne,ami
+                            WHERE personne.id_personne = ami.id_personne
+                            AND personne.id_personne = ?");
+                        mysqli_stmt_bind_param($stmt,'s',$idUser);
+                        $resultat = $dbcontroller->executeSelectQuery($stmt);
+                        
+                        for($i=0;$i<count($resultat);$i++)
+                        {
+                            array_push($tabResulat,$resultat[$i]["id_personne_ami"]);
+                        }
+
+                        for($i=0;$i<count($tabResulat);$i++)
+                        {
+                            $stmt = mysqli_prepare($dbcontroller->getConn(),
+                            "SELECT id_personne,prenom_personne,nom_personne,e_mail_personne,avatar_personne
+                            FROM personne
+                            WHERE id_personne != ?
+                            AND id_promotion = ?");
+                            mysqli_stmt_bind_param($stmt,'ss',$tabResulat[$i],$promotionUser);
+                            $tmp = $dbcontroller->executeSelectQuery($stmt);
+                            for($f=0;$f<count($tmp);$f++)
+                            {
+                                $id_personne = $tmp[$f]["id_personne"];
+                                $prenom_personne = $tmp[$f]["prenom_personne"];
+                                $nom_personne = $tmp[$f]["nom_personne"];
+                                $email_personne = $tmp[$f]["e_mail_personne"];
+                                $avatar_personne = $tmp[$f]["avatar_personne"];
+                            }
+                            $tabRetour[$i] = array("id_personne"=>$id_personne,"prenom_personne"=>$prenom_personne,"nom_personne"=>$nom_personne,"email_personne"=>$email_personne,"avatar_personne"=>$avatar_personne);
+                        }               
+                        $dbcontroller->closeQuery();
+                        return json_encode($tabRetour);
+                    break;
                 }
                 return $result;
             }
