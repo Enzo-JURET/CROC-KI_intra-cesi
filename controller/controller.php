@@ -25,18 +25,9 @@
                         $result = $this->Modification_profil();
                     }
                 break;
-                case "fil_actualite":
-                    if($_SERVER['REQUEST_METHOD'] === 'POST')
-                    {
-                    $result = $this-> fil_actualite();
-                    }
+                case "fil_actualite";
+                $result = $this-> fil_actualite();
 
-                break;
-                case "supprimerAmi":
-                    if($_SERVER['REQUEST_METHOD'] === 'POST')
-                    {
-                        $result = $this->supprimerAmi();
-                    }
                 break;
             }
             return $result;
@@ -54,6 +45,44 @@
 
                 switch($clef)
                 {
+                    case "amis":
+                        $idUser = $_POST["idUser"];
+
+                        $dbcontroller = new dbController();
+                        $stmt = mysqli_prepare($dbcontroller->getConn(),
+                            "SELECT id_personne_ami
+                            FROM personne,ami
+                            WHERE personne.id_personne = ami.id_personne
+                            AND personne.id_personne = ?");
+                        mysqli_stmt_bind_param($stmt,'s',$idUser);
+                        $resultat = $dbcontroller->executeSelectQuery($stmt);
+                        
+                        for($i=0;$i<count($resultat);$i++)
+                        {
+                            array_push($tabResulat,$resultat[$i]["id_personne_ami"]);
+                        }
+
+                        for($i=0;$i<count($tabResulat);$i++)
+                        {
+                            $stmt = mysqli_prepare($dbcontroller->getConn(),
+                            "SELECT id_personne,prenom_personne,nom_personne,e_mail_personne,avatar_personne
+                            FROM personne
+                            WHERE id_personne = ?");
+                            mysqli_stmt_bind_param($stmt,'s',$tabResulat[$i]);
+                            $tmp = $dbcontroller->executeSelectQuery($stmt);
+                            for($f=0;$f<count($tmp);$f++)
+                            {
+                                $id_ami = $tmp[$f]["id_personne"];
+                                $prenom_ami = $tmp[$f]["prenom_personne"];
+                                $nom_ami = $tmp[$f]["nom_personne"];
+                                $email_ami = $tmp[$f]["e_mail_personne"];
+                                $avatar_ami = $tmp[$f]["avatar_personne"];
+                            }
+                            $tabRetour[$i] = array("id_ami"=>$id_ami,"prenom_ami"=>$prenom_ami,"nom_ami"=>$nom_ami,"email_ami"=>$email_ami,"avatar_ami"=>$avatar_ami);
+                        }               
+                        $dbcontroller->closeQuery();
+                        return json_encode($tabRetour);
+                    break;
                     case "groupes":
                         $idUser = $_POST["idUser"];
 
@@ -95,6 +124,46 @@
                         $dbcontroller->closeQuery();
                         return json_encode($resultat);
 
+                    break;
+                    case "promotion":
+                        $idUser = $_POST["idUser"];
+                        $promotionUser = $_POST["promotionUser"];
+
+                        $dbcontroller = new dbController();
+                        $stmt = mysqli_prepare($dbcontroller->getConn(),
+                            "SELECT id_personne_ami
+                            FROM personne,ami
+                            WHERE personne.id_personne = ami.id_personne
+                            AND personne.id_personne = ?");
+                        mysqli_stmt_bind_param($stmt,'s',$idUser);
+                        $resultat = $dbcontroller->executeSelectQuery($stmt);
+                        
+                        for($i=0;$i<count($resultat);$i++)
+                        {
+                            array_push($tabResulat,$resultat[$i]["id_personne_ami"]);
+                        }
+
+                        for($i=0;$i<count($tabResulat);$i++)
+                        {
+                            $stmt = mysqli_prepare($dbcontroller->getConn(),
+                            "SELECT id_personne,prenom_personne,nom_personne,e_mail_personne,avatar_personne
+                            FROM personne
+                            WHERE id_personne != ?
+                            AND id_promotion = ?");
+                            mysqli_stmt_bind_param($stmt,'ss',$tabResulat[$i],$promotionUser);
+                            $tmp = $dbcontroller->executeSelectQuery($stmt);
+                            for($f=0;$f<count($tmp);$f++)
+                            {
+                                $id_personne = $tmp[$f]["id_personne"];
+                                $prenom_personne = $tmp[$f]["prenom_personne"];
+                                $nom_personne = $tmp[$f]["nom_personne"];
+                                $email_personne = $tmp[$f]["e_mail_personne"];
+                                $avatar_personne = $tmp[$f]["avatar_personne"];
+                            }
+                            $tabRetour[$i] = array("id_personne"=>$id_personne,"prenom_personne"=>$prenom_personne,"nom_personne"=>$nom_personne,"email_personne"=>$email_personne,"avatar_personne"=>$avatar_personne);
+                        }               
+                        $dbcontroller->closeQuery();
+                        return json_encode($tabRetour);
                     break;
                     case "amisEtPromotion" : 
                         $idUser = $_POST["idUser"];
@@ -238,82 +307,86 @@
             $titre_comp5 = $_POST["titre_comp5"];
             $valeur_comp5 = $_POST["valeur_comp5"];
 
-            // Effectue la modification des éléments basiques
             $dbcontroller = new dbController();
             $stmt = mysqli_prepare($dbcontroller->getConn(),
-                "UPDATE personne P, competences C
-                 SET P.description_personne = ?,
-                 P.telephone_personne = ?,
-                 P.lienLinkIn_personne = ?,
-                 P.lienInstagram_personne = ?,
-                 P.lienTwitter_personne = ?,
-                 P.lienFacebook_personne = ?,
-                 C.titre_competence1 = ?,
-                 C.valeur_competence1 = ?,
-                 C.titre_competence2 = ?,
-                 C.valeur_competence2 = ?,
-                 C.titre_competence3 = ?,
-                 C.valeur_competence3 = ?,
-                 C.titre_competence4 = ?,
-                 C.valeur_competence4 = ?,
-                 C.titre_competence5 = ?,
-                 C.valeur_competence5 = ?
-                 WHERE P.id_personne = ?;");
-            mysqli_stmt_bind_param($stmt,'sssssssssssssssss',$description, $telephone, $linkedin, $instagram, $twitter, $facebook, $titre_comp1, $valeur_comp1, $titre_comp2, $valeur_comp2, $titre_comp3, $valeur_comp3, $titre_comp4, $valeur_comp4, $titre_comp5, $valeur_comp5, $id_personne);
-            $dbcontroller->executeQuery($stmt);
+                "SELECT titre_competence1 FROM competences WHERE id_personne = ?");
+            mysqli_stmt_bind_param($stmt,'s',$id_personne);
+            $tmp = $dbcontroller->executeSelectQuery($stmt);
+
+            if($tmp != '') {
+                // Effectue la modification de tout les éléments
+                $stmt = mysqli_prepare($dbcontroller->getConn(),
+                    "UPDATE personne P, competences C
+                     SET P.description_personne = ?,
+                     P.telephone_personne = ?,
+                     P.lienLinkIn_personne = ?,
+                     P.lienInstagram_personne = ?,
+                     P.lienTwitter_personne = ?,
+                     P.lienFacebook_personne = ?,
+                     C.titre_competence1 = ?,
+                     C.valeur_competence1 = ?,
+                     C.titre_competence2 = ?,
+                     C.valeur_competence2 = ?,
+                     C.titre_competence3 = ?,
+                     C.valeur_competence3 = ?,
+                     C.titre_competence4 = ?,
+                     C.valeur_competence4 = ?,
+                     C.titre_competence5 = ?,
+                     C.valeur_competence5 = ?
+                     WHERE P.id_personne = ?;");
+                mysqli_stmt_bind_param($stmt,'sssssssssssssssss',$description, $telephone, $linkedin, $instagram, $twitter, $facebook, $titre_comp1, $valeur_comp1, $titre_comp2, $valeur_comp2, $titre_comp3, $valeur_comp3, $titre_comp4, $valeur_comp4, $titre_comp5, $valeur_comp5, $id_personne);
+                $dbcontroller->executeQuery($stmt);
+            }
+            else {
+                // Mise à jour de la table personne.
+                $stmt = mysqli_prepare($dbcontroller->getConn(),
+                    "UPDATE personne P
+                     SET P.description_personne = ?,
+                     P.telephone_personne = ?,
+                     P.lienLinkIn_personne = ?,
+                     P.lienInstagram_personne = ?,
+                     P.lienTwitter_personne = ?,
+                     P.lienFacebook_personne = ?
+                     WHERE P.id_personne = ?;");
+                mysqli_stmt_bind_param($stmt,'sssssss',$description, $telephone, $linkedin, $instagram, $twitter, $facebook, $id_personne);
+                $dbcontroller->executeQuery($stmt);
+
+                // Insertion des compétences
+                $stmt = mysqli_prepare($dbcontroller->getConn(),
+                    "INSERT INTO competences VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                mysqli_stmt_bind_param($stmt,'sssssssssss', $id_personne, $titre_comp1, $titre_comp2, $titre_comp3, $titre_comp4, $titre_comp5, $valeur_comp1, $valeur_comp2, $valeur_comp3, $valeur_comp4, $valeur_comp5);
+                $dbcontroller->executeQuery($stmt);                
+            }
             $dbcontroller->closeQuery();
             //return $stmt;
         }
 
-        function fil_actualite()//
+        function fil_actualite()
         {
-            $tabRetour = [];//tableau a retourner
+            $tabRetour = [];
             $dbcontroller = new dbController();
 
-            $result = mysqli_prepare($dbcontroller->getConn(),//
+            $result = mysqli_prepare($dbcontroller->getConn(),
             "SELECT act.* , per.nom_personne as auteur,per.avatar_personne as image_profil FROM actualite as act inner join personne as per on act.id_personne =per.id_personne");
             $retour = $dbcontroller->executeSelectQuery($result);
 
-            foreach ($retour as $key => $row) {//boucle sur chaque ligne
+            foreach ($retour as $key => $row) {
 
                 $tabRetour[$key] = array("image_profil"=>$row['image_profil'],"auteur"=>$row['auteur'] 
                 ,"id_actualite"=>$row['id_actualite'], "titre_actualite"=>$row['titre_actualite'] 
                 ,"description_actualite"=>$row['description_actualite'] , "status_actualite"=>$row['status_actualite']
                 , "date_creation_actualite"=>$row['date_creation_actualite']
                 , "chemin_image_actualite"=>$row['chemin_image_actualite'],"date_evenement_actualite"=>$row['date_evenement_actualite']
-                ,"status_evenement_actualite"=>$row['status_evenement_actualite']);//mets dans le tableau toute les donnée a recup dans la page
+                ,"status_evenement_actualite"=>$row['status_evenement_actualite']);
 
             }
 
 
 
             $dbcontroller->closeQuery();
+            //var_dump($tabRetour);
             return json_encode($tabRetour);
-        
-        }
-
-        function supprimerAmi()
-        {
-            $id_personne = $_POST["id"];
-            $id_ami = $_POST["id_ami"];
-
-            $dbcontroller = new dbController();
-
-            $stmt = mysqli_prepare($dbcontroller->getConn(),
-                "DELETE FROM ami
-                WHERE id_personne = ?
-                AND id_personne_ami = ?");
-            mysqli_stmt_bind_param($stmt,'ss',$id_personne,$id_ami);
-            $dbcontroller->executeQuery($stmt);
-
-            $stmt = mysqli_prepare($dbcontroller->getConn(),
-                "DELETE FROM ami
-                WHERE id_personne = ?
-                AND id_personne_ami = ?");
-            mysqli_stmt_bind_param($stmt,'ss',$id_ami,$id_personne);
-            $dbcontroller->executeQuery($stmt);
-
-            $dbcontroller->closeQuery();
+           // return "test";
         }
     }
 ?>

@@ -1,5 +1,7 @@
+var amis = [];
+
 $( document ).ready(function(){
-	$id_personne = getCookie("affichage_profil_id");
+    $id_personne = getCookie("affichage_profil_id");
 	chargement_page_profil($id_personne);
 	votreProfil($id_personne);
 });
@@ -58,8 +60,6 @@ function recupererAmisEtPromotion($id)
             $donnees = JSON.parse(retVal);           
             console.log($donnees);
             amis = $donnees["amis"];
-            promotion = $donnees["promotion"];
-
             afficherAmis();
         },
  
@@ -71,11 +71,13 @@ function recupererAmisEtPromotion($id)
 
 function afficherAmis()
 {
-    document.getElementById("amis").innerHTML = "";
-    for(var i=0;i<amis.length;i++)
-    {
+    document.getElementById("liste-amis").innerHTML = "";
+    if (amis != null) {
+        for(var i=0;i<amis.length;i++)
+        {
 
-        document.getElementById("amis").innerHTML += "<a onclick='visionageProfil("+amis[i].id+")' href='../view/profil.php'><p class='labelConnaissance'>"+amis[i].prenom + " " + amis[i].nom + "</p>";
+            document.getElementById("liste-amis").innerHTML += "<a onclick='visionageProfil("+amis[i].id+")' href='../view/profil.php'><p class='labelConnaissance'>"+amis[i].prenom + " " + amis[i].nom + "</p>";
+        }
     }
 }
 

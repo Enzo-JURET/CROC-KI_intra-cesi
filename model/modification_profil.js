@@ -99,7 +99,7 @@ $valeur_comp3, $valeur_comp4, $valeur_comp5) {
                 //console.log(retVal);
                 document.querySelector("#message_reussite").style.display="block";
                 setTimeout(function() {
-                    window.location.href="../view/profil.php";
+                    //window.location.href="../view/profil.php";
                 }, 1500);    	
 	        },
 	 
