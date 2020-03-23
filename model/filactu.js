@@ -1,68 +1,35 @@
-
-
 $(document).ready(function () {
+  preparation();
+  document.getElementById('iconeCentral').src="../public/images/icones/menublanc.png";
+  document.getElementById('date').innerText("test");
 
-
-  fil_actualite();
-
-  var menu_Evenement = document.getElementById("menu_Evenement");
-
-  var menu_Tout = document.getElementById("menu_Tout");
-
-  var menu_Information = document.getElementById("menu_Information");
-
- document.getElementById('menu_Tout').addEventListener('click', function(e) {
-  menu("tout");
-  });
-
-  document.getElementById('menu_Evenement').addEventListener('click', function(e) {
-    menu("event");
-    });
-    document.getElementById('menu_Information').addEventListener('click', function(e) {
-      menu("actu");
-      });
+  
+});
+function preparation()//permet d'afficher ou de cacher les block'
+  {
+  
+  
+    fil_actualite();
     
 
-
-  /*$('#menu_Tout').on('click', function () {//
+    var menu_Evenement = document.getElementById("menu_Evenement");
+  
+    var menu_Tout = document.getElementById("menu_Tout");
+  
+    var menu_Information = document.getElementById("menu_Information");
+  
+   document.getElementById('menu_Tout').addEventListener('click', function(e) {
     menu("tout");
-  })*/
-/*
-  $('#menu_Evenement').on('click', function () {
-    menu("event");
-  })*//*
-  $('#menu_Information').on('click', function () {
-    menu("actu");
-  })*/
-
-});
-
-
-function preparation()//permet d'afficher ou de cacher les block'
-{
-
-fil_actualite();
-
-var menu_Evenement = document.getElementById("menu_Evenement");
-
-var menu_Tout = document.getElementById("menu_Tout");
-
-var menu_Information = document.getElementById("menu_Information");
-
-document.getElementById('menu_Tout').addEventListener('click', function(e) {
-menu("tout");
-});
-
-document.getElementById('menu_Evenement').addEventListener('click', function(e) {
-  menu("event");
-  });
-  document.getElementById('menu_Information').addEventListener('click', function(e) {
-    menu("actu");
     });
-  }
+  
+    document.getElementById('menu_Evenement').addEventListener('click', function(e) {
+      menu("event");
+      });
+      document.getElementById('menu_Information').addEventListener('click', function(e) {
+        menu("actu");
+        });
 
-
-
+    }
 
 function fil_actualite()//permet d'afficher ou de cacher les block'
 {
@@ -90,16 +57,26 @@ function fil_actualite()//permet d'afficher ou de cacher les block'
       console.log("test16");
 
       for (var i = 0; i < tabreturn.length; i++) {
+
+        if(tabreturn[i].image_profil =="")
+        {
+        var image_profil = 'public/images/photo_profil/avatar-defaut.png';
+        }
+        else
+        {
+          image_profil= tabreturn[i].image_profil;
+
+        }
         if (tabreturn[i].status_actualite == "event") {
           var chaine = " <div class='card    divEvent '>  " + " <div class='row no-gutters'>"
             + "  <div class='col-2 alignement_center pt-4'>"
-            + " <a href='../view/profil.php'><img src='../" + tabreturn[i].image_profil + "' class='avatar'></a>"
+            + " <a href='../view/profil.php'><img src='../" + image_profil + "' class='avatar'></a>"
             + " <p>" + tabreturn[i].auteur + " </p> <img src='../public/images/icones/calendrier.png' class='icone_titre'>  " + tabreturn[i].date_evenement_actualite + " </div> <div class='col-10'>"
             + "  <div class='card-body'>"
             + " <h5 class='card-title'>" + tabreturn[i].titre_actualite + "  </h5>"
             + "  <h5 class='card-title text-right'>    </h5> <p class='card-text'>"
             + tabreturn[i].description_actualite
-            + " <a href='../view/profil.php'><img src='../public/images/icones/plusblanc.png' class='detail'></a>"
+       
             + "</p> <p class='card-text'><small class='text-muted'>" + tabreturn[i].date_creation_actualite + "</small></p>"
             + "</div>  </div></div></div>";
 
@@ -111,12 +88,12 @@ function fil_actualite()//permet d'afficher ou de cacher les block'
 
 
           var chaine = "<div class='card mb-12  divActu'> <div class='row no-gutters'> <div class='col-md-2 alignement_center pt-4'>"
-            + " <a href='../view/profil.php'><img src='../" + tabreturn[i].image_profil + " ' class='avatar'></a> <p>" + tabreturn[i].auteur + " </p> <img src='../public/images/icones/information.png' class='icone_titre'> "
+            + " <a href='../view/profil.php'><img src='../" + image_profil + "' class='avatar'></a> <p>" + tabreturn[i].auteur + " </p> <img src='../public/images/icones/information.png' class='icone_titre'> "
             + "</div> <div class='col-md-10'> <div class='card-body'>"
             + " <h5 class='card-title'>" + tabreturn[i].titre_actualite + " </h5>"
             + " <p class='card-text'>"
             + tabreturn[i].description_actualite
-            + "<a href='../view/profil.php'><img src='../public/images/icones/plusblanc.png' class='detail'></a>"
+            
             + " </p> <p class='card-text'><small class='text-muted'>" + tabreturn[i].date_creation_actualite + " </small></p>"
             + " </div></div></div></div>";
 

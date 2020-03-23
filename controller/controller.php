@@ -163,6 +163,19 @@
 
                         $dbcontroller->closeQuery();
                         return json_encode($tabRetour);
+                    break;
+
+                    case "competences":
+
+                        $idUser = $_POST["idUser"];
+
+                        $dbcontroller = new dbController();
+                        $stmt = mysqli_prepare($dbcontroller->getConn(),
+                            "SELECT titre_competence1, titre_competence2, titre_competence3, titre_competence4, titre_competence5, valeur_competence1, valeur_competence2, valeur_competence3, valeur_competence4, valeur_competence5 FROM competences WHERE id_personne = ?");
+                        mysqli_stmt_bind_param($stmt,'s',$idUser);
+                        $resultat = $dbcontroller->executeSelectQuery($stmt);
+                        $dbcontroller->closeQuery();
+                        return json_encode($resultat);
 
                     break;
                 }
@@ -214,18 +227,39 @@
             $instagram = $_POST["instagram"];
             $twitter = $_POST["twitter"];
 
-            // Effectue la modification
+            $titre_comp1 = $_POST["titre_comp1"];
+            $valeur_comp1 = $_POST["valeur_comp1"];
+            $titre_comp2 = $_POST["titre_comp2"];
+            $valeur_comp2 = $_POST["valeur_comp2"];
+            $titre_comp3 = $_POST["titre_comp3"];
+            $valeur_comp3 = $_POST["valeur_comp3"];
+            $titre_comp4 = $_POST["titre_comp4"];
+            $valeur_comp4 = $_POST["valeur_comp4"];
+            $titre_comp5 = $_POST["titre_comp5"];
+            $valeur_comp5 = $_POST["valeur_comp5"];
+
+            // Effectue la modification des éléments basiques
             $dbcontroller = new dbController();
             $stmt = mysqli_prepare($dbcontroller->getConn(),
-                "UPDATE personne
-                 SET description_personne = ?,
-                 telephone_personne = ?,
-                 lienLinkIn_personne = ?,
-                 lienInstagram_personne = ?,
-                 lienTwitter_personne = ?,
-                 lienFacebook_personne = ?
-                 WHERE id_personne = ?");
-            mysqli_stmt_bind_param($stmt,'sssssss',$description, $telephone, $linkedin, $instagram, $twitter, $facebook, $id_personne);
+                "UPDATE personne P, competences C
+                 SET P.description_personne = ?,
+                 P.telephone_personne = ?,
+                 P.lienLinkIn_personne = ?,
+                 P.lienInstagram_personne = ?,
+                 P.lienTwitter_personne = ?,
+                 P.lienFacebook_personne = ?,
+                 C.titre_competence1 = ?,
+                 C.valeur_competence1 = ?,
+                 C.titre_competence2 = ?,
+                 C.valeur_competence2 = ?,
+                 C.titre_competence3 = ?,
+                 C.valeur_competence3 = ?,
+                 C.titre_competence4 = ?,
+                 C.valeur_competence4 = ?,
+                 C.titre_competence5 = ?,
+                 C.valeur_competence5 = ?
+                 WHERE P.id_personne = ?;");
+            mysqli_stmt_bind_param($stmt,'sssssssssssssssss',$description, $telephone, $linkedin, $instagram, $twitter, $facebook, $titre_comp1, $valeur_comp1, $titre_comp2, $valeur_comp2, $titre_comp3, $valeur_comp3, $titre_comp4, $valeur_comp4, $titre_comp5, $valeur_comp5, $id_personne);
             $dbcontroller->executeQuery($stmt);
             $dbcontroller->closeQuery();
             //return $stmt;
