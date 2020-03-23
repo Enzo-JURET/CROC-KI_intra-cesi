@@ -1,98 +1,167 @@
+var tabreturn = [];
+
+$(document).ready(function () {
 
 
-$( document ).ready(function() {
-    
-      
-    
-    var menuevent = document.getElementById("menuevent"); 
-   
-    var menutout = document.getElementById("menutout");
+  fil_actualite();
 
-    var menuactu = document.getElementById("menuactu");
+  var menuevent = document.getElementById("menuevent");
+
+  var menutout = document.getElementById("menutout");
+
+  var menuactu = document.getElementById("menuactu");
 
 
-    $('#menutout').on('click', function () {
-        menu("tout");
-      })
+  $('#menutout').on('click', function () {
+    menu("tout");
+  })
 
-      $('#menuevent').on('click', function () {
-        menu("event");
-      })
-      $('#menuactu').on('click', function () {
-        menu("actu");
-      })
+  $('#menuevent').on('click', function () {
+    menu("event");
+  })
+  $('#menuactu').on('click', function () {
+    menu("actu");
+  })
 
-    });
+});
 
 
-   
 
-      
-      
+
+function fil_actualite()//permet d'afficher ou de cacher les block'
+{
+  console.log("test12");
+
+  $idUtilisateur = getCookie("id");
+  var donnees = [];
+
+  console.log("test13");
+  $.ajax({
+    cache: false,
+    url: "../data/fil_actualite",
+    type: "POST",
+    async: false,
+    data: ({
+      //clef:'amis',
+      //  idUser: $idUtilisateur
+    }),
+
+    success: function (retVal, statut) {
+      console.log("test14");
+      tabreturn = JSON.parse(retVal);
+      //   retVal (console.log(retVal) );  
+      console.log("test16");
+
+      for (var i = 0; i < tabreturn.length; i++) {
+        if (tabreturn[i].status_actualite == "event") {
+          var chaine = " <div class='card    divEvent '>  " + " <div class='row no-gutters'>"
+            + "  <div class='col-2 alignement_center pt-4'>"
+            + " <a href='../view/profil.php'><img src='../" + tabreturn[i].image_profil + "' class='avatar'></a>"
+            + " <p>" + tabreturn[i].auteur + " </p> </div> <div class='col-10'>"
+            + "  <div class='card-body'>"
+            + " <h5 class='card-title'>" + tabreturn[i].titre_actualite + " <img src='../public/images/icones/calendrier.png' class='icone_titre'>  " + tabreturn[i].date_evenement_actualite + " </h5>"
+            + "  <h5 class='card-title text-right'>    </h5> <p class='card-text'>"
+            + tabreturn[i].description_actualite
+            + " <a href='../view/profil.php'><img src='../public/images/icones/plusblanc.png' class='detail'></a>"
+            + "</p> <p class='card-text'><small class='text-muted'>" + tabreturn[i].date_creation_actualite + "</small></p>"
+            + "</div>  </div></div></div>";
+
+          document.getElementById("contenu").insertAdjacentHTML('beforeend', chaine);
+        }
+        else if (tabreturn[i].status_actualite == "actu") {
+
+
+
+
+          var chaine = "<div class='card mb-12  divActu'> <div class='row no-gutters'> <div class='col-md-2 alignement_center pt-4'>"
+            + " <a href='../view/profil.php'><img src='../" + tabreturn[i].image_profil + " ' class='avatar'></a> <p>" + tabreturn[i].auteur + " </p>"
+            + "</div> <div class='col-md-10'> <div class='card-body'>"
+            + " <h5 class='card-title'>" + tabreturn[i].titre_actualite + " <img src='../public/images/icones/information.png' class='icone_titre'>  </h5>"
+            + " <p class='card-text'>"
+            + tabreturn[i].description_actualite
+            + "<a href='../view/profil.php'><img src='../public/images/icones/plusblanc.png' class='detail'></a>"
+            + " </p> <p class='card-text'><small class='text-muted'>" + tabreturn[i].date_creation_actualite + " </small></p>"
+            + " </div></div></div></div>";
+
+
+          document.getElementById("contenu").insertAdjacentHTML('beforeend', chaine);
+        }
+      }
+
+
+    },
+
+    error: function (retVal, statut, erreur) {
+      console.log("test");
+      console.log("test15");
+    }
+  });
+
+}
+
+
+
 
 
 
 function menu(type)//permet d'afficher ou de cacher les block'
 {
 
-    
 
 
-    var contenu = document.getElementById("contenu");
-    if(type=="tout")
-    { 
-        
-        var x = contenu.getElementsByClassName("divEvent");
+
+  var contenu = document.getElementById("contenu");
+  if (type == "tout") {
+
+    var x = contenu.getElementsByClassName("divEvent");
     var i;
     for (i = 0; i < x.length; i++) {
-      x[i].style.display = "block";  
-    } 
+      x[i].style.display = "block";
+    }
     var x = contenu.getElementsByClassName("divActu");
     var i;
     for (i = 0; i < x.length; i++) {
-      x[i].style.display = "block";  
+      x[i].style.display = "block";
     }
-       
 
+
+  }
+  else if (type == "event") {
+    console.log("test9");
+
+
+    var x = contenu.getElementsByClassName("divActu");
+    var i;
+    for (i = 0; i < x.length; i++) {
+      x[i].style.display = "none";
     }
-    else if(type=="event")
-    {
-        console.log("test9");
-
-
-        var x = contenu.getElementsByClassName("divActu");
-        var i;
-        for (i = 0; i < x.length; i++) {
-          x[i].style.display = "none";  
-        } 
-        var x = contenu.getElementsByClassName("divEvent");
-        var i;
-        for (i = 0; i < x.length; i++) {
-          x[i].style.display = "block";  
-        }
-
-       // contenu.getElementsByClassName("divEvent").display = "none";  
-
+    var x = contenu.getElementsByClassName("divEvent");
+    var i;
+    for (i = 0; i < x.length; i++) {
+      x[i].style.display = "block";
     }
-    else if(type=="actu")
-    {
-        console.log("test9");
+
+    // contenu.getElementsByClassName("divEvent").display = "none";  
+
+  }
+  else if (type == "actu") {
+    console.log("test9");
 
 
-        var x = contenu.getElementsByClassName("divEvent");
-        var i;
-        for (i = 0; i < x.length; i++) {
-          x[i].style.display = "none";  
-        } 
-        var x = contenu.getElementsByClassName("divActu");
-        var i;
-        for (i = 0; i < x.length; i++) {
-          x[i].style.display = "block";  
-        } 
-
-       // contenu.getElementsByClassName("divEvent").display = "none";  
-
+    var x = contenu.getElementsByClassName("divEvent");
+    var i;
+    for (i = 0; i < x.length; i++) {
+      x[i].style.display = "none";
     }
+    var x = contenu.getElementsByClassName("divActu");
+    var i;
+    for (i = 0; i < x.length; i++) {
+      x[i].style.display = "block";
+    }
+
+    // contenu.getElementsByClassName("divEvent").display = "none";  
+
+  }
 
 
 }

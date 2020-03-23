@@ -51,7 +51,8 @@
                     </p>
                     <div class="row">
                         <div class="col-sm-4">
-                            <img id="image_profil" src="../public/images/avatar-test.jpg">
+                            <br><br>
+                            <img id="image-profil" src="../public/images/avatar-test.jpg">
                         </div>
                         <div class="col-sm-6">
                             <p>

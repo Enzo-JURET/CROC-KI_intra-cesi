@@ -25,6 +25,10 @@
                         $result = $this->Modification_profil();
                     }
                 break;
+                case "fil_actualite";
+                $result = $this-> fil_actualite();
+
+                break;
             }
             return $result;
         }
@@ -79,13 +83,42 @@
                         $dbcontroller->closeQuery();
                         return json_encode($tabRetour);
                     break;
+                    case "groupes":
+                        $idUser = $_POST["idUser"];
+
+                        $dbcontroller = new dbController();
+                        $stmt = mysqli_prepare($dbcontroller->getConn(),
+                            "SELECT id_groupe FROM association_groupe_personne WHERE id_personne = ?");
+                        mysqli_stmt_bind_param($stmt,'s',$idUser);
+                        $resultat = $dbcontroller->executeSelectQuery($stmt);
+                        
+                        for($i=0;$i<count($resultat);$i++)
+                        {
+                            array_push($tabResulat,$resultat[$i]["id_groupe"]);
+                        }
+
+                        for($i=0;$i<count($tabResulat);$i++)
+                        {
+                            $stmt = mysqli_prepare($dbcontroller->getConn(),
+                            "SELECT nom_groupe FROM groupe WHERE id_groupe = ?");
+                            mysqli_stmt_bind_param($stmt,'s',$tabResulat[$i]);
+                            $tmp = $dbcontroller->executeSelectQuery($stmt);
+                            for($f=0;$f<count($tmp);$f++)
+                            {
+                                $nom_groupe = $tmp[$f]["nom_groupe"];
+                            }
+                            $tabRetour[$i] = array("nom_groupe"=>$nom_groupe);
+                        }               
+                        $dbcontroller->closeQuery();
+                        return json_encode($tabRetour);
+                    break;
                     case "infos_utilisateur":
 
                         $idUser = $_POST["idUser"];
 
                         $dbcontroller = new dbController();
                         $stmt = mysqli_prepare($dbcontroller->getConn(),
-                            "SELECT description_personne, telephone_personne, lienLinkIn_personne, lienInstagram_personne, lienTwitter_personne, lienFacebook_personne FROM personne WHERE id_personne = ?");
+                            "SELECT P.nom_personne, P.prenom_personne, P.e_mail_personne, P.description_personne, P.telephone_personne, P.lienLinkIn_personne, P.lienInstagram_personne, P.lienTwitter_personne, P.lienFacebook_personne, P.telephone_personne, (SELECT libelle_promotion FROM `promotion` WHERE id_promotion=P.id_promotion) AS libelle_promotion, P.id_role, P.avatar_personne, P.fond_ecran_profil_personne FROM personne P WHERE id_personne = ?");
                         mysqli_stmt_bind_param($stmt,'s',$idUser);
                         $resultat = $dbcontroller->executeSelectQuery($stmt);
                         $dbcontroller->closeQuery();
@@ -265,6 +298,34 @@
             $dbcontroller->executeQuery($stmt);
             $dbcontroller->closeQuery();
             //return $stmt;
+        }
+
+        function fil_actualite()
+        {
+            $tabRetour = [];
+            $dbcontroller = new dbController();
+
+            $result = mysqli_prepare($dbcontroller->getConn(),
+            "SELECT act.* , per.nom_personne as auteur,per.avatar_personne as image_profil FROM actualite as act inner join personne as per on act.id_personne =per.id_personne");
+            $retour = $dbcontroller->executeSelectQuery($result);
+
+            foreach ($retour as $key => $row) {
+
+                $tabRetour[$key] = array("image_profil"=>$row['image_profil'],"auteur"=>$row['auteur'] 
+                ,"id_actualite"=>$row['id_actualite'], "titre_actualite"=>$row['titre_actualite'] 
+                ,"description_actualite"=>$row['description_actualite'] , "status_actualite"=>$row['status_actualite']
+                , "date_creation_actualite"=>$row['date_creation_actualite']
+                , "chemin_image_actualite"=>$row['chemin_image_actualite'],"date_evenement_actualite"=>$row['date_evenement_actualite']
+                ,"status_evenement_actualite"=>$row['status_evenement_actualite']);
+
+            }
+
+
+
+            $dbcontroller->closeQuery();
+            //var_dump($tabRetour);
+            return json_encode($tabRetour);
+           // return "test";
         }
     }
 ?>

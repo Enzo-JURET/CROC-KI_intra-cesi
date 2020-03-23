@@ -36,6 +36,8 @@ function chargement_page() {
 
         success : function(retVal, statut){
         	donnees = JSON.parse(retVal);
+        	$("#image-banniere").attr('src',"../"+donnees[0]["fond_ecran_profil_personne"]);
+			$("#image-profil").attr('src',"../"+donnees[0]["avatar_personne"]);
         	$("#description").val(donnees[0]["description_personne"]);
         	$("#telephone").val(donnees[0]["telephone_personne"]);
         	$("#linkedin").val(donnees[0]["lienLinkIn_personne"]);
