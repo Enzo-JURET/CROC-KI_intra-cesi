@@ -78,9 +78,9 @@ body {
 .personTooltip{
     position:absolute;
     width: auto;
-    height: -webkit-fill-available;
     background-color:#091021;
     color:white;
+    height:10em;
 }
 
 #identiteAmi {
@@ -89,14 +89,22 @@ body {
 }
 
 .avatarAmi {
-    height: 50%;
+    height:5em;
     width: auto;
     
+}
+
+#containerAvatar {
+    width: fit-content;
 }
 
 #conteneurTooltip {
     width:100%;
     display:inline-flex;
+}
+
+.textLabelAmi {
+    padding:1em;
 }
 /*** Menu messages ***/
 
