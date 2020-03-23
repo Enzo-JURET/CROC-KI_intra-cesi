@@ -29,6 +29,12 @@
                 $result = $this-> fil_actualite();
 
                 break;
+                case "supprimerAmi":
+                    if($_SERVER['REQUEST_METHOD'] === 'POST')
+                    {
+                        $result = $this->supprimerAmi();
+                    }
+                break;
             }
             return $result;
         }
@@ -248,6 +254,30 @@
             //var_dump($tabRetour);
             return json_encode($tabRetour);
            // return "test";
+        }
+
+        function supprimerAmi()
+        {
+            $id_personne = $_POST["id"];
+            $id_ami = $_POST["id_ami"];
+
+            $dbcontroller = new dbController();
+
+            $stmt = mysqli_prepare($dbcontroller->getConn(),
+                "DELETE FROM ami
+                WHERE id_personne = ?
+                AND id_personne_ami = ?");
+            mysqli_stmt_bind_param($stmt,'ss',$id_personne,$id_ami);
+            $dbcontroller->executeQuery($stmt);
+
+            $stmt = mysqli_prepare($dbcontroller->getConn(),
+                "DELETE FROM ami
+                WHERE id_personne = ?
+                AND id_personne_ami = ?");
+            mysqli_stmt_bind_param($stmt,'ss',$id_ami,$id_personne);
+            $dbcontroller->executeQuery($stmt);
+
+            $dbcontroller->closeQuery();
         }
     }
 ?>

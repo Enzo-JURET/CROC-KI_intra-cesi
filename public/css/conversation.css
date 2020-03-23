@@ -91,7 +91,7 @@ body {
 .avatarAmi {
     height:5em;
     width: auto;
-    
+    padding:0.5em;
 }
 
 #containerAvatar {
@@ -106,6 +106,19 @@ body {
 .textLabelAmi {
     padding:1em;
 }
+
+#iconeAjoutAmi {
+    height: 2.5em;
+    width: auto;
+    padding-left: 2em;
+}
+
+#iconeDejaAmi {
+    height: 2.5em;
+    width: auto;
+    padding-left: 2em;
+}
+
 /*** Menu messages ***/
 
 #conteneurMessage {
