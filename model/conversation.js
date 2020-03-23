@@ -109,7 +109,7 @@ function openPersonTooltipAmi(event)
         div = $("<div />");
         div.attr({id: 'customTooltip', class: 'personTooltip'});
         div.css({top: event.pageY, left: posX});
-        div.html("<div id='conteneurTooltip'><div><div class='textLabelAmi'>"+prenomPersonne + " " + nomPersonne +"</div><div class='textLabelAmi'>"+emailPersonne+"</div><div id='divIconesGestion'><div id='divDejaAmi'><img id='iconeDejaAmi' class='iconeTooltip' src='../public/images/icones/friends-white.png' alt=''/></div><div id='divAfficherProfil'><img id='idImgAfficherProfil' class='iconeTooltip' src='../public/images/icones/profil-white.png' alt='Profil' /></div><div id='divEnvoyerMessage'><img id='iconeEnvoyerMessage' class='iconeTooltip' src'../public/images/icones/open-conversation-white.png' alt=''/></div></div></div><div><img class='avatarAmi' src='../"+avatarPersonne+"' alt=''/></div></div>");
+        div.html("<div id='conteneurTooltip'><div><div class='textLabelAmi'>"+prenomPersonne + " " + nomPersonne +"</div><div class='textLabelAmi'>"+emailPersonne+"</div><div id='divIconesGestion'><div id='divDejaAmi'><img id='iconeDejaAmi' class='iconeTooltip'title='Supprimer de votre liste d&quot;amis' src='../public/images/icones/friends-white.png' alt=''/></div><div id='divAfficherProfil'><img id='idImgAfficherProfil' class='iconeTooltip' title='Afficher le profil' src='../public/images/icones/profil-white.png' alt='Profil' /></div><div id='divEnvoyerMessage'><img id='iconeEnvoyerMessage' class='iconeTooltip' src'../public/images/icones/open-conversation-white.png' alt=''/></div></div></div><div><img class='avatarAmi' src='../"+avatarPersonne+"' alt=''/></div></div>");
         $("#boiteFenetre").append(div);
 
         $("#divDejaAmi").click(function() {
