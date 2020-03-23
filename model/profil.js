@@ -28,7 +28,7 @@ function chargement_page_profil($id) {
         	$("#facebook").attr('href', donnees[0]["lienFacebook_personne"]);
         	$("#instagram").attr('href', donnees[0]["lienInstagram_personne"]);
         	$("#twitter").attr('href', donnees[0]["lienTwitter_personne"]);
-            listeAmis($id);
+            recupererAmisEtPromotion($id);
             listeGroupes($id);
             chargementCompetences($id);
         },
@@ -38,8 +38,10 @@ function chargement_page_profil($id) {
      });
 }
 
-function listeAmis($id) {
+function recupererAmisEtPromotion($id)
+{
     $idUtilisateur = $id;
+    $promotion = getCookie("promotion_personne");
     var donnees = [];
     $.ajax({
         cache : false,
@@ -47,25 +49,34 @@ function listeAmis($id) {
         type : "POST",
         async:false,
         data: ({
-            clef:'amis',
-            idUser: $idUtilisateur
+            clef:'amisEtPromotion',
+            idUser: $idUtilisateur,
+            promotionUser: $promotion
        }),
 
         success : function(retVal, statut){
-            amis = JSON.parse(retVal);           
-            console.log(amis);
-            for(var i=0;i<amis.length;i++)
-            {
-            	// PAUSE DU MIDI
-            	//<a onclick="visionageProfil()" href="../view/profil.php"></a>
-                document.getElementById("liste-amis").innerHTML += "<a onclick='visionageProfil("+amis[i].id_ami+")' href='../view/profil.php'><p id='ami_"+amis[i].id_ami+"' class='labelAmi'>" + amis[i].prenom_ami + " " + amis[i].nom_ami + "</p></a>";
-            }
+            $donnees = JSON.parse(retVal);           
+            console.log($donnees);
+            amis = $donnees["amis"];
+            promotion = $donnees["promotion"];
+
+            afficherAmis();
         },
  
         error : function(retVal, statut, erreur){
  
         }
      });
+}
+
+function afficherAmis()
+{
+    document.getElementById("amis").innerHTML = "";
+    for(var i=0;i<amis.length;i++)
+    {
+
+        document.getElementById("amis").innerHTML += "<a onclick='visionageProfil("+amis[i].id+")' href='../view/profil.php'><p class='labelConnaissance'>"+amis[i].prenom + " " + amis[i].nom + "</p>";
+    }
 }
 
 function listeGroupes($id) {
