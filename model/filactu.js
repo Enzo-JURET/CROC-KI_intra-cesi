@@ -1,35 +1,72 @@
-var tabreturn = [];
+
 
 $(document).ready(function () {
 
 
   fil_actualite();
 
-  var menuevent = document.getElementById("menuevent");
+  var menu_Evenement = document.getElementById("menu_Evenement");
 
-  var menutout = document.getElementById("menutout");
+  var menu_Tout = document.getElementById("menu_Tout");
 
-  var menuactu = document.getElementById("menuactu");
+  var menu_Information = document.getElementById("menu_Information");
 
+ document.getElementById('menu_Tout').addEventListener('click', function(e) {
+  menu("tout");
+  });
 
-  $('#menutout').on('click', function () {
-    menu("tout");
-  })
-
-  $('#menuevent').on('click', function () {
+  document.getElementById('menu_Evenement').addEventListener('click', function(e) {
     menu("event");
-  })
-  $('#menuactu').on('click', function () {
+    });
+    document.getElementById('menu_Information').addEventListener('click', function(e) {
+      menu("actu");
+      });
+    
+
+
+  /*$('#menu_Tout').on('click', function () {//
+    menu("tout");
+  })*/
+/*
+  $('#menu_Evenement').on('click', function () {
+    menu("event");
+  })*//*
+  $('#menu_Information').on('click', function () {
     menu("actu");
-  })
+  })*/
 
 });
+
+
+function preparation()//permet d'afficher ou de cacher les block'
+{
+
+fil_actualite();
+
+var menu_Evenement = document.getElementById("menu_Evenement");
+
+var menu_Tout = document.getElementById("menu_Tout");
+
+var menu_Information = document.getElementById("menu_Information");
+
+document.getElementById('menu_Tout').addEventListener('click', function(e) {
+menu("tout");
+});
+
+document.getElementById('menu_Evenement').addEventListener('click', function(e) {
+  menu("event");
+  });
+  document.getElementById('menu_Information').addEventListener('click', function(e) {
+    menu("actu");
+    });
+  }
 
 
 
 
 function fil_actualite()//permet d'afficher ou de cacher les block'
 {
+  var tabreturn = [];
   console.log("test12");
 
   $idUtilisateur = getCookie("id");
@@ -57,9 +94,9 @@ function fil_actualite()//permet d'afficher ou de cacher les block'
           var chaine = " <div class='card    divEvent '>  " + " <div class='row no-gutters'>"
             + "  <div class='col-2 alignement_center pt-4'>"
             + " <a href='../view/profil.php'><img src='../" + tabreturn[i].image_profil + "' class='avatar'></a>"
-            + " <p>" + tabreturn[i].auteur + " </p> </div> <div class='col-10'>"
+            + " <p>" + tabreturn[i].auteur + " </p> <img src='../public/images/icones/calendrier.png' class='icone_titre'>  " + tabreturn[i].date_evenement_actualite + " </div> <div class='col-10'>"
             + "  <div class='card-body'>"
-            + " <h5 class='card-title'>" + tabreturn[i].titre_actualite + " <img src='../public/images/icones/calendrier.png' class='icone_titre'>  " + tabreturn[i].date_evenement_actualite + " </h5>"
+            + " <h5 class='card-title'>" + tabreturn[i].titre_actualite + "  </h5>"
             + "  <h5 class='card-title text-right'>    </h5> <p class='card-text'>"
             + tabreturn[i].description_actualite
             + " <a href='../view/profil.php'><img src='../public/images/icones/plusblanc.png' class='detail'></a>"
@@ -74,9 +111,9 @@ function fil_actualite()//permet d'afficher ou de cacher les block'
 
 
           var chaine = "<div class='card mb-12  divActu'> <div class='row no-gutters'> <div class='col-md-2 alignement_center pt-4'>"
-            + " <a href='../view/profil.php'><img src='../" + tabreturn[i].image_profil + " ' class='avatar'></a> <p>" + tabreturn[i].auteur + " </p>"
+            + " <a href='../view/profil.php'><img src='../" + tabreturn[i].image_profil + " ' class='avatar'></a> <p>" + tabreturn[i].auteur + " </p> <img src='../public/images/icones/information.png' class='icone_titre'> "
             + "</div> <div class='col-md-10'> <div class='card-body'>"
-            + " <h5 class='card-title'>" + tabreturn[i].titre_actualite + " <img src='../public/images/icones/information.png' class='icone_titre'>  </h5>"
+            + " <h5 class='card-title'>" + tabreturn[i].titre_actualite + " </h5>"
             + " <p class='card-text'>"
             + tabreturn[i].description_actualite
             + "<a href='../view/profil.php'><img src='../public/images/icones/plusblanc.png' class='detail'></a>"
@@ -158,7 +195,6 @@ function menu(type)//permet d'afficher ou de cacher les block'
     for (i = 0; i < x.length; i++) {
       x[i].style.display = "block";
     }
-
     // contenu.getElementsByClassName("divEvent").display = "none";  
 
   }
