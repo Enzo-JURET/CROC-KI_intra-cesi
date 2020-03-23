@@ -8,8 +8,37 @@ $( document ).ready(function() {
     keyEnterListenerOnMessageInput();
     
     recupererAmis();
-    recupererPromotion();
+    //recupererPromotion();
+
+    recupererTout();
 });
+
+function recupererTout()
+{
+    $idUtilisateur = getCookie("id");
+    $promotion = getCookie("promotion_personne");
+    var donnees = [];
+    $.ajax({
+        cache : false,
+        url : "../data/getSomething",
+        type : "POST",
+        async:false,
+        data: ({
+            clef:'tout',
+            idUser: $idUtilisateur,
+            promotionUser: $promotion
+       }),
+
+        success : function(retVal, statut){
+            promotion = JSON.parse(retVal);           
+            console.log(promotion);
+        },
+ 
+        error : function(retVal, statut, erreur){
+ 
+        }
+     });
+}
 
 function recupererPromotion()
 {
