@@ -107,16 +107,19 @@ body {
     padding:1em;
 }
 
-#iconeAjoutAmi {
-    height: 2.5em;
-    width: auto;
-    padding-left: 2em;
+
+#divIconesGestion {
+    display: inline-flex;
 }
 
-#iconeDejaAmi {
+.iconeTooltip {
     height: 2.5em;
     width: auto;
-    padding-left: 2em;
+    padding-left: 1em;
+}
+
+#iconeEnvoyerMessage {
+
 }
 
 /*** Menu messages ***/

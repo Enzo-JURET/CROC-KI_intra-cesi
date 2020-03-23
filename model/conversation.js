@@ -109,7 +109,7 @@ function openPersonTooltipAmi(event)
         div = $("<div />");
         div.attr({id: 'customTooltip', class: 'personTooltip'});
         div.css({top: event.pageY, left: posX});
-        div.html("<div id='conteneurTooltip'><div><div class='textLabelAmi'>"+prenomPersonne + " " + nomPersonne +"</div><div class='textLabelAmi'>"+emailPersonne+"</div><div id='divDejaAmi'><img id='iconeDejaAmi' src='../public/images/icones/friends-white.png' alt=''/></div></div><div><img class='avatarAmi' src='../"+avatarPersonne+"' alt=''/></div></div>");
+        div.html("<div id='conteneurTooltip'><div><div class='textLabelAmi'>"+prenomPersonne + " " + nomPersonne +"</div><div class='textLabelAmi'>"+emailPersonne+"</div><div id='divIconesGestion'><div id='divDejaAmi'><img id='iconeDejaAmi' class='iconeTooltip' src='../public/images/icones/friends-white.png' alt=''/></div><div id='divAfficherProfil'><img id='idImgAfficherProfil' class='iconeTooltip' src='../public/images/icones/profil-white.png' alt='Profil' /></div><div id='divEnvoyerMessage'><img id='iconeEnvoyerMessage' class='iconeTooltip' src'../public/images/icones/open-conversation-white.png' alt=''/></div></div></div><div><img class='avatarAmi' src='../"+avatarPersonne+"' alt=''/></div></div>");
         $("#boiteFenetre").append(div);
 
         $("#divDejaAmi").click(function() {
@@ -135,6 +135,7 @@ function openPersonTooltipAmi(event)
                  recupererAmisEtPromotion();
             } 
         });
+        
     }
     else { // promotion
         idPersonne = elId.substring(10);
@@ -164,16 +165,20 @@ function openPersonTooltipAmi(event)
         div = $("<div />");
         div.attr({id: 'customTooltip', class: 'personTooltip'});
         div.css({top: event.pageY, left: posX});
-        div.html("<div id='conteneurTooltip'><div><div class='textLabelAmi'>"+prenomPersonne + " " + nomPersonne +"</div><div class='textLabelAmi'>"+emailPersonne+"</div><div id='divAjoutAmi'><img id='iconeAjoutAmi' src='../public/images/icones/ajouter-ami-white.png' alt=''/></div></div><div><img class='avatarAmi' src='../"+avatarPersonne+"' alt=''/></div></div>");
+        div.html("<div id='conteneurTooltip'><div><div class='textLabelAmi'>"+prenomPersonne + " " + nomPersonne +"</div><div class='textLabelAmi'>"+emailPersonne+"</div><div id='divIconesGestion'><div id='divAjoutAmi'><img id='iconeAjoutAmi' class='iconeTooltip' src='../public/images/icones/ajouter-ami-white.png' alt=''/></div><div id='divAfficherProfil'><img id='idImgAfficherProfil' class='iconeTooltip' src='../public/images/icones/profil-white.png' alt='Profil' /></div><div id='divEnvoyerMessage'><img id='iconeEnvoyerMessage' class='iconeTooltip' src'../public/images/icones/open-conversation-white.png' alt=''/></div></div></div><div><img class='avatarAmi' src='../"+avatarPersonne+"' alt=''/></div></div>");
         $("#boiteFenetre").append(div);
     }
 
 
     // Gestion des clicks sur amis et ajouter amis
 
-    
+    // voir profil
+    $("#divAfficherProfil").click(function() {
+        setCookie("affichage_profil_id" ,idPersonne);
+        window.location = "../view/profil.php";
+    });
         
-    $("#customTooltip").mouseleave(supPopUp);
+    //$("#customTooltip").mouseleave(supPopUp);
 
     function supPopUp()
     {
@@ -233,4 +238,8 @@ function getCookie(cname) {
 		}
 	}
 	return "";
+}
+
+function setCookie(cname, cvalue) {
+	document.cookie = cname + "=" + cvalue + ";path=/";
 }
