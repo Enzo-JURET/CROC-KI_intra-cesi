@@ -34,6 +34,7 @@
             $result = [];
             $tabResulat = [];
             $tabRetour = [];
+            $tmp = [];
             if(isset($_POST['clef']))
             {
                 $clef = $_POST["clef"];
@@ -131,7 +132,7 @@
                         $dbcontroller->closeQuery();
                         return json_encode($tabRetour);
                     break;
-                    case "tout" : 
+                    case "amisEtPromotion" : 
                         $idUser = $_POST["idUser"];
                         $promotionUser = $_POST["promotionUser"];
 
@@ -149,7 +150,55 @@
                             array_push($tabResulat,$resultat[$i]["id_personne"]);
                         }
 
-                        // là j'ai un tableau contenant toute les personnes de la promotion de la personne connecté. Maintenant il faut comparer chaque id ; Si l'id promotion est associé à l'id de la personne connecté dans la base ami, alors il va dans le tableau ami, sinon dans le tableau promotion (si la requête ne retourne rien)
+                        $tabRetour = [];
+                        $compteurAmis = 0;
+                        $compteurPromotion = 0;
+                        for($i=0;$i<count($tabResulat);$i++)
+                        {
+                            $stmt = mysqli_prepare($dbcontroller->getConn(),
+                            "SELECT id_personne, id_personne_ami
+                            FROM ami
+                            WHERE id_personne = ?
+                            AND id_personne_ami = ?");
+                            mysqli_stmt_bind_param($stmt,'ss',$idUser,$tabResulat[$i]);
+                            $tmp = $dbcontroller->executeSelectQuery($stmt);
+                            
+                            if($tmp != '')
+                            {
+                                $stmt = mysqli_prepare($dbcontroller->getConn(),
+                                "SELECT id_personne,prenom_personne,nom_personne,e_mail_personne,avatar_personne
+                                FROM personne
+                                WHERE id_personne = ?");
+                                mysqli_stmt_bind_param($stmt,'s',$tabResulat[$i]);
+                                $tmp = $dbcontroller->executeSelectQuery($stmt);
+
+                                $tabRetour["amis"][$compteurAmis]["id"] = $tmp[0]["id_personne"];
+                                $tabRetour["amis"][$compteurAmis]["prenom"] = $tmp[0]["prenom_personne"];
+                                $tabRetour["amis"][$compteurAmis]["nom"] = $tmp[0]["nom_personne"];
+                                $tabRetour["amis"][$compteurAmis]["email"] = $tmp[0]["e_mail_personne"];
+                                $tabRetour["amis"][$compteurAmis]["avatar"] = $tmp[0]["avatar_personne"];
+                                $compteurAmis+=1;
+                                
+                            }
+                            else {
+                                $stmt = mysqli_prepare($dbcontroller->getConn(),
+                                "SELECT id_personne,prenom_personne,nom_personne,e_mail_personne,avatar_personne
+                                FROM personne
+                                WHERE id_personne = ?");
+                                mysqli_stmt_bind_param($stmt,'s',$tabResulat[$i]);
+                                $tmp = $dbcontroller->executeSelectQuery($stmt);
+                                
+                                $tabRetour["promotion"][$compteurPromotion]["id"] = $tmp[0]["id_personne"];
+                                $tabRetour["promotion"][$compteurPromotion]["prenom"] = $tmp[0]["prenom_personne"];
+                                $tabRetour["promotion"][$compteurPromotion]["nom"] = $tmp[0]["nom_personne"];
+                                $tabRetour["promotion"][$compteurPromotion]["email"] = $tmp[0]["e_mail_personne"];
+                                $tabRetour["promotion"][$compteurPromotion]["avatar"] = $tmp[0]["avatar_personne"];
+                                $compteurPromotion+=1;
+                            }
+                        }
+
+                        $dbcontroller->closeQuery();
+                        return json_encode($tabRetour);
 
                     break;
                 }

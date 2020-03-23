@@ -6,14 +6,11 @@ $( document ).ready(function() {
     $("#barreEnvoiMessage").focus();
 
     keyEnterListenerOnMessageInput();
-    
-    recupererAmis();
-    //recupererPromotion();
 
-    recupererTout();
+    recupererAmisEtPromotion();
 });
 
-function recupererTout()
+function recupererAmisEtPromotion()
 {
     $idUtilisateur = getCookie("id");
     $promotion = getCookie("promotion_personne");
@@ -24,14 +21,22 @@ function recupererTout()
         type : "POST",
         async:false,
         data: ({
-            clef:'tout',
+            clef:'amisEtPromotion',
             idUser: $idUtilisateur,
             promotionUser: $promotion
        }),
 
         success : function(retVal, statut){
-            promotion = JSON.parse(retVal);           
-            console.log(promotion);
+            $donnees = JSON.parse(retVal);           
+            console.log($donnees);
+            amis = $donnees["amis"];
+            promotion = $donnees["promotion"];
+
+            afficherAmis();
+            afficherPromotion();
+            $(".labelConnaissance").mouseenter(openPersonTooltipAmi).mouseleave(closePersonTooltipAmi);
+
+
         },
  
         error : function(retVal, statut, erreur){
@@ -40,92 +45,69 @@ function recupererTout()
      });
 }
 
-function recupererPromotion()
+function afficherAmis()
 {
-    $idUtilisateur = getCookie("id");
-    $promotion = getCookie("promotion_personne");
-    var donnees = [];
-    $.ajax({
-        cache : false,
-        url : "../data/getSomething",
-        type : "POST",
-        async:false,
-        data: ({
-            clef:'promotion',
-            idUser: $idUtilisateur,
-            promotionUser: $promotion
-       }),
-
-        success : function(retVal, statut){
-            promotion = JSON.parse(retVal);           
-            console.log(promotion);
-            for(var i=0;i<promotion.length;i++)
-            {
-                document.getElementById("promotion").innerHTML += "<p id='promotion_"+promotion[i].id_personne+"' class='labelAmi'>" + promotion[i].prenom_personne + " " + promotion[i].nom_personne + "</p>";
-            }
-            //$(".labelAmi").mouseenter(openPersonTooltipAmi).mouseleave(closePersonTooltipAmi);
-
-        },
- 
-        error : function(retVal, statut, erreur){
- 
-        }
-     });
+    for(var i=0;i<amis.length;i++)
+    {
+        document.getElementById("amis").innerHTML += "<p id='ami_"+amis[i].id+"' class='labelConnaissance'>" + amis[i].prenom + " " + amis[i].nom + "</p>";
+    }
 }
 
-function recupererAmis (){
-    $idUtilisateur = getCookie("id");
-    var donnees = [];
-    $.ajax({
-        cache : false,
-        url : "../data/getSomething",
-        type : "POST",
-        async:false,
-        data: ({
-            clef:'amis',
-            idUser: $idUtilisateur
-       }),
-
-        success : function(retVal, statut){
-            amis = JSON.parse(retVal);           
-            console.log(amis);
-            for(var i=0;i<amis.length;i++)
-            {
-                document.getElementById("amis").innerHTML += "<p id='ami_"+amis[i].id_ami+"' class='labelAmi'>" + amis[i].prenom_ami + " " + amis[i].nom_ami + "</p>";
-            }
-            $(".labelAmi").mouseenter(openPersonTooltipAmi).mouseleave(closePersonTooltipAmi);
-
-        },
- 
-        error : function(retVal, statut, erreur){
- 
-        }
-     });
+function afficherPromotion() 
+{
+    for(var i=0;i<promotion.length;i++)
+    {
+        document.getElementById("promotion").innerHTML += "<p id='promotion_"+promotion[i].id+"' class='labelConnaissance'>" + promotion[i].prenom + " " + promotion[i].nom + "</p>";
+    }
 }
-
 
 function openPersonTooltipAmi(event)
 {
     var target = $(event.target);
     var elId = target.attr('id');
 
-    var idAmi = elId.substring(4);
-    console.log(idAmi);
-    var indexAmi = 0;
-    for(var i = 0;i<amis.length;i++)
-    {
-        if(amis[i].id_ami == idAmi)
-        {
-            indexAmi = i;
-        }
-    }
-    
-    var nomAmi = amis[indexAmi].nom_ami;
-    var prenomAmi = amis[indexAmi].prenom_ami;
-    var emailAmi = amis[indexAmi].email_ami;
-    var avatarAmi = amis[indexAmi].avatar_ami;
+    var idPersonne = 0;
+    var indexPersonne = 0;
 
-    console.log(emailAmi);
+    var nomPersonne = "";
+    var prenomPersonne = "";
+    var emailPersonne = "";
+    var avatarPersonne = "";
+
+    if(elId.substring(0,3) == "ami")
+    {
+        idPersonne = elId.substring(4);
+        console.log(idPersonne);
+        for(var i = 0;i<amis.length;i++)
+        {
+            if(amis[i].id == idPersonne)
+            {
+                indexPersonne = i;
+            }
+        }
+
+        nomPersonne = amis[indexPersonne].nom;
+        prenomPersonne = amis[indexPersonne].prenom;
+        emailPersonne = amis[indexPersonne].email;
+        avatarPersonne = amis[indexPersonne].avatar;
+    }
+    else {
+        idPersonne = elId.substring(10);
+        console.log(idPersonne);
+        for(var i = 0;i<promotion.length;i++)
+        {
+            if(promotion[i].id == idPersonne)
+            {
+                indexPersonne = i;
+            }
+        }
+
+        nomPersonne = promotion[indexPersonne].nom;
+        prenomPersonne = promotion[indexPersonne].prenom;
+        emailPersonne = promotion[indexPersonne].email;
+        avatarPersonne = promotion[indexPersonne].avatar;
+    }
+
 
     posX = event.pageX-50;
 
@@ -136,10 +118,10 @@ function openPersonTooltipAmi(event)
     div = $("<div />");
     div.attr({id: 'customTooltip', class: 'personTooltip'});
     div.css({top: event.pageY, left: posX});
-    div.html("<div id='conteneurTooltip'><div><div class='textLabelAmi'>"+prenomAmi + " " + nomAmi +"</div><div class='textLabelAmi'>"+emailAmi+"</div></div><div><img class='avatarAmi' src='../"+avatarAmi+"' alt=''/></div></div>");
+    div.html("<div id='conteneurTooltip'><div><div class='textLabelAmi'>"+prenomPersonne + " " + nomPersonne +"</div><div class='textLabelAmi'>"+emailPersonne+"</div></div><div><img class='avatarAmi' src='../"+avatarPersonne+"' alt=''/></div></div>");
     $("#boiteFenetre").append(div);
         
-    //$("#customTooltip").mouseleave(supPopUp);
+    $("#customTooltip").mouseleave(supPopUp);
 
     function supPopUp()
     {
