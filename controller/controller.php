@@ -38,6 +38,12 @@
                         $result = $this->supprimerAmi();
                     }
                 break;
+                case "envoyerDemandeAmi":
+                    if($_SERVER['REQUEST_METHOD'] === 'POST')
+                    {
+                        $result = $this->envoyerDemandeAmi();
+                    }
+                break;
             }
             return $result;
         }
@@ -127,10 +133,10 @@
                             mysqli_stmt_bind_param($stmt,'ss',$idUser,$tabResulat[$i]);
                             $tmp = $dbcontroller->executeSelectQuery($stmt);
                             
-                            if($tmp != '')
+                            if($tmp != '') // ami
                             {
                                 $stmt = mysqli_prepare($dbcontroller->getConn(),
-                                "SELECT id_personne,prenom_personne,nom_personne,e_mail_personne,avatar_personne
+                                "SELECT id_personne,prenom_personne,nom_personne,e_mail_personne,avatar_personne,demandesAmi_personne
                                 FROM personne
                                 WHERE id_personne = ?");
                                 mysqli_stmt_bind_param($stmt,'s',$tabResulat[$i]);
@@ -141,12 +147,13 @@
                                 $tabRetour["amis"][$compteurAmis]["nom"] = $tmp[0]["nom_personne"];
                                 $tabRetour["amis"][$compteurAmis]["email"] = $tmp[0]["e_mail_personne"];
                                 $tabRetour["amis"][$compteurAmis]["avatar"] = $tmp[0]["avatar_personne"];
+                                $tabRetour["amis"][$compteurAmis]["demandesAmi"] = $tmp[0]["demandesAmi_personne"];
                                 $compteurAmis+=1;
                                 
                             }
-                            else {
+                            else { // promotion
                                 $stmt = mysqli_prepare($dbcontroller->getConn(),
-                                "SELECT id_personne,prenom_personne,nom_personne,e_mail_personne,avatar_personne
+                                "SELECT id_personne,prenom_personne,nom_personne,e_mail_personne,avatar_personne,demandesAmi_personne
                                 FROM personne
                                 WHERE id_personne = ?");
                                 mysqli_stmt_bind_param($stmt,'s',$tabResulat[$i]);
@@ -157,6 +164,7 @@
                                 $tabRetour["promotion"][$compteurPromotion]["nom"] = $tmp[0]["nom_personne"];
                                 $tabRetour["promotion"][$compteurPromotion]["email"] = $tmp[0]["e_mail_personne"];
                                 $tabRetour["promotion"][$compteurPromotion]["avatar"] = $tmp[0]["avatar_personne"];
+                                $tabRetour["promotion"][$compteurPromotion]["demandesAmi"] = $tmp[0]["demandesAmi_personne"];
                                 $compteurPromotion+=1;
                             }
                         }
@@ -312,6 +320,57 @@
                 AND id_personne_ami = ?");
             mysqli_stmt_bind_param($stmt,'ss',$id_ami,$id_personne);
             $dbcontroller->executeQuery($stmt);
+
+            $dbcontroller->closeQuery();
+        }
+
+        function envoyerDemandeAmi()
+        {
+            $id_personne = $_POST["id"];
+            $id_ami_a_ajouter = $_POST["id_ami_a_ajouter"];
+
+            $dbcontroller = new dbController();
+
+            $stmt = mysqli_prepare($dbcontroller->getConn(),
+                "SELECT demandesAmi_personne
+                FROM personne
+                WHERE id_personne = ?");
+            mysqli_stmt_bind_param($stmt,'s',$id_ami_a_ajouter);
+            $tmp = $dbcontroller->executeSelectQuery($stmt);
+
+            $demandesExistantes = $tmp[0]["demandesAmi_personne"];
+            if( $demandesExistantes == null)
+            {
+                $demandesExistantes = "";
+            }
+            else {
+                $demandesExistantes = explode(';',$demandesExistantes);
+            }
+
+            $pretexte = ""; 
+            if(($demandesExistantes != "") && (!in_array($id_personne,$demandesExistantes)))
+            {
+                $pretexte = implode(';',$demandesExistantes) . $id_personne . ';';
+            }
+            else {
+                if($demandesExistantes == "")
+                {
+                    $pretexte = $id_personne . ';';
+                }
+                else {
+                    $pretexte = "dejaDemande";
+                }
+            }
+
+            if(($pretexte != "dejaDemande") && ($pretexte != ""))
+            {
+                $stmt = mysqli_prepare($dbcontroller->getConn(),
+                "UPDATE personne
+                SET demandesAmi_personne = ?
+                WHERE id_personne = ?");
+                mysqli_stmt_bind_param($stmt,'ss',$pretexte,$id_ami_a_ajouter);
+                $dbcontroller->executeQuery($stmt);
+            }
 
             $dbcontroller->closeQuery();
         }
