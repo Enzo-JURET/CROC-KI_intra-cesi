@@ -1,8 +1,6 @@
 $( document ).ready(function(){
 	$id_personne = getCookie("affichage_profil_id");
 	chargement_page_profil($id_personne);
-	listeAmis($id_personne);
-	listeGroupes($id_personne);
 	votreProfil($id_personne);
 });
 
@@ -30,6 +28,9 @@ function chargement_page_profil($id) {
         	$("#facebook").attr('href', donnees[0]["lienFacebook_personne"]);
         	$("#instagram").attr('href', donnees[0]["lienInstagram_personne"]);
         	$("#twitter").attr('href', donnees[0]["lienTwitter_personne"]);
+            listeAmis($id);
+            listeGroupes($id);
+            chargementCompetences($id);
         },
  
         error : function(retVal, statut, erreur){
@@ -86,6 +87,36 @@ function listeGroupes($id) {
             for(var i=0;i<groupes.length;i++) {
                 document.getElementById("liste-groupes").innerHTML += "<p>"+groupes[i].nom_groupe+"</p>";
             }
+        },
+ 
+        error : function(retVal, statut, erreur){
+        }
+     });
+}
+
+function chargementCompetences($id) {
+    $.ajax({
+        cache : false,
+        url : "../data/getSomething",
+        type : "POST",
+        async:false,
+        data: ({
+            clef:'competences',
+            idUser:$id
+       }),
+
+        success : function(retVal, statut){
+            donnees = JSON.parse(retVal);
+            $("#comp1").text(donnees[0]["titre_competence1"]);
+            $("#val_comp1").attr('value',donnees[0]["valeur_competence1"]);
+            $("#comp2").text(donnees[0]["titre_competence2"]);
+            $("#val_comp2").attr('value',donnees[0]["valeur_competence2"]);
+            $("#comp3").text(donnees[0]["titre_competence3"]);
+            $("#val_comp3").attr('value',donnees[0]["valeur_competence3"]);
+            $("#comp4").text(donnees[0]["titre_competence4"]);
+            $("#val_comp4").attr('value',donnees[0]["valeur_competence4"]);
+            $("#comp5").text(donnees[0]["titre_competence5"]);
+            $("#val_comp5").attr('value',donnees[0]["valeur_competence5"]);
         },
  
         error : function(retVal, statut, erreur){

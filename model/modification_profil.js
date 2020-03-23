@@ -17,7 +17,19 @@ $( document ).ready(function(){
 		$facebook = $("#facebook").val();
 		$instagram = $("#instagram").val();
 		$twitter = $("#twitter").val();
-		modification_profil($description, $telephone, $linkedin, $facebook, $instagram, $twitter);
+        $titre_comp1 = $("#titre_comp1").val();
+        $titre_comp2 = $("#titre_comp2").val();
+        $titre_comp3 = $("#titre_comp3").val();
+        $titre_comp4 = $("#titre_comp4").val();
+        $titre_comp5 = $("#titre_comp5").val();
+        $valeur_comp1 = $("#valeur_comp1").val();
+        $valeur_comp2 = $("#valeur_comp2").val();
+        $valeur_comp3 = $("#valeur_comp3").val();
+        $valeur_comp4 = $("#valeur_comp4").val();
+        $valeur_comp5 = $("#valeur_comp5").val();
+        console.log($valeur_comp1);
+        modification_profil($description, $telephone, $linkedin, $facebook, $instagram, $twitter, $titre_comp1, $titre_comp2, $titre_comp3, $titre_comp4, $titre_comp5, $valeur_comp1, $valeur_comp2, $valeur_comp3, $valeur_comp4, $valeur_comp5);
+
 	});
 
 });
@@ -44,6 +56,7 @@ function chargement_page() {
         	$("#facebook").val(donnees[0]["lienFacebook_personne"]);
         	$("#instagram").val(donnees[0]["lienInstagram_personne"]);
         	$("#twitter").val(donnees[0]["lienTwitter_personne"]);
+        	chargementCompetences($id);
         },
  
         error : function(retVal, statut, erreur){
@@ -51,7 +64,9 @@ function chargement_page() {
      });
 }
 
-function modification_profil($description, $telephone, $linkedin, $facebook, $instagram, $twitter) {
+function modification_profil($description, $telephone, $linkedin, $facebook, $instagram, $twitter,
+$titre_comp1, $titre_comp2, $titre_comp3, $titre_comp4, $titre_comp5, $valeur_comp1, $valeur_comp2,
+$valeur_comp3, $valeur_comp4, $valeur_comp5) {
 	
 	$id_personne = getCookie("id");
 
@@ -67,18 +82,63 @@ function modification_profil($description, $telephone, $linkedin, $facebook, $in
 	            linkedin:$linkedin,
 	            facebook:$facebook,
 	            instagram:$instagram,
-	            twitter:$twitter
+	            twitter:$twitter,
+                titre_comp1:$titre_comp1,
+                valeur_comp1:$valeur_comp1,
+                titre_comp2:$titre_comp2,
+                valeur_comp2:$valeur_comp2,
+                titre_comp3:$titre_comp3,
+                valeur_comp3:$valeur_comp3,
+                titre_comp4:$titre_comp4,
+                valeur_comp4:$valeur_comp4,
+                titre_comp5:$titre_comp5,
+                valeur_comp5:$valeur_comp5
 	       }),
 
-	        success : function(retVal, statut){
-	        	document.querySelector("#message_reussite").style.display="block";
-	        	setTimeout(function() {
-	        		window.location.href="../view/profil.php";
-	        	}, 1500);     	
+	        success : function(retVal, statut){ 
+                //console.log(retVal);
+                document.querySelector("#message_reussite").style.display="block";
+                setTimeout(function() {
+                    //window.location.href="../view/profil.php";
+                }, 1500);    	
 	        },
 	 
 	        error : function(retVal, statut, erreur){
 	        }
+     });
+}
+
+function chargementCompetences($id) {
+    $.ajax({
+        cache : false,
+        url : "../data/getSomething",
+        type : "POST",
+        async:false,
+        data: ({
+            clef:'competences',
+            idUser:$id
+       }),
+
+        success : function(retVal, statut){
+            donnees = JSON.parse(retVal);
+            $("#titre_comp1").attr('value',donnees[0]["titre_competence1"]);
+            $("#valeur_comp1").attr('value',donnees[0]["valeur_competence1"]);
+
+            $("#titre_comp2").attr('value',donnees[0]["titre_competence2"]);
+            $("#valeur_comp2").attr('value',donnees[0]["valeur_competence2"]);
+
+            $("#titre_comp3").attr('value',donnees[0]["titre_competence3"]);
+            $("#valeur_comp3").attr('value',donnees[0]["valeur_competence3"]);
+
+            $("#titre_comp4").attr('value',donnees[0]["titre_competence4"]);
+            $("#valeur_comp4").attr('value',donnees[0]["valeur_competence4"]);
+
+            $("#titre_comp5").attr('value',donnees[0]["titre_competence5"]);
+            $("#valeur_comp5").attr('value',donnees[0]["valeur_competence5"]);
+        },
+ 
+        error : function(retVal, statut, erreur){
+        }
      });
 }
 

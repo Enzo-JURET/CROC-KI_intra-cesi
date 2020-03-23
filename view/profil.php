@@ -62,7 +62,7 @@
 					</div>
 					<div class="liste-info">
 						<p id="liste-groupes">
-							
+
 						</p>
 					</div>
 				</div>
@@ -107,24 +107,24 @@
 					</div>
 					<div class="liste-info">
 						<p>
-							<label class="barre-progress-info" for="file">Compétence n°1</label>
-							<progress id="file" max="100" value="20"> 20% </progress>
+							<label id="comp1" class="barre-progress-info" for="file">Compétence n°1</label>
+							<progress id="val_comp1" max="100" value="20"></progress>
 						</p>
 						<p>
-							<label class="barre-progress-info" for="file">Compétence n°2</label>
-							<progress id="file" max="100" value="60"> 20% </progress>
+							<label id="comp2" class="barre-progress-info" for="file">Compétence n°2</label>
+							<progress id="val_comp2" max="100" value="60"></progress>
 						</p>
 						<p>
-							<label class="barre-progress-info" for="file">Compétence n°3</label>
-							<progress id="file" max="100" value="50"> 20% </progress>
+							<label id="comp3" class="barre-progress-info" for="file">Compétence n°3</label>
+							<progress id="val_comp3" max="100" value="50"></progress>
 						</p>
 						<p>
-							<label class="barre-progress-info" for="file">Compétence n°4</label>
-							<progress id="file" max="100" value="80"> 20% </progress>
+							<label id="comp4" class="barre-progress-info" for="file">Compétence n°4</label>
+							<progress id="val_comp4" max="100" value="80"></progress>
 						</p>
 						<p>
-							<label class="barre-progress-info" for="file">Compétence n°5</label>
-							<progress id="file" max="100" value="70"> 20% </progress>
+							<label id="comp5" class="barre-progress-info" for="file">Compétence n°5</label>
+							<progress id="val_comp5" max="100" value="70"></progress>
 						</p>
 					</div>
 				</div>

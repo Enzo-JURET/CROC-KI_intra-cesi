@@ -33,7 +33,7 @@
                     <p>
                     <div class="row">
                         <div class="col-sm-6">
-                            <img id="image-banniere" class="img-fluid" src="../public/images/banniere-test.jpg">
+                            <img id="image-banniere" class="img-fluid" src="../public/images/bannieres/banniere-defaut.jpg">
                         </div>
                         <div class="col-sm-6">
                             <p>
@@ -52,7 +52,7 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <br><br>
-                            <img id="image-profil" src="../public/images/avatar-test.jpg">
+                            <img id="image-profil" src="../public/images/photo_profil/avatar-defaut.png">
                         </div>
                         <div class="col-sm-6">
                             <p>
@@ -113,7 +113,84 @@
                         <img class="icone_rs" src="../public/images/icones/twitter.png">
                         <input id="twitter" type="text" placeholder="Lien vers votre page Twitter" name="lien_twitter">
                     </p>
+                    <br>
+                    <h4>
+                        Compétences :
+                    </h4>
                 </div>
+            </div>
+            <div class="row modification-competences">
+                <div class="col-sm-6 offset-sm-1">
+                    <p>
+                        Titre compétence n°1 :
+                        <input id="titre_comp1" type="text" name="montext" value="Python" maxlength="50" />
+                    </p>
+                </div>
+                <div class="col-sm-4">
+                    <p>
+                        Valeur (en %) :
+                        <input id="valeur_comp1" type="text" name="montext" value="60" maxlength="3" />
+                    </p>
+                </div>
+
+            </div>
+            <div class="row modification-competences">
+                <div class="col-sm-6 offset-sm-1">
+                    <p>
+                        Titre compétence n°2 :
+                        <input id="titre_comp2" type="text" name="montext" value="Python" maxlength="50" />
+                    </p>
+                </div>
+                <div class="col-sm-4">
+                    <p>
+                        Valeur (en %) :
+                        <input id="valeur_comp2" type="text" name="montext" value="60" maxlength="3" />
+                    </p>
+                </div>
+
+            </div>
+            <div class="row modification-competences">
+                <div class="col-sm-6 offset-sm-1">
+                    <p>
+                        Titre compétence n°3 :
+                        <input id="titre_comp3" type="text" name="montext" value="Python" maxlength="50" />
+                    </p>
+                </div>
+                <div class="col-sm-4">
+                    <p>
+                        Valeur (en %) :
+                        <input id="valeur_comp3" type="text" name="montext" value="60" maxlength="3" />
+                    </p>
+                </div>
+            </div>
+            <div class="row modification-competences">
+                <div class="col-sm-6 offset-sm-1">
+                    <p>
+                        Titre compétence n°4 :
+                        <input id="titre_comp4" type="text" name="montext" value="Python" maxlength="50" />
+                    </p>
+                </div>
+                <div class="col-sm-4">
+                    <p>
+                        Valeur (en %) :
+                        <input id="valeur_comp4" type="text" name="montext" value="60" maxlength="3" />
+                    </p>
+                </div>
+            </div>
+            <div class="row modification-competences">
+                <div class="col-sm-6 offset-sm-1">
+                    <p>
+                        Titre compétence n°5 :
+                        <input id="titre_comp5" type="text" name="montext" value="Python" maxlength="50" />
+                    </p>
+                </div>
+                <div class="col-sm-4">
+                    <p>
+                        Valeur (en %) :
+                        <input id="valeur_comp5" type="text" name="montext" value="60" maxlength="3" />
+                    </p>
+                </div>
+
             </div>
             <div class="row ligne_bouton-modifier">
                 <div class="col-sm-8 offset-sm-2">
