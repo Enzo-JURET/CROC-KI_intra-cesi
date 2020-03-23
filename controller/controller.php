@@ -78,13 +78,42 @@
                         $dbcontroller->closeQuery();
                         return json_encode($tabRetour);
                     break;
+                    case "groupes":
+                        $idUser = $_POST["idUser"];
+
+                        $dbcontroller = new dbController();
+                        $stmt = mysqli_prepare($dbcontroller->getConn(),
+                            "SELECT id_groupe FROM association_groupe_personne WHERE id_personne = ?");
+                        mysqli_stmt_bind_param($stmt,'s',$idUser);
+                        $resultat = $dbcontroller->executeSelectQuery($stmt);
+                        
+                        for($i=0;$i<count($resultat);$i++)
+                        {
+                            array_push($tabResulat,$resultat[$i]["id_groupe"]);
+                        }
+
+                        for($i=0;$i<count($tabResulat);$i++)
+                        {
+                            $stmt = mysqli_prepare($dbcontroller->getConn(),
+                            "SELECT nom_groupe FROM groupe WHERE id_groupe = ?");
+                            mysqli_stmt_bind_param($stmt,'s',$tabResulat[$i]);
+                            $tmp = $dbcontroller->executeSelectQuery($stmt);
+                            for($f=0;$f<count($tmp);$f++)
+                            {
+                                $nom_groupe = $tmp[$f]["nom_groupe"];
+                            }
+                            $tabRetour[$i] = array("nom_groupe"=>$nom_groupe);
+                        }               
+                        $dbcontroller->closeQuery();
+                        return json_encode($tabRetour);
+                    break;
                     case "infos_utilisateur":
 
                         $idUser = $_POST["idUser"];
 
                         $dbcontroller = new dbController();
                         $stmt = mysqli_prepare($dbcontroller->getConn(),
-                            "SELECT description_personne, telephone_personne, lienLinkIn_personne, lienInstagram_personne, lienTwitter_personne, lienFacebook_personne FROM personne WHERE id_personne = ?");
+                            "SELECT P.nom_personne, P.prenom_personne, P.e_mail_personne, P.description_personne, P.telephone_personne, P.lienLinkIn_personne, P.lienInstagram_personne, P.lienTwitter_personne, P.lienFacebook_personne, P.telephone_personne, (SELECT libelle_promotion FROM `promotion` WHERE id_promotion=P.id_promotion) AS libelle_promotion, P.id_role, P.avatar_personne, P.fond_ecran_profil_personne FROM personne P WHERE id_personne = ?");
                         mysqli_stmt_bind_param($stmt,'s',$idUser);
                         $resultat = $dbcontroller->executeSelectQuery($stmt);
                         $dbcontroller->closeQuery();
