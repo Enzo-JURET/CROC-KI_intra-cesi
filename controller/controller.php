@@ -25,6 +25,10 @@
                         $result = $this->Modification_profil();
                     }
                 break;
+                case "fil_actualite";
+                $result = $this-> fil_actualite();
+
+                break;
             }
             return $result;
         }
@@ -155,6 +159,34 @@
             $dbcontroller->executeQuery($stmt);
             $dbcontroller->closeQuery();
             //return $stmt;
+        }
+
+        function fil_actualite()
+        {
+            $tabRetour = [];
+            $dbcontroller = new dbController();
+
+            $result = mysqli_prepare($dbcontroller->getConn(),
+            "SELECT act.* , per.nom_personne as auteur,per.avatar_personne as image_profil FROM actualite as act inner join personne as per on act.id_personne =per.id_personne");
+            $retour = $dbcontroller->executeSelectQuery($result);
+
+            foreach ($retour as $key => $row) {
+
+                $tabRetour[$key] = array("image_profil"=>$row['image_profil'],"auteur"=>$row['auteur'] 
+                ,"id_actualite"=>$row['id_actualite'], "titre_actualite"=>$row['titre_actualite'] 
+                ,"description_actualite"=>$row['description_actualite'] , "status_actualite"=>$row['status_actualite']
+                , "date_creation_actualite"=>$row['date_creation_actualite']
+                , "chemin_image_actualite"=>$row['chemin_image_actualite'],"date_evenement_actualite"=>$row['date_evenement_actualite']
+                ,"status_evenement_actualite"=>$row['status_evenement_actualite']);
+
+            }
+
+
+
+            $dbcontroller->closeQuery();
+            //var_dump($tabRetour);
+            return json_encode($tabRetour);
+           // return "test";
         }
     }
 ?>

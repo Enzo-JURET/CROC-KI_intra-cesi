@@ -36,24 +36,8 @@
 
     <div id="contenu" class="col-10 w-75 offset-3">
 
-        <?php
-        include("fil_Actualite.php"); // on appelle le fichier
-        ?>
-
-    
+       
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
