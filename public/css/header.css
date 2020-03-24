@@ -34,9 +34,11 @@
     background-color: rgb(255,255,255,0.8);
     width: 20%;
     height: auto;
+    font-size: 20%;
 }
 
 .bouton-rechercher {
     width: 10%;
+    height: auto;
     font-size: 10px;
 }

@@ -1,6 +1,33 @@
 $( document ).ready(function(){
 });
 
+function rechercherPersonne() {
+
+    $email_personne = $("#barre-recherche").val();
+    console.log($email_personne);
+
+    $.ajax({
+        cache : false,
+        url : "../data/getSomething",
+        type : "POST",
+        async:false,
+        data: ({
+            clef:'recherchePersonne',
+            email:$email_personne
+       }),
+
+        success : function(retVal, statut){
+            //console.log(retVal);
+            $donnees = JSON.parse(retVal);
+            setCookie("affichage_profil_id" ,$donnees);
+            window.location="../view/profil.php";
+        },
+ 
+        error : function(retVal, statut, erreur){
+        }
+     });
+}
+
 function chargementProfil() {
 	$id_personne_connectee = getCookie("id");
 	setCookie("affichage_profil_id" ,$id_personne_connectee);

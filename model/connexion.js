@@ -33,7 +33,6 @@ function authentification($email, $password) {
             else {
                 setCookie("id" ,donnees["id"]);
             	setCookie("email" ,donnees["email"]);
-            	setCookie("password" ,donnees["password"]);
             	setCookie("nom_personne" ,donnees["nom"]);
             	setCookie("prenom_personne" ,donnees["prenom"]);
             	setCookie("role_personne" ,donnees["role"]);
