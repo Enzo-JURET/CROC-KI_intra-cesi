@@ -1,4 +1,7 @@
-# Justin Bahier
+# membre du groupe
+-Enzo JURET
+-Kévin Lehoux
+-Justin Bahier 
 ##  Actualite
 Cette partie permet d'afficher les actualite, de les supprimer et de créer des actualités.
 ### Actualite.php
@@ -14,4 +17,3 @@ Fonctionnalité opérationnelle
 - redirige ensuite vers la page Actualite.php
 Fonctionnalité manquante ou/et non finis
 -Message pour prévenir que l'ajout de l'actualité, c'est bien est fait sans erreur
--
