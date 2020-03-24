@@ -56,10 +56,16 @@
                         $result = $this->choixReponseDemandeAmi();
                     }
                 break;
-                case "ajoutGroupeSiExistePas":
+                case "etat_connexion":
                     if($_SERVER['REQUEST_METHOD'] === 'POST')
                     {
-                        $result = $this->ajoutGroupeSiExistePas();
+                        $result = $this->Etat_connexion();
+                    }
+                break;
+                case "creerGroupe":
+                    if($_SERVER['REQUEST_METHOD'] === 'POST')
+                    {
+                        $result = $this->creerGroupe();
                     }
                 break;
             }
@@ -368,7 +374,7 @@
 
         function fil_actualite()//
         {
-            $valeur_comp5 = $_POST["valeur_comp5"];
+           
             $tabRetour = [];//tableau a retourner
             $dbcontroller = new dbController();
 
@@ -391,6 +397,7 @@
 
             $dbcontroller->closeQuery();
             return json_encode($tabRetour);
+          
         
         }
         function ajout_actualite()
@@ -407,7 +414,6 @@
                 $dbcontroller->executeQuery($stmt);                
             
             $dbcontroller->closeQuery();
-            
         }
 
         function supprimerAmi()
@@ -530,9 +536,24 @@
             $dbcontroller->closeQuery();
         }
 
-        function ajoutGroupeSiExistePas()
+        function Etat_connexion()
         {
-            $id_personne = $_POST["idUser"];
+            $id_personne = $_POST["id"];
+            $etat_connexion = $_POST["etat"];
+
+            $dbcontroller = new dbController();
+            $stmt = mysqli_prepare($dbcontroller->getConn(),
+            "UPDATE personne
+                SET connecte_personne = ?
+                WHERE id_personne = ?");
+            mysqli_stmt_bind_param($stmt,'ss', $etat_connexion, $id_personne);
+            $dbcontroller->executeQuery($stmt);
+            $dbcontroller->closeQuery();
+        }
+
+        function creerGroupe()
+        {
+            /*$id_personne = $_POST["idUser"];
             $id_personne_pour_conversation = $_POST["id_personne_pour_conversation"];
             $status = $_POST["status"];
 
@@ -563,7 +584,7 @@
             {
 
             }
-            var_dump($tabResulat);
+            var_dump($tabResulat);*/
         }
     }
 ?>

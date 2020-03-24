@@ -21,14 +21,12 @@ function authentification($email, $password) {
         type : "POST",
         async:false,
         data: ({
-            //type:'amis',
             email:$email,
             password:$password
        }),
 
         success : function(retVal, statut){
             donnees = JSON.parse(retVal);
-            //console.log(donnees["etat"]);
             if (donnees["etat"] == false) {
             	alert("Email ou Mot de passe incorrect");
             }
@@ -41,7 +39,8 @@ function authentification($email, $password) {
             	setCookie("role_personne" ,donnees["role"]);
             	setCookie("promotion_personne" ,donnees["promotion"]);
             	setCookie("etat_connexion" ,donnees["etat"]);
-            	window.location.href="../view/conversation.php";
+                etat_connexion(donnees["id"]);
+                window.location.href="../view/conversation.php";
             }
         },
  
@@ -50,6 +49,46 @@ function authentification($email, $password) {
         }
      });
 }
+
+function etat_connexion($id) {
+
+    $etat = getCookie('etat_connexion');
+
+    $.ajax({
+        cache : false,
+        url : "../data/etat_connexion",
+        type : "POST",
+        async:false,
+        data: ({
+            id:$id,
+            etat:$etat
+       }),
+
+        success : function(retVal, statut){
+            console.log(retVal);
+        },
+ 
+        error : function(retVal, statut, erreur){
+        }
+     });
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
 
 function setCookie(cname, cvalue) {
 	document.cookie = cname + "=" + cvalue + ";path=/";

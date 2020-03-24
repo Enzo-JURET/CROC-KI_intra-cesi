@@ -7,7 +7,8 @@ $( document ).ready(function(){
 });
 
 function checkConnection() {
-	if (getCookie("etat_connexion") == false) {
+	if (getCookie("etat_connexion") != "true") {
+		console.log("COUCOU");
 		window.location.href="../view/connexion.php";
 	}
 }

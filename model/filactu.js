@@ -1,8 +1,6 @@
 $(document).ready(function () {
   preparation();
   document.getElementById('iconeCentral').src="../public/images/icones/menublanc.png";
-  document.getElementById('date').innerText("test");
-
   
 });
 function preparation()//permet d'afficher ou de cacher les block'
@@ -53,7 +51,7 @@ function fil_actualite()//permet d'afficher ou de cacher les block'
     success: function (retVal, statut) {
       console.log("test14");
       tabreturn = JSON.parse(retVal);
-      //   retVal (console.log(retVal) );  
+         //retVal (console.log(retVal) );  
       console.log("test16");
 
       for (var i = 0; i < tabreturn.length; i++) {

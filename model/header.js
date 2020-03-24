@@ -7,19 +7,32 @@ function chargementProfil() {
 }
 
 function deconnexion() {
-    deleteCookie("etat_connexion");
+	$id_personne = getCookie("id");
+    setCookie("etat_connexion" ,false);
+    etat_connexion($id_personne);
 }
 
-function deleteCookie(name) {
-    value = "";
-    days = -1;
-    if (days) {
-    	var date = new Date();
-    	date.setTime(date.getTime() + (days * 24 * 60 *60 * 1000));
-    	var exprires = "; exprires=" + date.toGMTString();
-    }
-    else var exprires = "";
-    	document.cookie = name + "=" + value + exprires + "; path=/";
+function etat_connexion($id) {
+
+    $etat = getCookie('etat_connexion');
+
+    $.ajax({
+        cache : false,
+        url : "../data/etat_connexion",
+        type : "POST",
+        async:false,
+        data: ({
+            id:$id,
+            etat:$etat
+       }),
+
+        success : function(retVal, statut){
+            console.log(retVal);
+        },
+ 
+        error : function(retVal, statut, erreur){
+        }
+     });
 }
 
 function setCookie(cname, cvalue) {
