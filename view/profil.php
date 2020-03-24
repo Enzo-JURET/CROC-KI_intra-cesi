@@ -32,22 +32,26 @@
 				</div>
 				<div id="ajouter-ami" class="col-sm-1 offset-sm-1 boutons-info-profil-demander-en">
 					<a href="conversation.php">
-						<img class="icones-outils" alt="Ajouter en tant que ami" src="../public/images/icones/ajouter-ami-color.png"></a>
+						<img class="icones-outils" alt="Ajouter en tant que ami" src="../public/images/icones/ajouter-ami-color.png">
 					</a>
 				</div>
 				<div id="envoyer-message" class="col-sm-1 boutons-info-profil-demander-en">
 					<a href="conversation.php">
-						<img class="icones-outils" alt="Envoyer un message à cette utilisateur" src="../public/images/icones/avion-papier-color.png"></a>
+						<img class="icones-outils" alt="Envoyer un message à cette utilisateur" src="../public/images/icones/avion-papier-color.png">
 					</a>
 				</div>
 				<div id="modifier-profil" class="col-sm-1 boutons-info-profil-demander-en">
 					<a href="modification_profil.php">
-						<img class="icones-outils" alt="Parametrez votre profil en cliquant ici" src="../public/images/icones/parametre-color.png"></a>
+						<img class="icones-outils" alt="Parametrez votre profil en cliquant ici" src="../public/images/icones/parametre-color.png">
 					</a>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-4 offset-sm-1">
+					<p id="connexion-status">
+						<img class="icone-status" alt="Déconnecté" src="../public/images/icones/rond-deconnecte.png">
+						Actuellement déconnecté
+					</p><br><br>
 					<p id="titre-description">
 						Description :
 					</p>

@@ -132,7 +132,7 @@
 
                         $dbcontroller = new dbController();
                         $stmt = mysqli_prepare($dbcontroller->getConn(),
-                            "SELECT P.nom_personne, P.prenom_personne, P.e_mail_personne, P.description_personne, P.telephone_personne, P.lienLinkIn_personne, P.lienInstagram_personne, P.lienTwitter_personne, P.lienFacebook_personne, P.telephone_personne, (SELECT libelle_promotion FROM `promotion` WHERE id_promotion=P.id_promotion) AS libelle_promotion, P.id_role, P.avatar_personne, P.fond_ecran_profil_personne FROM personne P WHERE id_personne = ?");
+                            "SELECT P.nom_personne, P.prenom_personne, P.e_mail_personne, P.description_personne, P.telephone_personne, P.lienLinkIn_personne, P.lienInstagram_personne, P.lienTwitter_personne, P.lienFacebook_personne, P.telephone_personne, (SELECT libelle_promotion FROM `promotion` WHERE id_promotion=P.id_promotion) AS libelle_promotion, P.id_role, P.avatar_personne, P.fond_ecran_profil_personne, P.connecte_personne FROM personne P WHERE id_personne = ?");
                         mysqli_stmt_bind_param($stmt,'s',$idUser);
                         $resultat = $dbcontroller->executeSelectQuery($stmt);
                         $dbcontroller->closeQuery();
@@ -319,7 +319,7 @@
 
             $dbcontroller = new dbController();
             $stmt = mysqli_prepare($dbcontroller->getConn(),
-                "SELECT titre_competence1 FROM competences WHERE id_personne = ?");
+                "SELECT id_personne FROM competences WHERE id_personne = ?");
             mysqli_stmt_bind_param($stmt,'s',$id_personne);
             $tmp = $dbcontroller->executeSelectQuery($stmt);
 
@@ -343,8 +343,8 @@
                      C.valeur_competence4 = ?,
                      C.titre_competence5 = ?,
                      C.valeur_competence5 = ?
-                     WHERE P.id_personne = ?;");
-                mysqli_stmt_bind_param($stmt,'sssssssssssssssss',$description, $telephone, $linkedin, $instagram, $twitter, $facebook, $titre_comp1, $valeur_comp1, $titre_comp2, $valeur_comp2, $titre_comp3, $valeur_comp3, $titre_comp4, $valeur_comp4, $titre_comp5, $valeur_comp5, $id_personne);
+                     WHERE P.id_personne = ? and C.id_personne = ?");
+                mysqli_stmt_bind_param($stmt,'ssssssssssssssssss',$description, $telephone, $linkedin, $instagram, $twitter, $facebook, $titre_comp1, $valeur_comp1, $titre_comp2, $valeur_comp2, $titre_comp3, $valeur_comp3, $titre_comp4, $valeur_comp4, $titre_comp5, $valeur_comp5, $id_personne, $id_personne);
                 $dbcontroller->executeQuery($stmt);
             }
             else {
@@ -368,7 +368,7 @@
                 $dbcontroller->executeQuery($stmt);                
             }
             $dbcontroller->closeQuery();
-            //return $stmt;
+            //return $id_personne;
         }
 
 

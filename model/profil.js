@@ -21,7 +21,15 @@ function chargement_page_profil($id) {
         	donnees = JSON.parse(retVal);
         	$("#image-banniere").attr('src',"../"+donnees[0]["fond_ecran_profil_personne"]);
 			$("#image-profil").attr('src',"../"+donnees[0]["avatar_personne"]);
-        	$("#pseudo-info").text(donnees[0]["prenom_personne"]+" "+donnees[0]["nom_personne"]);
+            
+            if (donnees[0]["connecte_personne"] == "true") {
+                $("#connexion-status").replaceWith("<img class='icone-status' alt='Connecté' src='../public/images/icones/rond-connecte.png'> Actuellement connecté");   
+            }
+            else {
+                $("#connexion-status").replaceWith("<img class='icone-status' alt='Déconnecté' src='../public/images/icones/rond-deconnecte.png'> Actuellement déconnecté");    
+            }
+        	
+            $("#pseudo-info").text(donnees[0]["prenom_personne"]+" "+donnees[0]["nom_personne"]);
         	$("#promo-info").text("Promotion : "+donnees[0]["libelle_promotion"]);
         	$("#description-info").text(donnees[0]["description_personne"]);
         	$("#email").text("Email : "+donnees[0]["e_mail_personne"]);
