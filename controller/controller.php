@@ -32,6 +32,12 @@
                     }
 
                 break;
+                case " ajout_actualite()":
+                    if($_SERVER['REQUEST_METHOD'] === 'POST')
+                    {
+                        $result = $this->ajout_actualite();
+                    }
+                break;
                 case "supprimerAmi":
                     if($_SERVER['REQUEST_METHOD'] === 'POST')
                     {
@@ -349,11 +355,12 @@
 
         function fil_actualite()//
         {
+            $valeur_comp5 = $_POST["valeur_comp5"];
             $tabRetour = [];//tableau a retourner
             $dbcontroller = new dbController();
 
             $result = mysqli_prepare($dbcontroller->getConn(),//
-            "SELECT act.* , per.nom_personne as auteur,per.avatar_personne as image_profil FROM actualite as act inner join personne as per on act.id_personne =per.id_personne");
+            "SELECT act.* ,  CONCAT( per.nom_personne ,' ',per.prenom_personne )as auteur,per.avatar_personne as image_profil FROM actualite as act inner join personne as per on act.id_personne =per.id_personne  ORDER by act.id_actualite DESC");
             $retour = $dbcontroller->executeSelectQuery($result);
 
             foreach ($retour as $key => $row) {//boucle sur chaque ligne
@@ -372,6 +379,22 @@
             $dbcontroller->closeQuery();
             return json_encode($tabRetour);
         
+        }
+        function ajout_actualite()
+        {
+            
+            $dbcontroller = new dbController();
+            // Insertion de l'actualite
+                $stmt = mysqli_prepare($dbcontroller->getConn(),
+                    "INSERT INTO `actualite`  VALUES (NULL, ?, ?, ?, ?, CURRENT_DATE(), '', ?, '')");
+                
+                    mysqli_stmt_bind_param($stmt,'sssss',$_POST["status_actualite"] ,$_POST["titre_actualite"]
+                 ,  $_POST["description_actualite"], $_POST["id_personne"] ,$_POST["date_evenement_actualite"] );
+
+                $dbcontroller->executeQuery($stmt);                
+            
+            $dbcontroller->closeQuery();
+            
         }
 
         function supprimerAmi()
