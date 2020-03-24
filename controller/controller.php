@@ -32,7 +32,7 @@
                     }
 
                 break;
-                case " ajout_actualite()":
+                case "ajout_actualite":
                     if($_SERVER['REQUEST_METHOD'] === 'POST')
                     {
                         $result = $this->ajout_actualite();
