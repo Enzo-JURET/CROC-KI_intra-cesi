@@ -34,6 +34,11 @@ class dbController
         return $query->execute();
     }
 
+    function getLastIdIncremente()
+    {
+        return $this->conn->insert_id;
+    }
+
     function executeSelectQuery($query)
     {
         $query->execute();
