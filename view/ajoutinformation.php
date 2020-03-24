@@ -55,6 +55,7 @@
                     </div>
                     <div class="col-10">
                         <div class="card-body">
+                        <input class="typeActualite" id="typeActualite" value="infomation">
                             <input class="form-control" id="titre" type="text" placeholder="titre">
                             <p class="card-text">
                                 <div class="form-group">
@@ -63,7 +64,10 @@
                               
                             </p>
                             <p class="card-text"><small id="date" class="text-muted"></small>
-                            <button id="EnvoieInformation"  type="button" class="btn btn-light boutonEnvoi">Terminer <img src="../public/images/icones/iconeEnvoiNoir.png"></button>
+                            <a href="../view/actualite.php">
+                            <button id="Envoi"  type="button" class="btn btn-light boutonEnvoi">Terminer 
+                                <img src="../public/images/icones/iconeEnvoiNoir.png">
+                        </button></a>
                         </p>  
                             
                         </div>

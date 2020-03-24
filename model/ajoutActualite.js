@@ -8,21 +8,27 @@ $(document).ready(function () {
     $id_personne = getCookie("id");
     chargement_page_profil($id_personne);
 
-    document.getElementById('EnvoieInformation').addEventListener('click', function(e) {
-              ajout_actualite("actu", 
-              document.getElementById("titre").value ,
-              document.getElementById("description").value, 
-              getCookie("id"), 
-               '');
-        });
+    document.getElementById('Envoi').addEventListener('click', function (e) {
+        if (document.getElementById("typeActualite").value == "infomation") {
+            console.log("test14");
+            ajout_actualite("actu",
+                document.getElementById("titre").value,
+                document.getElementById("description").value,
+                getCookie("id"),
+                '');
+        }
+        else if (document.getElementById("typeActualite").value == "evenement") {
+            console.log("test15");
+            ajout_actualite("event",
+                document.getElementById("titre").value,
+                document.getElementById("description").value,
+                getCookie("id"),
+                document.getElementById("dateEvent").value);
+        }
+    });
 
-        document.getElementById('EnvoieEvenement').addEventListener('click', function(e) {
-            ajout_actualite("actu", 
-            document.getElementById("titre").value ,
-            document.getElementById("description").value, 
-            getCookie("id"), 
-            document.getElementById("dateEvent").value);
-      });
+
+
 
 
 });
@@ -49,7 +55,7 @@ function chargement_page_profil($id) {
                 $("#image_profil").attr('src', '../public/images/photo_profil/avatar-defaut.png');
             }
             else {
-                $("#image_profil").attr('src', "../"+donnees[0]["avatar_personne"]);
+                $("#image_profil").attr('src', "../" + donnees[0]["avatar_personne"]);
             }
 
             $("#pseudo").text(donnees[0]["prenom_personne"] + " " + donnees[0]["nom_personne"]);
@@ -64,30 +70,30 @@ function chargement_page_profil($id) {
 
 
 function ajout_actualite($status_actualite, $titre_actualite, $description_actualite, $id_personne, $date_evenement_actualite) {
-        
-        $id_personne = getCookie("id");
-    
-        $.ajax({
-                cache : false,
-                url : "../data/ajout_actualite",
-                type : "POST",
-                async:false,
-                data: ({
-                    status_actualite:$status_actualite,
-                    titre_actualite:$titre_actualite,
-                    description_actualite:$description_actualite,
-                    id_personne:$id_personne,
-                    date_evenement_actualite:$date_evenement_actualite
-               }),
-    
-                success : function(retVal, statut){
-                    document.querySelector("#message_reussite").style.display="block";
-                    setTimeout(function() {
-                        
-                    }, 1500);    	
-                },
-         
-                error : function(retVal, statut, erreur){
-                }
-         });
-    }
+
+    $id_personne = getCookie("id");
+
+    $.ajax({
+        cache: false,
+        url: "../data/ajout_actualite",
+        type: "POST",
+        async: false,
+        data: ({
+            status_actualite: $status_actualite,
+            titre_actualite: $titre_actualite,
+            description_actualite: $description_actualite,
+            id_personne: $id_personne,
+            date_evenement_actualite: $date_evenement_actualite
+        }),
+
+        success: function (retVal, statut) {
+            document.querySelector("#message_reussite").style.display = "block";
+            setTimeout(function () {
+
+            }, 1500);
+        },
+
+        error: function (retVal, statut, erreur) {
+        }
+    });
+}

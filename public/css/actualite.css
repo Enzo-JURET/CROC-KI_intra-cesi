@@ -19,7 +19,11 @@
   
     float:right;
   }
+  .typeActualite
+  {
   
+    display: none;
+  }
 
   .icone_titre {
     vertical-align: middle;

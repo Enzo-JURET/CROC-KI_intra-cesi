@@ -401,7 +401,6 @@
                 $dbcontroller->executeQuery($stmt);                
             
             $dbcontroller->closeQuery();
-            
         }
 
         function supprimerAmi()

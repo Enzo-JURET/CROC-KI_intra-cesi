@@ -48,14 +48,19 @@
                     </div>
                     <div class="col-md-10">
                         <div class="card-body">
+                        <input class="typeActualite" id="typeActualite" value="evenement">
                             <input class="form-control" type="text" id="titre" placeholder="titre">
                             <p class="card-text">
                                 <div class="form-group">
                                     <textarea class="form-control" id="description" placeholder="description" rows="3"></textarea>
                                 </div>
                             </p>
-                            <p class="card-text"><small id="date" class="text-muted"></small></p>
-                            <button id="EnvoieEvenement" type="button" class="btn btn-light boutonEnvoi">Terminer <img src="../public/images/icones/iconeEnvoiNoir.png"></button>
+                            <p class="card-text"><small id="date" class="text-muted"></small>
+                            <a href="../view/actualite.php">
+                            <button id="Envoi" type="button" class="btn btn-light boutonEnvoi">Terminer 
+                                <img src="../public/images/icones/iconeEnvoiNoir.png">
+                            </button></a>
+                            </p>
                         </div>
                     </div>
                 </div>
