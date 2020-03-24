@@ -21,7 +21,22 @@
 }
 
 .iconeBarre {
-    margin-left: 2%;
+    margin-left: 4%;
     width: 2em;
     height: auto;
+}
+
+.iconeTechnic {
+    margin-right: 8%;
+}
+
+.barre-recherche {
+    background-color: rgb(255,255,255,0.8);
+    width: 20%;
+    height: auto;
+}
+
+.bouton-rechercher {
+    width: 10%;
+    font-size: 10px;
 }

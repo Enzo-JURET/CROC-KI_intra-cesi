@@ -38,6 +38,12 @@
                         $result = $this->ajout_actualite();
                     }
                 break;
+                case "supprime_actualite":
+                    if($_SERVER['REQUEST_METHOD'] === 'POST')
+                    {
+                        $result = $this->supprime_actualite();
+                    }
+                break;
                 case "supprimerAmi":
                     if($_SERVER['REQUEST_METHOD'] === 'POST')
                     {
@@ -442,7 +448,7 @@
             $dbcontroller = new dbController();
 
             $result = mysqli_prepare($dbcontroller->getConn(),//
-            "SELECT act.* ,  CONCAT( per.nom_personne ,' ',per.prenom_personne )as auteur,per.avatar_personne as image_profil FROM actualite as act inner join personne as per on act.id_personne =per.id_personne  ORDER by act.id_actualite DESC");
+            "SELECT act.* , act.id_personne as identifiant_personne , CONCAT( per.nom_personne ,' ',per.prenom_personne )as auteur,per.avatar_personne as image_profil FROM actualite as act inner join personne as per on act.id_personne =per.id_personne  ORDER BY act.date_creation_actualite desc");
             $retour = $dbcontroller->executeSelectQuery($result);
 
             foreach ($retour as $key => $row) {//boucle sur chaque ligne
@@ -450,7 +456,7 @@
                 $tabRetour[$key] = array("image_profil"=>$row['image_profil'],"auteur"=>$row['auteur'] 
                 ,"id_actualite"=>$row['id_actualite'], "titre_actualite"=>$row['titre_actualite'] 
                 ,"description_actualite"=>$row['description_actualite'] , "status_actualite"=>$row['status_actualite']
-                , "date_creation_actualite"=>$row['date_creation_actualite']
+                , "date_creation_actualite"=>$row['date_creation_actualite'] ,"identifiant_personne"=>$row['identifiant_personne']
                 , "chemin_image_actualite"=>$row['chemin_image_actualite'],"date_evenement_actualite"=>$row['date_evenement_actualite']
                 ,"status_evenement_actualite"=>$row['status_evenement_actualite']);//mets dans le tableau toute les donnée a recup dans la page
 
@@ -473,6 +479,20 @@
                 
                     mysqli_stmt_bind_param($stmt,'sssss',$_POST["status_actualite"] ,$_POST["titre_actualite"]
                  ,  $_POST["description_actualite"], $_POST["id_personne"] ,$_POST["date_evenement_actualite"] );
+
+                $dbcontroller->executeQuery($stmt);                
+            
+            $dbcontroller->closeQuery();
+        }
+        function supprime_actualite()
+        {
+            
+            $dbcontroller = new dbController();
+            // Insertion de l'actualite
+                $stmt = mysqli_prepare($dbcontroller->getConn(),
+                    "DELETE FROM actualite WHERE actualite.id_actualite = ?");
+                
+                    mysqli_stmt_bind_param($stmt,'s',$_POST["id_actualite"]  );
 
                 $dbcontroller->executeQuery($stmt);                
             
