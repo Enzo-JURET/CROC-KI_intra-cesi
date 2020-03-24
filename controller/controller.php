@@ -15,12 +15,16 @@
                         $result = $this->getSomething();
                     }
                 break;
+                // Fonction permettant de gérer l'authentification des utilisateurs, afin qu'il puissent se connecter.
+                // Pour cela on lui passe en POST, email et le password que l'on récupère dans la page connexion.php.
                 case "authentification":
                     if($_SERVER['REQUEST_METHOD'] === 'POST')
                     {
                         $result = $this->Authentification();
                     }
                 break;
+                // Fonction permettant de UPDATE certains champs des tables profil et competences.
+                // Pour cela on lui passe en POST les paramètres relié à tout les champs que l'on récupère dans la page modification_profil.php, cela permet à l'utilisateur de modifier sa page de profil comme il le souhaite. 
                 case "modification_profil":
                     if($_SERVER['REQUEST_METHOD'] === 'POST')
                     {
@@ -67,6 +71,8 @@
                         $result = $this->choixReponseDemandeAmi();
                     }
                 break;
+                // Fonction permettant de modifier en base de données le champ connecte_personne, ce champ nous permet de savoir depuis la base de données si un utilisateur est connecté ou non.
+                // Pour cela on lui passe en POST les paramètres : id de l'utilisateur connecté, ainsi que la valeur du cookie etat_connexion (permettant d'insérer directement la valeur de l'état du cookie dans le champ connecte_personne)
                 case "etat_connexion":
                     if($_SERVER['REQUEST_METHOD'] === 'POST')
                     {
@@ -146,6 +152,7 @@
                         $dbcontroller->closeQuery();
                         return json_encode($tabRetour);
                     break;
+                    // Retourne certains éléments de la table personne, cette fonction est utiliser lorsque que l'on souhaite charger les pages page profil.php et modification_profil.php en fonction du cookie : affichage_profil_id (id du profil que l'on souhaite afficher sur la page profil par exemple).
                     case "infos_utilisateur":
 
                         $idUser = $_POST["idUser"];
@@ -231,6 +238,7 @@
                         return json_encode($tabRetour);
                     break;
 
+                    // Retourne certains tout les éléments de la table competences, cette fonction est utiliser lorsque que l'on souhaite charger les pages profil.php et modification_profil.php en fonction du cookie : affichage_profil_id (id du profil que l'on souhaite afficher sur la page profil par exemple). 
                     case "competences":
 
                         $idUser = $_POST["idUser"];
@@ -324,6 +332,7 @@
                         $dbcontroller->closeQuery();
                         return json_encode($tabRetour);
                     break;
+                    // Retourne l'id du profil en fonction de l'email indiqué, cette fonction est utilisé pour générer un profil suite à une recherche dans la navbar.
                     case "recherchePersonne":
                         $email = $_POST["email"];
 

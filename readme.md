@@ -207,68 +207,68 @@ Les groupes privés sont limités à 2 personnes (=messages privés) et les grou
 ### Fonctionnalités opérationnelles
 
 #### > Listing des contacts :
-	- Amis
-	- Promotion
+- Amis
+- Promotion
 
 #### > Affichage du tooltip personnalisé lors du survol avec ses fonctionnalités
-	- Informations de bases sur la personne : Nom, prénom, adresse mail, avatar.
-	- En fonction du type de personne survolé :
-		- Ami : Icone ami : Lors d'un clique, propose à l'utilisateur s'il veux retirer ce contact de sa list d'amis.
-		- Contact de sa promotion : Icone ajout ami : Lors d'un clique, envoi une requête de demande d'ami à la personne.
-	- Icone voir profil de la personne 
-		- Affiche la page de profil de la personne.
-	- Icone démarrer / Ouvrir une conversation :
-		- Si aucun groupe privé n'éxistait avec la personne, en créer un et l'ajoute à la liste des groupes privés de l'utilisateur. Puis ouvre la discussion dans le menu central de discussion (affiche les messages déjà éxistant s'il y en a).
+- Informations de bases sur la personne : Nom, prénom, adresse mail, avatar.
+- En fonction du type de personne survolé :
+	- Ami : Icone ami : Lors d'un clique, propose à l'utilisateur s'il veux retirer ce contact de sa list d'amis.
+	- Contact de sa promotion : Icone ajout ami : Lors d'un clique, envoi une requête de demande d'ami à la personne.
+- Icone voir profil de la personne 
+	- Affiche la page de profil de la personne.
+- Icone démarrer / Ouvrir une conversation :
+	- Si aucun groupe privé n'éxistait avec la personne, en créer un et l'ajoute à la liste des groupes privés de l'utilisateur. Puis ouvre la discussion dans le menu central de discussion (affiche les messages déjà éxistant s'il y en a).
 
 #### > Affichage des demandes d'amis dans le menu des demandes d'amis qui se situe parmit les contacts (entre amis et promotion).
-	- Rafraichissement automatique des demandes toute les 10 secondes. (modifiable dans le code)
-	- Possibilité d'accepter ou de refuser la demande :
-		- En cas de réponse positive, ajoute immédiatement le contact parmis la liste d'amis.
-		- Dans le cas contraire, supprime la demande.
+- Rafraichis Je utomatique des demandes toute les 10 secondes. (modifiable dans le code)
+- Possibilité d'accepter ou de refuser la demande :
+	- En cas de réponse positive, ajoute immédiatement le contact parmis la liste d'amis.
+	- Dans le cas contraire, supprime la demande.
 
 #### > Affichage des groupes privés (=conversation privé)(2 personnes max)
-	- Lors d'un clique sur le nom d'un groupe privé, ouvre la discussion, affiche les messages éxistants s'il y en a, et modifie le nom d'entête de l'encart de message par le nom du groupe. (Le nom du groupe corresponsant au prenom et nom des participants)
+- Lors d'un clique sur le nom d'un groupe privé, ouvre la discussion, affiche les messages éxistants s'il y en a, et modifie le nom d'entête de l'encart de message par le nom du groupe. (Le nom du groupe corresponsant au prenom et nom des participants)
 
 #### > Envoyer message
-	- Sans ouvrir de conversation, écrire dans la barre et envoyer par le biais de la touche entrée ne produit rien.
-	- Après avoir ouvert une conversation, vous pouvez envoyer un message à l'interlocuteur en écrivant dans le champ prévu à cet effet, puis envoyer en appuyant sur la touche 'entrée'.
+- Sans ouvrir de conversation, écrire dans la barre et envoyer par le biais de la touche entrée ne produit rien.
+- Après avoir ouvert une conversation, vous pouvez envoyer un message à l'interlocuteur en écrivant dans le champ prévu à cet effet, puis envoyer en appuyant sur la touche 'entrée'.
 
 #### > Visualisation des messages
-	- Visualisation des nouveaux ET des anciens messages.
-	- Rafraichissement automatique des messages toute les 5 secondes donc on peut considérer que c'est du temps réel (modifiable dans le code).
-	- Distinction de couleur entre l'identité de l'envoyeur et celle du receveur.
+- Visualisation des nouveaux ET des anciens messages.
+- Rafraichissement automatique des messages toute les 5 secondes donc on peut considérer que c'est du temps réel (modifiable dans le code).
+- Distinction de couleur entre l'identité de l'envoyeur et celle du receveur.
 
 ### Fonctionnalitées manquantes et/ou non finis
 
 #### > Listing des contacts par ordre alpabétique
 
 #### > Notification de réception de messages :
-	Non fais mais même principe que pour les notifications de réception de demande d'amis qui elles sont opérationnelles.
+Non fais mais même principe que pour les notifications de réception de demande d'amis qui elles sont opérationnelles.
 
 #### > Groupes publiques :
-	Pas dutout géré dans les conversations, des dicussions entre 2 personnes (privés) uniquement sont possibles.
+Pas dutout géré dans les conversations, des dicussions entre 2 personnes (privés) uniquement sont possibles.
 
 #### > Contacts : 
-	Les contacts sont constitués uniquement des personnes de la promotion d'utilisateur et de ses amis. L'utilisateur n'a pas accès aux autres personnes présente sur le site, il ne peut donc pas ajouter des personnes en amis qui ne sont pas de sa promotion.
+Les contacts sont constitués uniquement des personnes de la promotion d'utilisateur et de ses amis. L'utilisateur n'a pas accès aux autres personnes présente sur le site, il ne peut donc pas ajouter des personnes en amis qui ne sont pas de sa promotion.
 
 #### > Date des messages :
-	Les messages sont datés dans la base de donnée, mais le format ne me plaît pas et je n'ai pas pris le temps de modifié ça donc j'ai préféré ne pas le mettre à l'affichage des messages.
+Les messages sont datés dans la base de donnée, mais le format ne me plaît pas et je n'ai pas pris le temps de modifié ça donc j'ai préféré ne pas le mettre à l'affichage des messages.
 
 #### > Fichiers dans conversations
-	Possibilité d'envoyer des fichiers dans les conversations => Pas dutout pris en charge pour le moment.
+Possibilité d'envoyer des fichiers dans les conversations => Pas dutout pris en charge pour le moment.
 
 #### > Conversation avec emoji / gif
-	Possibilité d'envoyer des emojis/gifs dans les conversations => Pas dutout pris en charge pour le moment.
+Possibilité d'envoyer des emojis/gifs dans les conversations => Pas dutout pris en charge pour le moment.
 	
 #### > Chat par socket ??
-	Ce chat utilise uniquement la base de donnée et du rafraichissement de contenu périodique par manque de temps et de connaissances pour mettre en places des sockets.
+Ce chat utilise uniquement la base de donnée et du rafraichissement de contenu périodique par manque de temps et de connaissances pour mettre en places des sockets.
 
 #### > Barre de recherche dans les contacts pour rechercher des personnes hors de la promotion et pouvoir les ajouter en ami.
 
 #### > Groupe paramétrables :
-	- Nom de groupe
-	- Avatar de groupe
-	- Personnalisation des couleurs etc...
+- Nom de groupe
+- Avatar de groupe
+- Personnalisation des couleurs etc...
 
 #### > Beaucoup de grosses et petites fonctionnalités (comme celles citées ci-dessus) sont manquantes par manque de temps <
 
