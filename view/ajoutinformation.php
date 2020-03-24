@@ -55,10 +55,10 @@
                     </div>
                     <div class="col-10">
                         <div class="card-body">
-                            <input class="form-control" type="text" placeholder="titre">
+                            <input class="form-control" id="titre" type="text" placeholder="titre">
                             <p class="card-text">
                                 <div class="form-group">
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="description" rows="3"></textarea>
+                                    <textarea class="form-control" id="description" placeholder="description" rows="3"></textarea>
                                 </div>
 
                             </p>
