@@ -1,9 +1,9 @@
 # Nom du Site
 
 ### Membre du groupe
--Enzo JURET
--Kévin Lehoux
--Justin Bahier 
+- Enzo JURET
+- Kévin LEHOUX
+- Justin BAHIER 
 
 ##  Les Actualités (by Justin BAHIER)
 Cette partie permet d'afficher les actualite, de les supprimer et de créer des actualités.
@@ -15,7 +15,7 @@ Cette partie permet d'afficher les actualite, de les supprimer et de créer des 
 - Le menu permet aussi d'acceder a la page ajoutinformation.php  ou ajoutEvenement.php
 
 #### Fonctionnalités manquantes ou/et non finis
--Tri en fonction des amis
+- Tri en fonction des amis
 
 ### > Page ajoutinformation.php et ajoutEvenement.php
 
@@ -24,7 +24,7 @@ Cette partie permet d'afficher les actualite, de les supprimer et de créer des 
 - redirige ensuite vers la page Actualite.php
 
 #### Fonctionnalité manquante ou/et non finis
--Message pour prévenir que l'ajout de l'actualité, c'est bien est fait sans erreur
+- Message pour prévenir que l'ajout de l'actualité, c'est bien est fait sans erreur
 
 ---
 
@@ -71,7 +71,6 @@ L'entièreté de ces éléments sont récupérés directement depuis la base de 
 
 - Affichage de l'ensemble des fonctionnalités si le rôle de l'utilisateur connecté est "Administrateur" (cette fonctionnalité n'a pas été effectué puisque les rôles ne sont pas géré tout court).
 
----
 
 ## Modifier le profils utilisateurs (by Enzo JURET)
 Page permettant de modifier les éléments de la page profils. Cette page est accéssible via la redirection de l'icone en forme d'écrou.
@@ -112,7 +111,6 @@ Avec plus de temps, je pense que j'aurai pu faire un front plus propre et plus d
 
 - Le système d'upload des images (avatar et bannière), non pas eu le temps d'être réalisé. Avec cette configuration, il est impossible de changer sa photo de profil, n'y de changer sa bannière (cependant tout le reste l'est).
 
----
 
 ## Système de connexion au site (by Enzo JURET)
 Page permettant à l'utilisateur de se connecter à son profil, cela va lui permettre d'accéder à toutes les pages du sites. Il est important également de savoir que vous ne pouvez pas accéder aux autres pages, si vous ne vous êtes pas connecté avec un profil qui se situe en base de données.
@@ -161,10 +159,10 @@ Les différents logos possèdes des liens vers des pages prédéfinis :
 
 
 L'onglet conversation permet à l'utilisateur de discuter avec sa promotion ou ses amis. Il peut par ailleurs envoyer des demandes d'amis aux personnes de sa promotion.
-Si les personnes accepte sa demande d'ami, ils apparaitront dans la partit 'amis' des contacts. 
+Si les personnes acceptent sa demande d'ami, ils apparaitront dans la partit 'amis' des contacts. 
 
 En survolant les contacts, une tooltip personnalisé apparait. Dedans on y retrouve l'identité de la personne que l'on survole, son adresse mail et sa photo de profil.
-Dans le cas où cette personne est un ami, cette relation y sera représentée par un symbole. L'utilisateur, peut, depuis cette tooltip, supprimer de amis.
+Dans le cas où cette personne est un ami, cette relation y sera représentée par un symbole. L'utilisateur, peut, depuis cette tooltip, supprimer des amis.
 Dans le cas où cette personne est un contact de sa promotion ; à l'inverse, il peut lui envoyer une requête d'ami.
 Les requêtes d'amis apparaissent dans le champ des requêtes d'amis.
 La fréquence de rafraichissement des notifications de demandes d'amis est de 10s.
