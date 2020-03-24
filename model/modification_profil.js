@@ -27,7 +27,6 @@ $( document ).ready(function(){
         $valeur_comp3 = $("#valeur_comp3").val();
         $valeur_comp4 = $("#valeur_comp4").val();
         $valeur_comp5 = $("#valeur_comp5").val();
-        console.log($valeur_comp1);
         modification_profil($description, $telephone, $linkedin, $facebook, $instagram, $twitter, $titre_comp1, $titre_comp2, $titre_comp3, $titre_comp4, $titre_comp5, $valeur_comp1, $valeur_comp2, $valeur_comp3, $valeur_comp4, $valeur_comp5);
 
 	});
@@ -121,20 +120,20 @@ function chargementCompetences($id) {
 
         success : function(retVal, statut){
             donnees = JSON.parse(retVal);
-            $("#titre_comp1").attr('value',donnees[0]["titre_competence1"]);
-            $("#valeur_comp1").attr('value',donnees[0]["valeur_competence1"]);
+            $("#titre_comp1").val(donnees[0]["titre_competence1"]);
+            $("#valeur_comp1").val(donnees[0]["valeur_competence1"]);
 
-            $("#titre_comp2").attr('value',donnees[0]["titre_competence2"]);
-            $("#valeur_comp2").attr('value',donnees[0]["valeur_competence2"]);
+            $("#titre_comp2").val(donnees[0]["titre_competence2"]);
+            $("#valeur_comp2").val(donnees[0]["valeur_competence2"]);
 
-            $("#titre_comp3").attr('value',donnees[0]["titre_competence3"]);
-            $("#valeur_comp3").attr('value',donnees[0]["valeur_competence3"]);
+            $("#titre_comp3").val(donnees[0]["titre_competence3"]);
+            $("#valeur_comp3").val(donnees[0]["valeur_competence3"]);
 
-            $("#titre_comp4").attr('value',donnees[0]["titre_competence4"]);
-            $("#valeur_comp4").attr('value',donnees[0]["valeur_competence4"]);
+            $("#titre_comp4").val(donnees[0]["titre_competence4"]);
+            $("#valeur_comp4").val(donnees[0]["valeur_competence4"]);
 
-            $("#titre_comp5").attr('value',donnees[0]["titre_competence5"]);
-            $("#valeur_comp5").attr('value',donnees[0]["valeur_competence5"]);
+            $("#titre_comp5").val(donnees[0]["titre_competence5"]);
+            $("#valeur_comp5").val(donnees[0]["valeur_competence5"]);
         },
  
         error : function(retVal, statut, erreur){
