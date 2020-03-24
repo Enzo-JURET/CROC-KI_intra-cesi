@@ -42,18 +42,6 @@ body {
 
 /*** Menu amis***/
 
-#conteneurContact {
-    
-}
-
-#bandeauContact {
-
-}
-
-#boiteContact {
-
-}
-
 .titreTypeContact {
     margin-left: 1em;
     font-family: "Calibri";   
@@ -147,34 +135,14 @@ body {
     padding-left: 1em;
 }
 
-#iconeEnvoyerMessage {
-
-}
-
 /*** Menu messages ***/
-
-#conteneurMessage {
-
-}
-
-#bandeauMessage {
-    
-}
-
-#boiteMessagerie {
-
-}
-
-#corpsConteneurMessage {
-    
-}
 
 #barreConteneurMessage {
     background-color : lightgrey;
 }
 
 .divMessage {
-    color : lightgrey;
+    color : black;
 }
 
 .identiteAuteurMessage {
@@ -194,18 +162,6 @@ body {
 }
 
 /** Menu groupes **/
-
-#conteneurGroupe {
-
-}
-
-#bandeauGroupe {
-
-}
-
-#boiteGroupe {
-
-}
 
 .bandeauTypeGroupe {
     border-bottom: 2px solid white;

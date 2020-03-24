@@ -13,13 +13,13 @@ $( document ).ready(function() {
 
     recupererGroupes();
 
-
+    // Tache de fond qui actualise les demandes d'ami
     setInterval(function(){ 
         recupererAmisEtPromotion(); 
     }, 10000);
     
 });
-
+// Récupère les groupes et les ajoutes aux encarts de groupes (seulement groupe privé de géré pour le moment)
 function recupererGroupes()
 {
     $idUtilisateur = getCookie("id");
@@ -56,6 +56,9 @@ function recupererGroupes()
      });
 }
 
+// Fonction qui hold le clique sur un nom de groupe dans le menu de droite
+// Récupère l'id groupe depuis l'id de l'élément puis fournit l'idGroupe à la méthode
+// actualiserMessages(idGroupe) puis actualiserMessages() et refais quelque association
 function holdCliqueGroupe(elem)
 {
     var idElem = elem.getAttribute("id");
@@ -77,6 +80,12 @@ function holdCliqueGroupe(elem)
     keyEnterListenerOnMessageInput(idgroupe);
 }
 
+// Récupère les contacts (amis et promotion) pour mettre à jours les variables globales puis
+// rafraichi les affichages en appelant afficherAmis(), afficherDemandesAmi() et afficherPromotion()
+// On réassocie également aux nouvelles lignes ajoutés (contact) l'évènement mouseenter() pour ouvrir
+// la tooltip personnalisé lors de l'entré de la souris sur la ligne, et l'évènement mouseleave() pour 
+//fermer la tooltip lorsque la souris sort de la ligne, sauf si la souris est sur la tooltip, dans ce
+// là la tooltip sera fermé quand la souris sortira et de la ligne, et de la tooltip
 function recupererAmisEtPromotion()
 {
     $idUtilisateur = getCookie("id");
@@ -113,6 +122,9 @@ function recupererAmisEtPromotion()
      });
 }
 
+// Récupère les demandes d'amis et les affiches dans l'encart des demandes d'amis.
+// Construit la ligne pour chaque demande avec le bouton accepter et le bouton refuser et y associe
+// la méthode holdCliqueChoixBoutonDemandeAmi() pour récupérer le choix de l'utilisateur
 function afficherDemandesAmi()
 {
     $idUtilisateur = getCookie("id");
@@ -149,6 +161,9 @@ function afficherDemandesAmi()
      });
 }
 
+// Fonction qui gère le clique sur un bouton valider ou refuser la demande d'ami
+// Le choix 'oui' ou 'non' est récupéré grâce à l'id de l'élément qui déclenche l'évènement
+// l'id est de la forme boutonOui7 , l'id est 7 donc je récupère que la fin de l'id
 function holdCliqueChoixBoutonDemandeAmi(idPersonneQuiDemande,elem)
 {
     $idUtilisateur = getCookie("id");
@@ -177,6 +192,7 @@ function holdCliqueChoixBoutonDemandeAmi(idPersonneQuiDemande,elem)
     });
 }
 
+// Affiche les contacts amis dans l'encart amis
 function afficherAmis()
 {
     document.getElementById("amis").innerHTML = "";
@@ -189,6 +205,7 @@ function afficherAmis()
     }
 }
 
+// Affiche les contacts promotion dans l'encart promotion
 function afficherPromotion() 
 {
     document.getElementById("promotion").innerHTML = "";
@@ -200,7 +217,9 @@ function afficherPromotion()
         }
     }
 }
-
+// Fonction qui gère la tooltip personnalisé qui se déclenche en survolant un contact
+// Elle gère aussi les évènements qui y sont associés (demandes d'amis, supression amis, voir profil
+// ouvrir discussion) => tout part de cette tooltip pour gérer le 'réseau social'
 function openPersonTooltipAmi(event)
 {
     $idUtilisateur = getCookie("id");
@@ -438,6 +457,7 @@ function openPersonTooltipAmi(event)
     }
 }
 
+// Ouvre la discussion en fonction de l'id du groupe et affiches les anciens et nouveaux messages 
 function openGroupe(idGroupe)
 {
     $donnees = [];
@@ -482,6 +502,9 @@ function openGroupe(idGroupe)
 
 }
 
+// Supprime l'élélement de la page avec l'id #customTooltip. Cette méthode est utilisé pour fermer
+// la tooltip mais aussi pour m'assurer qu'il n'y ai toujours qu'une seule tooltip en les fermant toute
+// (en supprimant les éléments avec cette id) puis en réaffichant la tooltip en cas d'évènement
 function closePersonTooltipAmi()
 {
     if(!$('#customTooltip').is(":hover"))
@@ -490,6 +513,9 @@ function closePersonTooltipAmi()
     }
 }
 
+// Fonction écoute la touche entrée dans la barre d'écriture
+// Elle ne commence à écouter que quand une conversation a été ouverte
+// Si la touche entrée est préssé, elle envoi le message dans la bdd, puis actualise les messages
 function keyEnterListenerOnMessageInput(idGroupe)
 {
     var champsTexte = document.getElementById("barreEnvoiMessage");
@@ -527,6 +553,7 @@ function keyEnterListenerOnMessageInput(idGroupe)
     };
 }
 
+// Actualise la variable globale $donneesMessages avec les messages de la base
 function actualiserMessages(idGroupe)
 {
     $.ajax({
@@ -554,6 +581,8 @@ function actualiserMessages(idGroupe)
      });
 }
 
+// Fonction qui retourne le résultat de la requête php pour obtenir les informations d'une personne
+// en fonction de son id
 function getOnePersonToDisplay(id)
 {
     $retour = "";
