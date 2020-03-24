@@ -56,6 +56,7 @@ function recupererGroupes()
      });
 }
 
+// Fonction qui 
 function holdCliqueGroupe(elem)
 {
     var idElem = elem.getAttribute("id");
@@ -77,6 +78,12 @@ function holdCliqueGroupe(elem)
     keyEnterListenerOnMessageInput(idgroupe);
 }
 
+// Récupère les contacts (amis et promotion) pour mettre à jours les variables globales puis
+// rafraichi les affichages en appelant afficherAmis(), afficherDemandesAmi() et afficherPromotion()
+// On réassocie également aux nouvelles lignes ajoutés (contact) l'évènement mouseenter() pour ouvrir
+// la tooltip personnalisé lors de l'entré de la souris sur la ligne, et l'évènement mouseleave() pour 
+//fermer la tooltip lorsque la souris sort de la ligne, sauf si la souris est sur la tooltip, dans ce
+// là la tooltip sera fermé quand la souris sortira et de la ligne, et de la tooltip
 function recupererAmisEtPromotion()
 {
     $idUtilisateur = getCookie("id");
@@ -113,6 +120,9 @@ function recupererAmisEtPromotion()
      });
 }
 
+// Récupère les demandes d'amis et les affiches dans l'encart des demandes d'amis.
+// Construit la ligne pour chaque demande avec le bouton accepter et le bouton refuser et y associe
+// la méthode holdCliqueChoixBoutonDemandeAmi() pour récupérer le choix de l'utilisateur
 function afficherDemandesAmi()
 {
     $idUtilisateur = getCookie("id");
@@ -149,6 +159,9 @@ function afficherDemandesAmi()
      });
 }
 
+// Fonction qui gère le clique sur un bouton valider ou refuser la demande d'ami
+// Le choix 'oui' ou 'non' est récupéré grâce à l'id de l'élément qui déclenche l'évènement
+// l'id est de la forme boutonOui7 , l'id est 7 donc je récupère que la fin de l'id
 function holdCliqueChoixBoutonDemandeAmi(idPersonneQuiDemande,elem)
 {
     $idUtilisateur = getCookie("id");
@@ -177,6 +190,7 @@ function holdCliqueChoixBoutonDemandeAmi(idPersonneQuiDemande,elem)
     });
 }
 
+// Affiche les contacts amis dans l'encart amis
 function afficherAmis()
 {
     document.getElementById("amis").innerHTML = "";
@@ -189,6 +203,7 @@ function afficherAmis()
     }
 }
 
+// Affiche les contacts promotion dans l'encart promotion
 function afficherPromotion() 
 {
     document.getElementById("promotion").innerHTML = "";
@@ -200,7 +215,9 @@ function afficherPromotion()
         }
     }
 }
-
+// Fonction qui gère la tooltip personnalisé qui se déclenche en survolant un contact
+// Elle gère aussi les évènements qui y sont associés (demandes d'amis, supression amis, voir profil
+// ouvrir discussion) => tout part de cette tooltip pour gérer le 'réseau social'
 function openPersonTooltipAmi(event)
 {
     $idUtilisateur = getCookie("id");
@@ -438,7 +455,7 @@ function openPersonTooltipAmi(event)
     }
 }
 
-function openGroupe(idGroupe)
+function openGroupe(idGroupe) // Ouvre la discussion en fonction de l'id du groupe et affiches les anciens et nouveaux messages 
 {
     $donnees = [];
     $donneesMessages = [];

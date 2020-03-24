@@ -7,7 +7,9 @@
         function HandlerController($type)
         {
             switch($type) {
-                case "getSomething":
+                // Fonction à laquelle on donne un mot clé pour identier quel fonction get on veut utiliser. 
+                //Cette fonction rassemble les fonctions contenant uniquement des requêtes faisant des SELECT
+                case "getSomething": 
                     if($_SERVER['REQUEST_METHOD'] === 'POST')
                     {
                         $result = $this->getSomething();
@@ -44,18 +46,21 @@
                         $result = $this->supprime_actualite();
                     }
                 break;
+                // Fonction pour supprimer un ami
                 case "supprimerAmi":
                     if($_SERVER['REQUEST_METHOD'] === 'POST')
                     {
                         $result = $this->supprimerAmi();
                     }
                 break;
+                // Fonction qui envoi la demande d'ami 
                 case "envoyerDemandeAmi":
                     if($_SERVER['REQUEST_METHOD'] === 'POST')
                     {
                         $result = $this->envoyerDemandeAmi();
                     }
                 break;
+                // Fonction qui refuse ou accepte la demande d'ami en fonction du choix de l'utilisateur
                 case "choixReponseDemandeAmi":
                     if($_SERVER['REQUEST_METHOD'] === 'POST')
                     {
@@ -68,12 +73,14 @@
                         $result = $this->Etat_connexion();
                     }
                 break;
+                // Fonction qui permet de créer un groupe et de retourne l'id du groupe
                 case "creerGroupe":
                     if($_SERVER['REQUEST_METHOD'] === 'POST')
                     {
                         $result = $this->creerGroupe();
                     }
                 break;
+                // Fonction qui associe le message envoyé à un groupe
                 case "envoiMessageDansGroupe":
                     if($_SERVER['REQUEST_METHOD'] === 'POST')
                     {
@@ -96,6 +103,7 @@
 
                 switch($clef)
                 {
+                    // Retoune les groupes auxquelles appartient l'id (l'utilisaiteur) passé en paramètre
                     case "groupes":
                         $idUser = $_POST["idUser"];
 
@@ -151,6 +159,7 @@
                         return json_encode($resultat);
 
                     break;
+                    // Retourne la liste des contacts [amis][promotion] de l'id (l'utilisateur) passé en paramètre
                     case "amisEtPromotion" : 
                         $idUser = $_POST["idUser"];
                         $promotionUser = $_POST["promotionUser"];
@@ -235,6 +244,7 @@
                         return json_encode($resultat);
 
                     break;
+                    // Retourne la liste des id_personne demandant en ami l'utilisateur (l'id passé en paramètre)
                     case "demandesAmi" :
                         $idUser = $_POST["idUser"];
 
@@ -269,6 +279,7 @@
                         $dbcontroller->closeQuery();
                         return json_encode($tabRetour);
                     break;
+                    // Retourne les informations d'un groupe en fonction de l'id du groupe passé en paramètre
                     case "getOneGroupe":
                         $idGroupe = $_POST["idGroupe"];
 
@@ -282,6 +293,7 @@
                         $dbcontroller->closeQuery();
                         return json_encode($resultat);
                     break;
+                    // Retourne les messages associés à un groupe en fonction de l'id du groupe passé en paramètre
                     case "getMessagesFromOneGroupe":
                         $idGroupe = $_POST["idGroupe"];
 
