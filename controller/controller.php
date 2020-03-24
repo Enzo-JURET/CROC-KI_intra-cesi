@@ -50,6 +50,12 @@
                         $result = $this->choixReponseDemandeAmi();
                     }
                 break;
+                case "etat_connexion":
+                    if($_SERVER['REQUEST_METHOD'] === 'POST')
+                    {
+                        $result = $this->Etat_connexion();
+                    }
+                break;
             }
             return $result;
         }
@@ -487,6 +493,21 @@
             mysqli_stmt_bind_param($stmt,'ss',$tmpJoin,$id_personne);
             $dbcontroller->executeQuery($stmt);    
 
+            $dbcontroller->closeQuery();
+        }
+
+        function Etat_connexion()
+        {
+            $id_personne = $_POST["id"];
+            $etat_connexion = $_POST["etat"];
+
+            $dbcontroller = new dbController();
+            $stmt = mysqli_prepare($dbcontroller->getConn(),
+            "UPDATE personne
+                SET connecte_personne = ?
+                WHERE id_personne = ?");
+            mysqli_stmt_bind_param($stmt,'ss', $etat_connexion, $id_personne);
+            $dbcontroller->executeQuery($stmt);
             $dbcontroller->closeQuery();
         }
     }
