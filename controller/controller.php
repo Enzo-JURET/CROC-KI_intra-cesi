@@ -56,6 +56,12 @@
                         $result = $this->choixReponseDemandeAmi();
                     }
                 break;
+                case "ajoutGroupeSiExistePas":
+                    if($_SERVER['REQUEST_METHOD'] === 'POST')
+                    {
+                        $result = $this->ajoutGroupeSiExistePas();
+                    }
+                break;
             }
             return $result;
         }
@@ -81,29 +87,36 @@
                         mysqli_stmt_bind_param($stmt,'s',$idUser);
                         $resultat = $dbcontroller->executeSelectQuery($stmt);
                         
-                        for($i=0;$i<count($resultat);$i++)
+                        if($resultat != '')
                         {
-                            array_push($tabResulat,$resultat[$i]["id_groupe"]);
-                        }
-
-                        for($i=0;$i<count($tabResulat);$i++)
-                        {
-                            $stmt = mysqli_prepare($dbcontroller->getConn(),
-                            "SELECT id_groupe, nom_groupe, description_groupe, avatar_groupe, status_groupe 
-                            FROM groupe 
-                            WHERE id_groupe = ?");
-                            mysqli_stmt_bind_param($stmt,'s',$tabResulat[$i]);
-                            $tmp = $dbcontroller->executeSelectQuery($stmt);
-                            for($f=0;$f<count($tmp);$f++)
+                            for($i=0;$i<count($resultat);$i++)
                             {
-                                $id = $tmp[$f]["id_groupe"];
-                                $nom_groupe = $tmp[$f]["nom_groupe"];
-                                $description = $tmp[$f]["description_groupe"];
-                                $avatar = $tmp[$f]["avatar_groupe"];
-                                $status = $tmp[$f]["status_groupe"];
+                                array_push($tabResulat,$resultat[$i]["id_groupe"]);
                             }
-                            $tabRetour[$i] = array("id"=>$id,"nom_groupe"=>$nom_groupe,"description"=>$description,"avatar"=>$avatar,"status"=>$status);
-                        }               
+
+                            for($i=0;$i<count($tabResulat);$i++)
+                            {
+                                $stmt = mysqli_prepare($dbcontroller->getConn(),
+                                "SELECT id_groupe, nom_groupe, description_groupe, avatar_groupe, status_groupe 
+                                FROM groupe 
+                                WHERE id_groupe = ?");
+                                mysqli_stmt_bind_param($stmt,'s',$tabResulat[$i]);
+                                $tmp = $dbcontroller->executeSelectQuery($stmt);
+                                for($f=0;$f<count($tmp);$f++)
+                                {
+                                    $id = $tmp[$f]["id_groupe"];
+                                    $nom_groupe = $tmp[$f]["nom_groupe"];
+                                    $description = $tmp[$f]["description_groupe"];
+                                    $avatar = $tmp[$f]["avatar_groupe"];
+                                    $status = $tmp[$f]["status_groupe"];
+                                }
+                                $tabRetour[$i] = array("id"=>$id,"nom_groupe"=>$nom_groupe,"description"=>$description,"avatar"=>$avatar,"status"=>$status);
+                            }     
+                        }
+                        else {
+                            $tabRetour = "";
+                        }
+                                  
                         $dbcontroller->closeQuery();
                         return json_encode($tabRetour);
                     break;
@@ -515,6 +528,42 @@
             $dbcontroller->executeQuery($stmt);    
 
             $dbcontroller->closeQuery();
+        }
+
+        function ajoutGroupeSiExistePas()
+        {
+            $id_personne = $_POST["idUser"];
+            $id_personne_pour_conversation = $_POST["id_personne_pour_conversation"];
+            $status = $_POST["status"];
+
+            if($status == "prive")
+            {
+                $status = 1;
+            }
+            else {
+                $status = 0;
+            }
+
+            $dbcontroller = new dbController();
+
+            // Récupération de la liste des groupes de l'utilisateur
+            $stmt = mysqli_prepare($dbcontroller->getConn(),
+                "SELECT id_groupe
+                FROM association_groupe_personne
+                WHERE id_personne = ?");
+            mysqli_stmt_bind_param($stmt,'s',$id_personne);
+            $resultat = $dbcontroller->executeSelectQuery($stmt);
+            
+            for($i=0;$i<count($resultat);$i++)
+            {
+                array_push($tabResulat,$resultat[$i]["id_groupe"]);
+            }
+
+            for($i=0;$i<count($tabResulat);$i++)
+            {
+
+            }
+            var_dump($tabResulat);
         }
     }
 ?>

@@ -1,5 +1,6 @@
 var amis = [];
 var promotion = [];
+var groupes = [];
 
 $( document ).ready(function() {
     containerInit();
@@ -30,16 +31,16 @@ function recupererGroupes()
        }),
 
         success : function(retVal, statut){
-            $groupes = JSON.parse(retVal);
-            console.log($groupes);
+            groupes = JSON.parse(retVal);
+            console.log(groupes);
 
             document.getElementById("conteneurGroupePrive").innerHTML = "";
             document.getElementById("conteneurGroupePublic").innerHTML = "";
-            for(var i = 0 ; i < $groupes.length ; i++)
+            for(var i = 0 ; i < groupes.length ; i++)
             {
-                if($groupes[i].status == 1) // privé
+                if(groupes[i].status == 1) // privé
                 {
-                    document.getElementById("conteneurGroupePrive").innerHTML += "<div id='ligneGroupe"+$groupes[i].id+"' class='ligneGroupe' title='"+$groupes[i].description+"' >"+$groupes[i].nom_groupe+"</div><br/>";
+                    document.getElementById("conteneurGroupePrive").innerHTML += "<div id='ligneGroupe"+groupes[i].id+"' class='ligneGroupe' title='"+groupes[i].description+"' >"+groupes[i].nom_groupe+"</div><br/>";
                 }
                 else { // = 0 donc public
 
@@ -226,7 +227,7 @@ function openPersonTooltipAmi(event)
         div = $("<div />");
         div.attr({id: 'customTooltip', class: 'personTooltip'});
         div.css({top: event.pageY, left: posX});
-        div.html("<div id='conteneurTooltip'><div><div class='textLabelAmi'>"+prenomPersonne + " " + nomPersonne +"</div><div class='textLabelAmi'>"+emailPersonne+"</div><div id='divIconesGestion'><div id='divDejaAmi'><img id='iconeDejaAmi' class='iconeTooltip' title='Supprimer de votre liste d&apos;amis' src='../public/images/icones/friends-white.png' alt=''/></div><div id='divAfficherProfil'><img id='idImgAfficherProfil' class='iconeTooltip' title='Afficher le profil' src='../public/images/icones/profil-white.png' alt='Profil' /></div><div id='divEnvoyerMessage'><img id='iconeEnvoyerMessage' class='iconeTooltip' src'../public/images/icones/open-conversation-white.png' alt=''/></div></div></div><div><img class='avatarAmi' src='../"+avatarPersonne+"' alt=''/></div></div>");
+        div.html("<div id='conteneurTooltip'><div><div class='textLabelAmi'>"+prenomPersonne + " " + nomPersonne +"</div><div class='textLabelAmi'>"+emailPersonne+"</div><div id='divIconesGestion'><div id='divDejaAmi'><img id='iconeDejaAmi' class='iconeTooltip' title='Supprimer de votre liste d&apos;amis' src='../public/images/icones/friends-white.png' alt=''/></div><div id='divAfficherProfil'><img id='idImgAfficherProfil' class='iconeTooltip' title='Afficher le profil' src='../public/images/icones/profil-white.png' alt='Profil' /></div><div id='divEnvoyerMessage'><img id='iconeEnvoyerMessage' class='iconeTooltip' title='Démarrer une conversation / Envoyer un message' src='../public/images/icones/open-conversation-white.png' alt=''/></div></div></div><div><img class='avatarAmi' src='../"+avatarPersonne+"' alt=''/></div></div>");
         $("#boiteFenetre").append(div);
 
         $("#divDejaAmi").click(function() {
@@ -298,7 +299,7 @@ function openPersonTooltipAmi(event)
         div = $("<div />");
         div.attr({id: 'customTooltip', class: 'personTooltip'});
         div.css({top: event.pageY, left: posX});
-        div.html("<div id='conteneurTooltip'><div><div class='textLabelAmi'>"+prenomPersonne + " " + nomPersonne +"</div><div class='textLabelAmi'>"+emailPersonne+"</div><div id='divIconesGestion'><div id='divAjoutAmi'><img id='iconeAjoutAmi' class='iconeTooltip' title='Envoyer une invitation d&apos;amis' src='"+$cheminImageAjoutAmi+"' alt=''/></div><div id='divAfficherProfil'><img id='idImgAfficherProfil' class='iconeTooltip' title='Afficher le profil' src='../public/images/icones/profil-white.png' alt='Profil' /></div><div id='divEnvoyerMessage'><img id='iconeEnvoyerMessage' class='iconeTooltip' src'../public/images/icones/open-conversation-white.png' alt=''/></div></div></div><div><img class='avatarAmi' src='../"+avatarPersonne+"' alt=''/></div></div>");
+        div.html("<div id='conteneurTooltip'><div><div class='textLabelAmi'>"+prenomPersonne + " " + nomPersonne +"</div><div class='textLabelAmi'>"+emailPersonne+"</div><div id='divIconesGestion'><div id='divAjoutAmi'><img id='iconeAjoutAmi' class='iconeTooltip' title='Envoyer une invitation d&apos;amis' src='"+$cheminImageAjoutAmi+"' alt=''/></div><div id='divAfficherProfil'><img id='idImgAfficherProfil' class='iconeTooltip' title='Afficher le profil' src='../public/images/icones/profil-white.png' alt='Profil' /></div><div id='divEnvoyerMessage'><img id='iconeEnvoyerMessage' class='iconeTooltip' title='Démarrer une conversation / Envoyer un message' src='../public/images/icones/open-conversation-white.png' alt=''/></div></div></div><div><img class='avatarAmi' src='../"+avatarPersonne+"' alt=''/></div></div>");
         $("#boiteFenetre").append(div);
 
         $("#divAjoutAmi").click(function() {
@@ -324,6 +325,8 @@ function openPersonTooltipAmi(event)
                  recupererAmisEtPromotion();
             } 
         });
+
+        
     }
 
 
@@ -334,6 +337,71 @@ function openPersonTooltipAmi(event)
         setCookie("affichage_profil_id" ,idPersonne);
         window.location = "../view/profil.php";
     });
+
+    // Ouvrir conversation 
+    $("#divEnvoyerMessage").click(function(){
+        supPopUp();
+        $.ajax({
+            cache : false,
+            url : "../data/getSomething",
+            type : "POST",
+            async:false,
+            data: ({
+                clef:'groupes',
+                idUser: idPersonne
+           }),
+    
+            success : function(retVal, statut){
+                $groupesPersonneAQuiJeVeuxParler = JSON.parse(retVal);
+                console.log($groupesPersonneAQuiJeVeuxParler);
+                var ifExistGroupCommun = false;
+                var idGroupe = 0;
+                if($groupesPersonneAQuiJeVeuxParler != null);
+                {
+                    for(var i = 0 ; i < $groupesPersonneAQuiJeVeuxParler.length;i++)
+                    {
+                        for(var f = 0 ; f < groupes.length ; f++)
+                        {
+                            if(groupes[f]["id"] == $groupesPersonneAQuiJeVeuxParler[i]["id"])
+                            {
+                                ifExistGroupCommun = true;
+                                idGroupe = groupes[f]["id"];
+                            }
+                        }
+                    }
+                }
+                if(!ifExistGroupCommun) // Pas de groupe commun donc on en créer un
+                {
+                    $tableauId[0] = idUtilisateur;
+                    $tableauId[1] = idPersonne;
+                    $.ajax({
+                        cache : false,
+                        url : "../data/creerGroupe",
+                        type : "POST",
+                        async:false,
+                        data: ({
+                            tableauIdPersonneDansGroupe: $idUtilisateur,
+                       }),
+                
+                        success : function(retVal, statut){
+                            console.log(retVal); // Retourne l'id du groupe
+                        },
+                 
+                        error : function(retVal, statut, erreur){
+                 
+                        }
+                     });
+                }
+
+                openGroupe(idGroupe);
+
+            },
+     
+            error : function(retVal, statut, erreur){
+            }
+         });
+         recupererGroupes();
+    });
         
     $("#customTooltip").mouseleave(supPopUp);
 
@@ -341,6 +409,11 @@ function openPersonTooltipAmi(event)
     {
         $("#customTooltip").remove();
     }
+}
+
+function openGroupe(idGroupe)
+{
+    console.log("ouvrir groupe : "+idGroupe);
 }
 
 function closePersonTooltipAmi()
