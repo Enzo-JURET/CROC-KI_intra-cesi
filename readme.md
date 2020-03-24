@@ -131,7 +131,7 @@ La connexion est fonctionelle, elle permet aux utilisateurs d'êtres connectés 
 
 ## La Navbar (by Enzo JURET)
 La Navbar est une de barre navigation permettant d'accéder rapidement aux différentes pages du site, elle est accéssible sur toutes les pages en cliquant sur ce logo :
-[mettre image ici] 
+![logo d'accès à la navbar](https://cdn.discordapp.com/attachments/656535741324591115/692120133400920145/Annotation_2020-03-24_221615.png)
 
 ### Fichiers associés
 
@@ -143,15 +143,15 @@ La Navbar est une de barre navigation permettant d'accéder rapidement aux diff�
 #### > Tutoriel d'utilisation de la navbar
 
 Pour accéder à la navbar en haut de l'écran passer la souris sur ce logo :
-[mettre image ici]
+![Logo d'accès à la navbar](https://cdn.discordapp.com/attachments/656535741324591115/692121030478659654/unknown.png)
 
 Les différents logos possèdes des liens vers des pages prédéfinis :
 
-- Ce logo permet d'accéder à la page de profil de l'utilisateur connecté : [mettre image ici]
-- Celui ci permet d'accéder à la page conversation : [mettre image ici]
-- Celui la, les actualités : [mettre image ici]
-- La barre de recherche permet de rechercher une personne grace à une adresse email de la CESI : [mettre image ici]
-- Et pour finir, ce logo permet de se déconnecter (passer le cookie "etat_connexion" à false, et renvoi sur la page de connexion.php) : [mettre image ici]
+- Ce logo permet d'accéder à la page de profil de l'utilisateur connecté : ![Logo d'accès au profil.php](https://cdn.discordapp.com/attachments/656535741324591115/692121600862060594/unknown.png)
+- Celui ci permet d'accéder à la page conversation : ![Logo d'accès à la page conversation](https://cdn.discordapp.com/attachments/656535741324591115/692121832349892608/unknown.png)
+- Celui la, les actualités : ![Logo d'accès à la page actualités](https://cdn.discordapp.com/attachments/656535741324591115/692122122994057226/unknown.png)
+- La barre de recherche permet de rechercher une personne grace à une adresse email de la CESI : ![Barre de recherche de la navbar](https://cdn.discordapp.com/attachments/656535741324591115/692122520454955159/unknown.png)
+- Et pour finir, ce logo permet de se déconnecter (passer le cookie "etat_connexion" à false, et renvoi sur la page de connexion.php) : ![Logo d'accès à la déconnexion](https://cdn.discordapp.com/attachments/656535741324591115/692122763875450880/unknown.png)
 
 ---
 
