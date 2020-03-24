@@ -45,7 +45,7 @@ function chargement_page_profil($id) {
 
 
 
-function modification_profil($status_actualite, $titre_actualite, $description_actualite, $id_personne, $date_evenement_actualite) {
+function ajout_actualite($status_actualite, $titre_actualite, $description_actualite, $id_personne, $date_evenement_actualite) {
         
         $id_personne = getCookie("id");
     
