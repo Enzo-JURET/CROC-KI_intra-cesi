@@ -213,5 +213,8 @@ body {
 
 .ligneGroupe {
     font-family: "Calibri";
+    display: inline-flex;
+    padding-left: 1em;
+    width: 100%;
 }
 

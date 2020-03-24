@@ -83,14 +83,20 @@
                         for($i=0;$i<count($tabResulat);$i++)
                         {
                             $stmt = mysqli_prepare($dbcontroller->getConn(),
-                            "SELECT nom_groupe FROM groupe WHERE id_groupe = ?");
+                            "SELECT id_groupe, nom_groupe, description_groupe, avatar_groupe, status_groupe 
+                            FROM groupe 
+                            WHERE id_groupe = ?");
                             mysqli_stmt_bind_param($stmt,'s',$tabResulat[$i]);
                             $tmp = $dbcontroller->executeSelectQuery($stmt);
                             for($f=0;$f<count($tmp);$f++)
                             {
+                                $id = $tmp[$f]["id_groupe"];
                                 $nom_groupe = $tmp[$f]["nom_groupe"];
+                                $description = $tmp[$f]["description_groupe"];
+                                $avatar = $tmp[$f]["avatar_groupe"];
+                                $status = $tmp[$f]["status_groupe"];
                             }
-                            $tabRetour[$i] = array("nom_groupe"=>$nom_groupe);
+                            $tabRetour[$i] = array("id"=>$id,"nom_groupe"=>$nom_groupe,"description"=>$description,"avatar"=>$avatar,"status"=>$status);
                         }               
                         $dbcontroller->closeQuery();
                         return json_encode($tabRetour);
@@ -452,8 +458,6 @@
             $dbcontroller = new dbController();
             if($choix == "Oui")
             {
-                
-
                 // Ajout mutuel du statut amis
                 $dateAuj = date('d m Y');
                 var_dump($dateAuj);
