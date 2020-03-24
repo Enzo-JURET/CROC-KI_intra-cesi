@@ -68,6 +68,12 @@
                         $result = $this->creerGroupe();
                     }
                 break;
+                case "envoiMessageDansGroupe":
+                    if($_SERVER['REQUEST_METHOD'] === 'POST')
+                    {
+                        $result = $this->envoiMessageDansGroupe();
+                    }
+                break;
             }
             return $result;
         }
@@ -276,7 +282,7 @@
                         $dbcontroller = new dbController();
                         $stmt = mysqli_prepare($dbcontroller->getConn(),
                             "SELECT id_message, texte_message, date_heure_message, id_personne
-                            FROM 'message'
+                            FROM message
                             WHERE id_groupe = ?");
                         mysqli_stmt_bind_param($stmt,'s',$idGroupe);
                         $tmp = $dbcontroller->executeSelectQuery($stmt);
@@ -288,8 +294,10 @@
                                 $texte_message = $tmp[$f]["texte_message"];
                                 $date_heure_message = $tmp[$f]["date_heure_message"];
                                 $id_personne = $tmp[$f]["id_personne"];
+
+                                $tabRetour[$f] = array("id_message"=>$id_message,"texte_message"=>$texte_message,"date_heure_message"=>$date_heure_message,"id_personne"=>$id_personne);
                             }
-                            $tabRetour[$i] = array("id_message"=>$id_message,"texte_message"=>$texte_message,"date_heure_message"=>$date_heure_message,"id_personne"=>$id_personne);
+                            
                         }
                         else {
                             $tabRetour = "";
@@ -297,6 +305,20 @@
                        
                         $dbcontroller->closeQuery();
                         return json_encode($tabRetour);
+                    break;
+                    case "getOnePerson":
+                        $idPersonne = $_POST["idPersonne"];
+
+                        $dbcontroller = new dbController();
+                        $stmt = mysqli_prepare($dbcontroller->getConn(),
+                            "SELECT nom_personne, prenom_personne
+                            FROM personne
+                            WHERE id_personne = ?");
+                        mysqli_stmt_bind_param($stmt,'s',$idPersonne);
+                        $tmp = $dbcontroller->executeSelectQuery($stmt);
+
+                        $dbcontroller->closeQuery();
+                        return json_encode($tmp);
                     break;
                 }
                 return $result;
@@ -636,6 +658,24 @@
             }
             $dbcontroller->closeQuery();
             return $idGroupe;
+        }
+
+        function envoiMessageDansGroupe()
+        { 
+            $idGroupe = $_POST["idGroupe"];
+            $idUser = $_POST["idUser"];
+            $contenuMessage = $_POST["contenuMessage"];
+            $dateHeure = date("d m Y G H s");
+
+            $dbcontroller = new dbController();
+            $stmt = mysqli_prepare($dbcontroller->getConn(),
+            "INSERT INTO message (texte_message,date_heure_message, id_personne, id_groupe)
+            VALUES 
+            (? , ? , ?, ?)");
+            mysqli_stmt_bind_param($stmt,'ssss', $contenuMessage,$dateHeure, $idUser , $idGroupe);
+            $dbcontroller->executeQuery($stmt);
+
+            $dbcontroller->closeQuery();
         }
     }
 ?>

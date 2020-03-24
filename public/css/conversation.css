@@ -173,6 +173,25 @@ body {
     background-color : lightgrey;
 }
 
+.divMessage {
+    color : lightgrey;
+}
+
+.identiteAuteurMessage {
+    font-weight: bold;
+}
+
+.classCouleurUser {
+    color:#091021;
+}
+
+.classCouleurAutre {
+    color: white;
+}
+
+.conteneurDivsMessage {
+    padding: 2px;
+}
 
 /** Menu groupes **/
 
