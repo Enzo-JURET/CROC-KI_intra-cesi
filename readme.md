@@ -14,4 +14,3 @@ Fonctionnalité opérationnelle
 - redirige ensuite vers la page Actualite.php
 Fonctionnalité manquante ou/et non finis
 -Message pour prévenir que l'ajout de l'actualité, c'est bien est fait sans erreur
--
