@@ -471,7 +471,11 @@ function openGroupe(idGroupe)
         afficherMessages();
     }, 5000);
     
-     document.getElementById("bandeauMessage").innerHTML = $donnees[0].nom_groupe;
+    if($donnees[0].nom_groupe != null && $donnees[0].nom_groupe != "")
+    {
+        document.getElementById("bandeauMessage").innerHTML = $donnees[0].nom_groupe;
+    }
+    
 
     keyEnterListenerOnMessageInput(idGroupe);
     
