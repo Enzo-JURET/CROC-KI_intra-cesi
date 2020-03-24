@@ -42,3 +42,34 @@ function chargement_page_profil($id) {
         }
     });
 }
+
+
+
+function ajout_actualite($status_actualite, $titre_actualite, $description_actualite, $id_personne, $date_evenement_actualite) {
+        
+        $id_personne = getCookie("id");
+    
+        $.ajax({
+                cache : false,
+                url : "../data/ajout_actualite",
+                type : "POST",
+                async:false,
+                data: ({
+                    status_actualite:$status_actualite,
+                    titre_actualite:$titre_actualite,
+                    description_actualite:$description_actualite,
+                    id_personne:$id_personne,
+                    date_evenement_actualite:$date_evenement_actualite
+               }),
+    
+                success : function(retVal, statut){
+                    document.querySelector("#message_reussite").style.display="block";
+                    setTimeout(function() {
+                        
+                    }, 1500);    	
+                },
+         
+                error : function(retVal, statut, erreur){
+                }
+         });
+    }

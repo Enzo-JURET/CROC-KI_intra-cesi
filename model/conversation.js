@@ -9,8 +9,49 @@ $( document ).ready(function() {
 
     recupererAmisEtPromotion();
 
+    recupererGroupes();
+
+
+    setInterval(function(){ recupererAmisEtPromotion(); }, 10000);
     
 });
+
+function recupererGroupes()
+{
+    $idUtilisateur = getCookie("id");
+    $.ajax({
+        cache : false,
+        url : "../data/getSomething",
+        type : "POST",
+        async:false,
+        data: ({
+            clef:'groupes',
+            idUser: $idUtilisateur
+       }),
+
+        success : function(retVal, statut){
+            $groupes = JSON.parse(retVal);
+            console.log($groupes);
+
+            document.getElementById("conteneurGroupePrive").innerHTML = "";
+            document.getElementById("conteneurGroupePublic").innerHTML = "";
+            for(var i = 0 ; i < $groupes.length ; i++)
+            {
+                if($groupes[i].status == 1) // privé
+                {
+                    document.getElementById("conteneurGroupePrive").innerHTML += "<div id='ligneGroupe"+$groupes[i].id+"' class='ligneGroupe' title='"+$groupes[i].description+"' >"+$groupes[i].nom_groupe+"</div><br/>";
+                }
+                else { // = 0 donc public
+
+                }
+            }
+
+        },
+ 
+        error : function(retVal, statut, erreur){
+        }
+     });
+}
 
 function recupererAmisEtPromotion()
 {
