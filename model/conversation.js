@@ -13,13 +13,13 @@ $( document ).ready(function() {
 
     recupererGroupes();
 
-
+    // Tache de fond qui actualise les demandes d'ami
     setInterval(function(){ 
         recupererAmisEtPromotion(); 
     }, 10000);
     
 });
-
+// Récupère les groupes et les ajoutes aux encarts de groupes (seulement groupe privé de géré pour le moment)
 function recupererGroupes()
 {
     $idUtilisateur = getCookie("id");
@@ -56,7 +56,9 @@ function recupererGroupes()
      });
 }
 
-// Fonction qui 
+// Fonction qui hold le clique sur un nom de groupe dans le menu de droite
+// Récupère l'id groupe depuis l'id de l'élément puis fournit l'idGroupe à la méthode
+// actualiserMessages(idGroupe) puis actualiserMessages() et refais quelque association
 function holdCliqueGroupe(elem)
 {
     var idElem = elem.getAttribute("id");
@@ -455,7 +457,8 @@ function openPersonTooltipAmi(event)
     }
 }
 
-function openGroupe(idGroupe) // Ouvre la discussion en fonction de l'id du groupe et affiches les anciens et nouveaux messages 
+// Ouvre la discussion en fonction de l'id du groupe et affiches les anciens et nouveaux messages 
+function openGroupe(idGroupe)
 {
     $donnees = [];
     $donneesMessages = [];
@@ -499,6 +502,9 @@ function openGroupe(idGroupe) // Ouvre la discussion en fonction de l'id du grou
 
 }
 
+// Supprime l'élélement de la page avec l'id #customTooltip. Cette méthode est utilisé pour fermer
+// la tooltip mais aussi pour m'assurer qu'il n'y ai toujours qu'une seule tooltip en les fermant toute
+// (en supprimant les éléments avec cette id) puis en réaffichant la tooltip en cas d'évènement
 function closePersonTooltipAmi()
 {
     if(!$('#customTooltip').is(":hover"))
@@ -507,6 +513,9 @@ function closePersonTooltipAmi()
     }
 }
 
+// Fonction écoute la touche entrée dans la barre d'écriture
+// Elle ne commence à écouter que quand une conversation a été ouverte
+// Si la touche entrée est préssé, elle envoi le message dans la bdd, puis actualise les messages
 function keyEnterListenerOnMessageInput(idGroupe)
 {
     var champsTexte = document.getElementById("barreEnvoiMessage");
@@ -544,6 +553,7 @@ function keyEnterListenerOnMessageInput(idGroupe)
     };
 }
 
+// Actualise la variable globale $donneesMessages avec les messages de la base
 function actualiserMessages(idGroupe)
 {
     $.ajax({
@@ -571,6 +581,8 @@ function actualiserMessages(idGroupe)
      });
 }
 
+// Fonction qui retourne le résultat de la requête php pour obtenir les informations d'une personne
+// en fonction de son id
 function getOnePersonToDisplay(id)
 {
     $retour = "";
