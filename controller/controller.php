@@ -38,6 +38,12 @@
                         $result = $this->ajout_actualite();
                     }
                 break;
+                case "supprime_actualite":
+                    if($_SERVER['REQUEST_METHOD'] === 'POST')
+                    {
+                        $result = $this->supprime_actualite();
+                    }
+                break;
                 case "supprimerAmi":
                     if($_SERVER['REQUEST_METHOD'] === 'POST')
                     {
@@ -451,6 +457,20 @@
                 
                     mysqli_stmt_bind_param($stmt,'sssss',$_POST["status_actualite"] ,$_POST["titre_actualite"]
                  ,  $_POST["description_actualite"], $_POST["id_personne"] ,$_POST["date_evenement_actualite"] );
+
+                $dbcontroller->executeQuery($stmt);                
+            
+            $dbcontroller->closeQuery();
+        }
+        function supprime_actualite()
+        {
+            
+            $dbcontroller = new dbController();
+            // Insertion de l'actualite
+                $stmt = mysqli_prepare($dbcontroller->getConn(),
+                    "DELETE FROM actualite WHERE actualite.id_actualite = ?");
+                
+                    mysqli_stmt_bind_param($stmt,'s',$_POST["id_actualite"]  );
 
                 $dbcontroller->executeQuery($stmt);                
             

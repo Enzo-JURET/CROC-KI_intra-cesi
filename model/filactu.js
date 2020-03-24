@@ -70,7 +70,7 @@ function fil_actualite()//charge le fil d'actualite
             + " <a href='../view/profil.php'><img onclick='BoutonProfil("+tabreturn[i].identifiant_personne+")' src='../" + image_profil + "' class='avatar profil-"+tabreturn[i].identifiant_personne+"'></a>"
             + " <p>" + tabreturn[i].auteur + " </p> <img src='../public/images/icones/calendrier.png' class='icone_titre'>  " + tabreturn[i].date_evenement_actualite + " </div> <div class='col-10'>"
             + "  <div class='card-body'>"
-            + " <h5 class='card-title'>" + tabreturn[i].titre_actualite + " <a href='../view/actualite.php'   onclick='suppression_article("+tabreturn[i].id_actualite+")' ><img src='../public/images/icones/poubelle.png' class='detail  suppression suppression-profil-"+tabreturn[i].identifiant_personne+"'></a>  </h5> "
+            + " <h5 class='card-title'>" + tabreturn[i].titre_actualite + " <a  href='../view/actualite.php'  onclick='suppression_article("+tabreturn[i].id_actualite+")' ><img src='../public/images/icones/poubelle.png' class='detail  suppression suppression-profil-"+tabreturn[i].identifiant_personne+"'></a>  </h5> "
             + "  <h5 class='card-title text-right'>    </h5> <p class='card-text'>"
             + tabreturn[i].description_actualite
        
@@ -87,7 +87,7 @@ function fil_actualite()//charge le fil d'actualite
           var chaine = "<div class='card mb-12  divActu  profil-"+tabreturn[i].identifiant_personne+"'> <div class='row no-gutters'> <div class='col-md-2 alignement_center pt-4'>"
             + " <a href='../view/profil.php'><img onclick='BoutonProfil("+tabreturn[i].identifiant_personne+")' src='../" + image_profil + "' class='avatar profil-"+tabreturn[i].identifiant_personne+"'></a> <p>" + tabreturn[i].auteur + " </p> <img src='../public/images/icones/information.png' class='icone_titre'> "
             + "</div> <div class='col-md-10'> <div class='card-body'>"
-            + " <h5 class='card-title'>" + tabreturn[i].titre_actualite + " <a href='../view/actualite.php'><img src='../public/images/icones/poubelle.png' class='detail suppression suppression-profil-"+tabreturn[i].identifiant_personne+"'></a></h5>"
+            + " <h5 class='card-title'>" + tabreturn[i].titre_actualite + " <a href='../view/actualite.php' onclick='suppression_article("+tabreturn[i].id_actualite+")'><img src='../public/images/icones/poubelle.png' class='detail suppression suppression-profil-"+tabreturn[i].identifiant_personne+"'></a></h5>"
             + " <p class='card-text'>"
             + tabreturn[i].description_actualite
             
@@ -221,15 +221,15 @@ console.log("test10");
 function suppression_article(id_actualite)//permet d'afficher le bouton de actualite des utilisateur
 {
 
-  $id_personne = getCookie("id");
+
 
   $.ajax({
       cache: false,
-      url: "../data/ajout_actualite",
+      url: "../data/supprime_actualite",
       type: "POST",
       async: false,
       data: ({
-        id_actualite: $id_actualite
+        id_actualite: id_actualite
           
       }),
 
