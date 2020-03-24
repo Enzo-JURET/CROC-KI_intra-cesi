@@ -65,4 +65,7 @@ L'entièreté de ces éléments sont récupérés directement depuis la base de 
 
 ##### Affichage spécifique :
 
-- Affichage de l'ensemble des fonctionnalités si le rôle de l'utilisateur connecté est "Administrateur"
+- Affichage de l'ensemble des fonctionnalités si le rôle de l'utilisateur connecté est "Administrateur" (cette fonctionnalité n'a pas été effectué puisque les rôles ne sont pas géré tout court).
+
+### Page modification.php
+Page qui affiche l'ensemble des éléments informationnelles d'un profil utilisateur.

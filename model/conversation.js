@@ -470,7 +470,7 @@ function openGroupe(idGroupe)
         actualiserMessages(idGroupe);
         afficherMessages();
     }, 5000);
-    
+    console.log($donnees);
     if($donnees[0].nom_groupe != null && $donnees[0].nom_groupe != "")
     {
         document.getElementById("bandeauMessage").innerHTML = $donnees[0].nom_groupe;
