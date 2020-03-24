@@ -87,13 +87,33 @@ function ajout_actualite($status_actualite, $titre_actualite, $description_actua
         }),
 
         success: function (retVal, statut) {
-            document.querySelector("#message_reussite").style.display = "block";
-            setTimeout(function () {
-
-            }, 1500);
+            
+            
         },
 
         error: function (retVal, statut, erreur) {
         }
     });
+}
+
+
+
+function setCookie(cname, cvalue) {
+	document.cookie = cname + "=" + cvalue + ";path=/";
+}
+
+function getCookie(cname) {
+	var name = cname + "=";
+	var decodedCookie = decodeURIComponent(document.cookie);
+	var ca = decodedCookie.split(';');
+	for(var i = 0; i < ca.length; i++) {
+		var c = ca[i];
+		while (c.charAt(0) == ' ') {
+			c = c.substring(1);
+		}
+		if (c.indexOf(name) == 0) {
+			return c.substring(name.length, c.length);
+		}
+	}
+	return "";
 }
