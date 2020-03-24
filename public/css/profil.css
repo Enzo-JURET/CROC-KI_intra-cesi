@@ -197,3 +197,7 @@ outline: 0;
 .icones-outils {
 	height: 50%;
 }
+
+#liste-amis {
+	max-height: 190px;
+}
