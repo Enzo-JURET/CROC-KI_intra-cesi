@@ -347,7 +347,7 @@
             $dbcontroller = new dbController();
 
             $result = mysqli_prepare($dbcontroller->getConn(),//
-            "SELECT act.* , per.nom_personne as auteur,per.avatar_personne as image_profil FROM actualite as act inner join personne as per on act.id_personne =per.id_personne");
+            "SELECT act.* ,  CONCAT( per.nom_personne ,' ',per.prenom_personne )as auteur,per.avatar_personne as image_profil FROM actualite as act inner join personne as per on act.id_personne =per.id_personne  ORDER by act.id_actualite DESC");
             $retour = $dbcontroller->executeSelectQuery($result);
 
             foreach ($retour as $key => $row) {//boucle sur chaque ligne
