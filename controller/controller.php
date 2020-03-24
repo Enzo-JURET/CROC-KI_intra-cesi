@@ -257,6 +257,47 @@
                         $dbcontroller->closeQuery();
                         return json_encode($tabRetour);
                     break;
+                    case "getOneGroupe":
+                        $idGroupe = $_POST["idGroupe"];
+
+                        $dbcontroller = new dbController();
+                        $stmt = mysqli_prepare($dbcontroller->getConn(),
+                            "SELECT nom_groupe, description_groupe, avatar_groupe, status_groupe
+                            FROM groupe
+                            WHERE id_groupe = ?");
+                        mysqli_stmt_bind_param($stmt,'s',$idGroupe);
+                        $resultat = $dbcontroller->executeSelectQuery($stmt);
+                        $dbcontroller->closeQuery();
+                        return json_encode($resultat);
+                    break;
+                    case "getMessagesFromOneGroupe":
+                        $idGroupe = $_POST["idGroupe"];
+
+                        $dbcontroller = new dbController();
+                        $stmt = mysqli_prepare($dbcontroller->getConn(),
+                            "SELECT id_message, texte_message, date_heure_message, id_personne
+                            FROM 'message'
+                            WHERE id_groupe = ?");
+                        mysqli_stmt_bind_param($stmt,'s',$idGroupe);
+                        $tmp = $dbcontroller->executeSelectQuery($stmt);
+                        if($tmp != "")
+                        {
+                            for($f=0;$f<count($tmp);$f++)
+                            {
+                                $id_message = $tmp[$f]["id_message"];
+                                $texte_message = $tmp[$f]["texte_message"];
+                                $date_heure_message = $tmp[$f]["date_heure_message"];
+                                $id_personne = $tmp[$f]["id_personne"];
+                            }
+                            $tabRetour[$i] = array("id_message"=>$id_message,"texte_message"=>$texte_message,"date_heure_message"=>$date_heure_message,"id_personne"=>$id_personne);
+                        }
+                        else {
+                            $tabRetour = "";
+                        }
+                       
+                        $dbcontroller->closeQuery();
+                        return json_encode($tabRetour);
+                    break;
                 }
                 return $result;
             }
@@ -553,38 +594,48 @@
 
         function creerGroupe()
         {
-            /*$id_personne = $_POST["idUser"];
-            $id_personne_pour_conversation = $_POST["id_personne_pour_conversation"];
+            
             $status = $_POST["status"];
+            $idGroupe = 1;
 
             if($status == "prive")
             {
                 $status = 1;
+                $id1 = $_POST["id1"];
+                $nomPersonne1 = $_POST["nom1"];
+                $prenomPersonne1 = $_POST["prenom1"];
+
+                $id2 = $_POST["id2"];
+                $nomPersonne2 = $_POST["nom2"];
+                $prenomPersonne2 = $_POST["prenom2"];
+
+                $chaineNomGroupe = "Conversation entre " . $prenomPersonne1 . " " . $nomPersonne1 . " et " . $prenomPersonne2 . " " . $nomPersonne2;
+
+                $dbcontroller = new dbController();
+
+                $stmt = mysqli_prepare($dbcontroller->getConn(),
+                    "INSERT INTO groupe (nom_groupe, status_groupe)
+                    VALUES (?, ?)");
+                mysqli_stmt_bind_param($stmt,'ss',$chaineNomGroupe,$status);
+                $resultat = $dbcontroller->executeQuery($stmt);
+
+                $idGroupe = $dbcontroller->getLastIdIncremente();
+
+                $stmt = mysqli_prepare($dbcontroller->getConn(),
+                    "INSERT INTO association_groupe_personne (id_groupe, id_personne)
+                    VALUES 
+                    (?, ?),
+                    (?, ?)");
+                mysqli_stmt_bind_param($stmt,'ssss',$idGroupe,$id1,$idGroupe,$id2);
+                $resultat = $dbcontroller->executeQuery($stmt);
+
             }
             else {
                 $status = 0;
+                //$tableauPersonnes = $_POST["tableauPersonnes"];
             }
-
-            $dbcontroller = new dbController();
-
-            // Récupération de la liste des groupes de l'utilisateur
-            $stmt = mysqli_prepare($dbcontroller->getConn(),
-                "SELECT id_groupe
-                FROM association_groupe_personne
-                WHERE id_personne = ?");
-            mysqli_stmt_bind_param($stmt,'s',$id_personne);
-            $resultat = $dbcontroller->executeSelectQuery($stmt);
-            
-            for($i=0;$i<count($resultat);$i++)
-            {
-                array_push($tabResulat,$resultat[$i]["id_groupe"]);
-            }
-
-            for($i=0;$i<count($tabResulat);$i++)
-            {
-
-            }
-            var_dump($tabResulat);*/
+            $dbcontroller->closeQuery();
+            return $idGroupe;
         }
     }
 ?>
