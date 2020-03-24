@@ -32,7 +32,6 @@ function recupererGroupes()
 
         success : function(retVal, statut){
             groupes = JSON.parse(retVal);
-            console.log(groupes);
 
             document.getElementById("conteneurGroupePrive").innerHTML = "";
             document.getElementById("conteneurGroupePublic").innerHTML = "";
@@ -144,8 +143,7 @@ function holdCliqueChoixBoutonDemandeAmi(idPersonneQuiDemande,elem)
             idPersonneQuiDemande:idPersonneQuiDemande
         }),
                     
-        success : function(retVal, statut){            
-            console.log(retVal);
+        success : function(retVal, statut){
             recupererAmisEtPromotion();
         },
                      
@@ -182,6 +180,8 @@ function afficherPromotion()
 function openPersonTooltipAmi(event)
 {
     $idUtilisateur = getCookie("id");
+    $nomUser = getCookie("nom_personne");
+    $prenomUser = getCookie("prenom_personne");
 
     var target = $(event.target);
     var elId = target.attr('id');
@@ -353,7 +353,6 @@ function openPersonTooltipAmi(event)
     
             success : function(retVal, statut){
                 $groupesPersonneAQuiJeVeuxParler = JSON.parse(retVal);
-                console.log($groupesPersonneAQuiJeVeuxParler);
                 var ifExistGroupCommun = false;
                 var idGroupe = 0;
                 if($groupesPersonneAQuiJeVeuxParler != null);
@@ -362,7 +361,7 @@ function openPersonTooltipAmi(event)
                     {
                         for(var f = 0 ; f < groupes.length ; f++)
                         {
-                            if(groupes[f]["id"] == $groupesPersonneAQuiJeVeuxParler[i]["id"])
+                            if((groupes[f]["id"] == $groupesPersonneAQuiJeVeuxParler[i]["id"]) && groupes[f]["status"]==1)
                             {
                                 ifExistGroupCommun = true;
                                 idGroupe = groupes[f]["id"];
@@ -371,20 +370,25 @@ function openPersonTooltipAmi(event)
                     }
                 }
                 if(!ifExistGroupCommun) // Pas de groupe commun donc on en créer un
-                {
-                    $tableauId[0] = idUtilisateur;
-                    $tableauId[1] = idPersonne;
+                {                     
                     $.ajax({
                         cache : false,
                         url : "../data/creerGroupe",
                         type : "POST",
                         async:false,
                         data: ({
-                            tableauIdPersonneDansGroupe: $idUtilisateur,
+                            id1:$idUtilisateur,
+                            nom1:$nomUser,
+                            prenom1:$prenomUser,
+
+                            id2:idPersonne,
+                            nom2:nomPersonne,
+                            prenom2:prenomPersonne,
+                            status : "prive"
                        }),
                 
-                        success : function(retVal, statut){
-                            console.log(retVal); // Retourne l'id du groupe
+                        success : function(retVal, statut){// Retourne l'id du groupe
+                            idGroupe=retVal;
                         },
                  
                         error : function(retVal, statut, erreur){
@@ -394,7 +398,6 @@ function openPersonTooltipAmi(event)
                 }
 
                 openGroupe(idGroupe);
-
             },
      
             error : function(retVal, statut, erreur){
@@ -413,7 +416,62 @@ function openPersonTooltipAmi(event)
 
 function openGroupe(idGroupe)
 {
-    console.log("ouvrir groupe : "+idGroupe);
+    $donnees = [];
+    $donneesMessages = [];
+    $.ajax({
+        cache : false,
+        url : "../data/getSomething",
+        type : "POST",
+        async:false,
+        data: ({
+            clef:'getOneGroupe',
+            idGroupe: idGroupe
+       }),
+
+        success : function(retVal, statut){            
+            $donnees = JSON.parse(retVal);
+            console.log($donnees);
+
+            
+        },
+ 
+        error : function(retVal, statut, erreur){
+ 
+        }
+     });
+
+     $.ajax({
+        cache : false,
+        url : "../data/getSomething",
+        type : "POST",
+        async:false,
+        data: ({
+            clef:'getMessagesFromOneGroupe',
+            idGroupe: idGroupe
+       }),
+
+        success : function(retVal, statut){            
+            if(retVal != null)
+            {
+                $donneesMessages = JSON.parse(retVal);
+                console.log($donneesMessages);
+            }
+
+            
+        },
+ 
+        error : function(retVal, statut, erreur){
+ 
+        }
+     });
+     
+     if(($donneesMessages != null) && ($donnees != null))
+     {
+        document.getElementById("bandeauMessage").innerHTML = $donnees[0].nom_groupe;
+     }
+    
+    
+
 }
 
 function closePersonTooltipAmi()
