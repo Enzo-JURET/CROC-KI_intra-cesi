@@ -2,18 +2,21 @@ var amis = [];
 var promotion = [];
 var groupes = [];
 
+var timeoutToolTip;
+var timeoutMenuGroupe;
+
 $( document ).ready(function() {
     containerInit();
     $("#barreEnvoiMessage").focus();
-
-    keyEnterListenerOnMessageInput();
 
     recupererAmisEtPromotion();
 
     recupererGroupes();
 
 
-    setInterval(function(){ recupererAmisEtPromotion(); }, 10000);
+    setInterval(function(){ 
+        recupererAmisEtPromotion(); 
+    }, 10000);
     
 });
 
@@ -39,7 +42,7 @@ function recupererGroupes()
             {
                 if(groupes[i].status == 1) // privé
                 {
-                    document.getElementById("conteneurGroupePrive").innerHTML += "<div id='ligneGroupe"+groupes[i].id+"' class='ligneGroupe' title='"+groupes[i].description+"' >"+groupes[i].nom_groupe+"</div><br/>";
+                    document.getElementById("conteneurGroupePrive").innerHTML += "<div id='ligneGroupe"+groupes[i].id+"' class='ligneGroupe' title='"+groupes[i].description+"' onclick='holdCliqueGroupe(this)'>"+groupes[i].nom_groupe+"</div><br/>";
                 }
                 else { // = 0 donc public
 
@@ -51,6 +54,27 @@ function recupererGroupes()
         error : function(retVal, statut, erreur){
         }
      });
+}
+
+function holdCliqueGroupe(elem)
+{
+    var idElem = elem.getAttribute("id");
+    var contenu = $("#"+idElem).text();
+    var idgroupe = idElem.substring(11);
+
+    actualiserMessages(idgroupe);
+     afficherMessages();
+
+     clearTimeout(timeoutMenuGroupe);
+     clearTimeout(timeoutToolTip);
+     timeoutMenuGroupe =  setInterval(function(){ 
+        actualiserMessages(idgroupe);
+        afficherMessages();
+    }, 5000);
+    
+     document.getElementById("bandeauMessage").innerHTML = contenu;
+
+    keyEnterListenerOnMessageInput(idgroupe);
 }
 
 function recupererAmisEtPromotion()
@@ -71,7 +95,7 @@ function recupererAmisEtPromotion()
 
         success : function(retVal, statut){
             $donnees = JSON.parse(retVal);           
-            //console.log($donnees);
+            
             amis = $donnees["amis"];
             promotion = $donnees["promotion"];
 
@@ -315,7 +339,7 @@ function openPersonTooltipAmi(event)
                    }),
             
                     success : function(retVal, statut){
-                        console.log(retVal);
+                        
                     },
              
                     error : function(retVal, statut, erreur){
@@ -430,9 +454,6 @@ function openGroupe(idGroupe)
 
         success : function(retVal, statut){            
             $donnees = JSON.parse(retVal);
-            console.log($donnees);
-
-            
         },
  
         error : function(retVal, statut, erreur){
@@ -440,7 +461,71 @@ function openGroupe(idGroupe)
         }
      });
 
-     $.ajax({
+     actualiserMessages(idGroupe);
+     afficherMessages();
+
+     clearTimeout(timeoutMenuGroupe);
+     clearTimeout(timeoutToolTip);
+     timeoutToolTip = setInterval(function(){ 
+        actualiserMessages(idGroupe);
+        afficherMessages();
+    }, 5000);
+    
+     document.getElementById("bandeauMessage").innerHTML = $donnees[0].nom_groupe;
+
+    keyEnterListenerOnMessageInput(idGroupe);
+    
+
+}
+
+function closePersonTooltipAmi()
+{
+    if(!$('#customTooltip').is(":hover"))
+    {
+        $("#customTooltip").remove();
+    }
+}
+
+function keyEnterListenerOnMessageInput(idGroupe)
+{
+    var champsTexte = document.getElementById("barreEnvoiMessage");
+    champsTexte.onkeypress = function(e) {
+        e = e || window.event;
+        var codeCaractere = (typeof e.which == "number") ? e.which : e.codeCaractere;
+        if (codeCaractere == 13) {
+            $contenuMessage = $("#barreEnvoiMessage").val();
+            $idUtilisateur = getCookie("id");
+            $("#barreEnvoiMessage").val("");
+
+            $.ajax({
+                cache : false,
+                url : "../data/envoiMessageDansGroupe",
+                type : "POST",
+                async:false,
+                data: ({
+                    idGroupe: idGroupe,
+                    idUser: $idUtilisateur,
+                    contenuMessage: $contenuMessage
+               }),
+        
+                success : function(retVal, statut){            
+                    
+                },
+         
+                error : function(retVal, statut, erreur){
+         
+                }
+             });
+            actualiserMessages(idGroupe);
+            afficherMessages();
+
+        }
+    };
+}
+
+function actualiserMessages(idGroupe)
+{
+    $.ajax({
         cache : false,
         url : "../data/getSomething",
         type : "POST",
@@ -454,7 +539,6 @@ function openGroupe(idGroupe)
             if(retVal != null)
             {
                 $donneesMessages = JSON.parse(retVal);
-                console.log($donneesMessages);
             }
 
             
@@ -464,36 +548,61 @@ function openGroupe(idGroupe)
  
         }
      });
-     
-     if(($donneesMessages != null) && ($donnees != null))
-     {
-        document.getElementById("bandeauMessage").innerHTML = $donnees[0].nom_groupe;
-     }
-    
-    
-
 }
 
-function closePersonTooltipAmi()
+function getOnePersonToDisplay(id)
 {
-    if(!$('#customTooltip').is(":hover"))
-    {
-        $("#customTooltip").remove();
-    }
-}
+    $retour = "";
+    $.ajax({
+        cache : false,
+        url : "../data/getSomething",
+        type : "POST",
+        async:false,
+        data: ({
+            clef:'getOnePerson',
+            idPersonne: id
+       }),
 
-function keyEnterListenerOnMessageInput()
-{
-    var champsTexte = document.getElementById("barreEnvoiMessage");
-    champsTexte.onkeypress = function(e) {
-        e = e || window.event;
-        var codeCaractere = (typeof e.which == "number") ? e.which : e.codeCaractere;
-        if (codeCaractere == 13) {
-            $("#barreEnvoiMessage").val("");
+        success : function(retVal, statut){            
+            if(retVal != null)
+            {
+                $laPersonne = JSON.parse(retVal);                
+                $retour = $laPersonne[0].prenom_personne + " " + $laPersonne[0].nom_personne;
+            }
+            else {
+                $retour = "";
+            }
 
-
+            
+        },
+ 
+        error : function(retVal, statut, erreur){
+ 
         }
-    };
+     });
+     return $retour;
+}
+
+function afficherMessages()
+{
+    $idUser = getCookie("id");
+    if($donneesMessages != null)
+     {          
+        document.getElementById("corpsConteneurMessage").innerHTML = "";
+        // id = corpsConteneurMessage
+        for($i=0 ; $i<$donneesMessages.length;$i++)
+        {
+            if($donneesMessages[$i].id_personne == $idUser)
+            {
+                $classAAjouter = "classCouleurUser";
+            }
+            else {
+                $classAAjouter = "classCouleurAutre";
+            }
+            $identite = getOnePersonToDisplay($donneesMessages[$i].id_personne);
+            document.getElementById("corpsConteneurMessage").innerHTML += "<div class='conteneurDivsMessage'><div class='identiteAuteurMessage "+$classAAjouter+"'>"+$identite+"</div><div class='divMessage'>"+ $donneesMessages[$i].texte_message+"</div></div>";
+        }
+     }
 }
 
 function containerInit()
@@ -508,7 +617,7 @@ function resizeContainers()
 {
         $(window).resize(function() {
             var sH = $(window).height();
-            $('#boiteFenetre').css('height', sH-150 + 'px');
+            $('#boiteFenetre').css('height', sH-200 + 'px');
         });        
 }
 
