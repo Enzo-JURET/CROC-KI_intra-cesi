@@ -32,6 +32,12 @@
                     }
 
                 break;
+                case " ajout_actualite()":
+                    if($_SERVER['REQUEST_METHOD'] === 'POST')
+                    {
+                        $result = $this->ajout_actualite();
+                    }
+                break;
                 case "supprimerAmi":
                     if($_SERVER['REQUEST_METHOD'] === 'POST')
                     {
@@ -343,6 +349,7 @@
 
         function fil_actualite()//
         {
+            $valeur_comp5 = $_POST["valeur_comp5"];
             $tabRetour = [];//tableau a retourner
             $dbcontroller = new dbController();
 
@@ -366,6 +373,22 @@
             $dbcontroller->closeQuery();
             return json_encode($tabRetour);
         
+        }
+        function ajout_actualite()
+        {
+            
+            $dbcontroller = new dbController();
+            // Insertion de l'actualite
+                $stmt = mysqli_prepare($dbcontroller->getConn(),
+                    "INSERT INTO `actualite`  VALUES (NULL, ?, ?, ?, ?, CURRENT_DATE(), '', ?, '')");
+                
+                    mysqli_stmt_bind_param($stmt,'sssss',$_POST["status_actualite"] ,$_POST["titre_actualite"]
+                 ,  $_POST["description_actualite"], $_POST["id_personne"] ,$_POST["date_evenement_actualite"] );
+
+                $dbcontroller->executeQuery($stmt);                
+            
+            $dbcontroller->closeQuery();
+            
         }
 
         function supprimerAmi()
