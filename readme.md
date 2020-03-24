@@ -5,6 +5,56 @@
 - Kévin LEHOUX
 - Justin BAHIER 
 
+## Mise en place du projet 
+
+### Configuration nécéssaire
+
+#### Un environnement d'hébergement
+- Au sein de notre groupe, nous utilisons XAMPP et WAMP
+	
+#### Configuration serveur du site
+- Les informations permettant la connexion du site à la base de données sont à renseigné dans le fichier config.php.
+- lien relatif : /config/config.php	
+
+### Script de création de la base de données
+
+#### Importation du script de base de donnée
+- lien relatif où se trouve le script : /mcd_et_sql/intra_cesi.sql
+- Le script contient des données d'exemples à des fin de test ; Elles sont donc potentiellement à remplacer par les votre tout en respectant la cohérence de données. En cas de remplacement, les données à importer en masse sont celles de la table 'personne'.
+- Un schéma MCD représentant notre conception de la base de données initiale (avant de commencer à développer le projet) est présent au lien /mcd_et_sql/intra_cesi_mcd_inital. La base a ensuite évolué au cours du projet.
+
+### Informations complémentaires
+
+#### Utilisation de l'application
+
+- Pour se connecter au site, un identifiant et un mot de passe sont nécéssaires. L'identifiant correspont à l'email du fait qu'il soit unique et dans notre base de test, tout les mots de passe sont 'motdepasse'.
+- Deux exemples de comptes étudiant pour effectuer des tests sur l'application :
+	- identifiant : **kevin.lehoux@viacesi.fr**   mot de passe : '**motdepasse**'
+	- identifiant : **enzo.juret@viacesi.fr**     mot de passe : '**motdepasse**'
+	
+- Notre application utilise les cookies du navigateur. Pour tester la page de conversation, veillez à utiliser deux navigateur différents (chrome, firefox, microsft edge ....) pour utiliser deux comptes étudiant différents et ainsi visualiser la reception de messages et/ou de reception d'invitation d'ami.
+
+- L'accès aux url de l'application est bloqué tant qu'un utilisateur n'est pas connecté. Le déplacement dans l'application par lien direct dans la barre d'url est impossible sans connexion.
+
+- Si pour les bien de tests, vous avez besoin de visualiser les cookies nous utilisons, nous vous conseillons (sous chrome) l'extension que nous avons utilisé : 'Cookie Inspector'
+
+#### Architecture de l'application 
+
+- L'application respecte une architecture en MVC.
+
+- L'application utilise les technologies :
+	- HTML
+	- CSS
+	- JS
+	- JQuery
+	- Ajax
+	- PHP
+	
+```diff
+- Nous vous rappelons que notre application n'utilise aucun framework.
+```
+
+
 ##  Les Actualités (by Justin BAHIER)
 Cette partie permet d'afficher les actualite, de les supprimer et de créer des actualités.
 
