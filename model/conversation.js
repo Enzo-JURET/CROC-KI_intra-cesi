@@ -35,6 +35,7 @@ function recupererAmisEtPromotion()
             promotion = $donnees["promotion"];
 
             afficherAmis();
+            afficherDemandesAmi();
             afficherPromotion();
             $(".labelConnaissance").mouseenter(openPersonTooltipAmi).mouseleave(closePersonTooltipAmi);
 
@@ -45,6 +46,71 @@ function recupererAmisEtPromotion()
  
         }
      });
+}
+
+function afficherDemandesAmi()
+{
+    $idUtilisateur = getCookie("id");
+    $promotion = getCookie("promotion_personne");
+    var donnees = [];
+    $.ajax({
+        cache : false,
+        url : "../data/getSomething",
+        type : "POST",
+        async:false,
+        data: ({
+            clef:'demandesAmi',
+            idUser: $idUtilisateur
+       }),
+
+        success : function(retVal, statut){            
+            $demandes = JSON.parse(retVal);
+            document.getElementById("invitation_ami").innerHTML = "";
+            $oui = "oui";
+            $non = "non";
+            if($demandes != null)
+            {
+                for(var i = 0; i < $demandes.length;i++)
+                {
+                    document.getElementById("invitation_ami").innerHTML += "<div id='demande_"+$demandes[i].id+"' class='ligneInvitAmi'><div class='labelDemandeAmi'>" + $demandes[i].prenom + " " + $demandes[i].nom + "</div><div class='divBoutonsChoix'><img id='boutonOui"+$demandes[i].id+"' class='iconeChoix' onclick='holdCliqueChoixBoutonDemandeAmi("+$demandes[i].id+",this)' src='../public/images/icones/reponse_oui.png' alt='Oui' /><img id='boutonNon"+$demandes[i].id+"' class='iconeChoix' onclick='holdCliqueChoixBoutonDemandeAmi("+$demandes[i].id+",this)' src='../public/images/icones/reponse_non.png' alt='Non' /></div></div><br/>";
+                }
+            }
+            
+        },
+ 
+        error : function(retVal, statut, erreur){
+ 
+        }
+     });
+}
+
+function holdCliqueChoixBoutonDemandeAmi(idPersonneQuiDemande,elem)
+{
+    $idUtilisateur = getCookie("id");
+
+    var idElem = elem.getAttribute("id");
+    var choix = idElem.substring(6,9);
+
+    $.ajax({
+        cache : false,
+        url : "../data/choixReponseDemandeAmi",
+        type : "POST",
+        async:false,
+        data: ({
+            choix:choix,
+            idUser: $idUtilisateur,
+            idPersonneQuiDemande:idPersonneQuiDemande
+        }),
+                    
+        success : function(retVal, statut){            
+            console.log(retVal);
+            recupererAmisEtPromotion();
+        },
+                     
+        error : function(retVal, statut, erreur){
+                     
+        }
+    });
 }
 
 function afficherAmis()
@@ -172,7 +238,6 @@ function openPersonTooltipAmi(event)
         if(demandesAmi != "" && demandesAmi != null)
         {
             $tabIdDemandesAmi = demandesAmi.split(';');
-            console.log($tabIdDemandesAmi)
             if($tabIdDemandesAmi.includes($idUtilisateur))
             {
                 $cheminImageAjoutAmi = "../public/images/icones/ok-white.png";
@@ -184,8 +249,6 @@ function openPersonTooltipAmi(event)
         else {
             $cheminImageAjoutAmi = "../public/images/icones/ajouter-ami-white.png";
         }
-        
-        console.log($cheminImageAjoutAmi);
 
         if($("#customTooltip").length)
         {

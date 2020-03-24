@@ -31,6 +31,12 @@
                     
                 </div>
                 <div id="bandeauAmis" class="bandeauTypeContact"> 
+                    <div id="titreInvitationAmi" class="titreTypeContact">Invitations d'ami</div>
+                </div>
+                <div id="invitation_ami">
+
+                </div>
+                <div id="bandeauAmis" class="bandeauTypeContact"> 
                     <div id="titrePromotion" class="titreTypeContact">Promotion</div>
                 </div>
                 <div id="promotion">
@@ -40,7 +46,7 @@
         </div>
 
         <div id ="boiteMessagerie" class="col-sm-6 boitesPrincipales">
-            <div id="bandeauMessage" class="bandeauTitre">Conversation avec Enzo Juret</div>
+            <div id="bandeauMessage" class="bandeauTitre">Aucune conversation en cours !</div>
             <div id="conteneurMessage" class="conteneur">
                 <div id="corpsConteneurMessage">
 

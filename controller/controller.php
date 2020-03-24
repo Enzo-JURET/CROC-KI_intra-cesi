@@ -44,6 +44,12 @@
                         $result = $this->envoyerDemandeAmi();
                     }
                 break;
+                case "choixReponseDemandeAmi":
+                    if($_SERVER['REQUEST_METHOD'] === 'POST')
+                    {
+                        $result = $this->choixReponseDemandeAmi();
+                    }
+                break;
             }
             return $result;
         }
@@ -185,6 +191,40 @@
                         $dbcontroller->closeQuery();
                         return json_encode($resultat);
 
+                    break;
+                    case "demandesAmi" :
+                        $idUser = $_POST["idUser"];
+
+                        $dbcontroller = new dbController();
+                        $stmt = mysqli_prepare($dbcontroller->getConn(),
+                            "SELECT demandesAmi_personne AS demandes
+                            FROM personne
+                            WHERE id_personne = ?");
+                        mysqli_stmt_bind_param($stmt,'s',$idUser);
+                        $resultat = $dbcontroller->executeSelectQuery($stmt);
+
+                        $tabIdRequetes = explode(';',$resultat[0]["demandes"]);
+
+                        for($i=0;$i<count($tabIdRequetes)-1;$i++)
+                        {
+                            $stmt = mysqli_prepare($dbcontroller->getConn(),
+                            "SELECT id_personne as id, nom_personne as nom, prenom_personne as prenom 
+                            FROM personne 
+                            WHERE id_personne = ?");
+                            mysqli_stmt_bind_param($stmt,'s',$tabIdRequetes[$i]);
+                            $tmp = $dbcontroller->executeSelectQuery($stmt);
+
+                            for($f=0;$f<count($tmp);$f++)
+                            {
+                                $id = $tmp[$f]["id"];
+                                $nom = $tmp[$f]["nom"];
+                                $prenom = $tmp[$f]["prenom"];
+                            }
+                            $tabRetour[$i] = array("id"=>$id,"nom"=>$nom,"prenom"=>$prenom);
+                        }
+
+                        $dbcontroller->closeQuery();
+                        return json_encode($tabRetour);
                     break;
                 }
                 return $result;
@@ -399,6 +439,53 @@
                 mysqli_stmt_bind_param($stmt,'ss',$pretexte,$id_ami_a_ajouter);
                 $dbcontroller->executeQuery($stmt);
             }
+
+            $dbcontroller->closeQuery();
+        }
+
+        function choixReponseDemandeAmi()
+        {
+            $choix = $_POST["choix"];
+            $id_personne = $_POST["idUser"];
+            $id_personne_qui_demande = $_POST["idPersonneQuiDemande"];
+
+            $dbcontroller = new dbController();
+            if($choix == "Oui")
+            {
+                
+
+                // Ajout mutuel du statut amis
+                $dateAuj = date('d m Y');
+                var_dump($dateAuj);
+                $stmt = mysqli_prepare($dbcontroller->getConn(),
+                    "INSERT INTO ami (id_personne, id_personne_ami, date_rencontre)
+                    VALUES 
+                    (? , ? , ?),
+                    (? , ? , ?)");
+                mysqli_stmt_bind_param($stmt,'ssssss',$id_personne,$id_personne_qui_demande,$dateAuj,$id_personne_qui_demande,$id_personne,$dateAuj);
+                $dbcontroller->executeQuery($stmt);                
+            }
+
+            // Supression de la demande d'amis dans tout les cas
+
+            $stmt = mysqli_prepare($dbcontroller->getConn(),
+                "SELECT demandesAmi_personne as demandes
+                FROM personne
+                WHERE id_personne = ?");
+            mysqli_stmt_bind_param($stmt,'s',$id_personne);
+            $resultat = $dbcontroller->executeSelectQuery($stmt);
+
+            $tmp = explode(';',$resultat[0]["demandes"]);
+            $index = array_search($id_personne_qui_demande,$tmp);
+            unset($tmp[$index]);
+            $tmpJoin = implode(';',$tmp);
+
+            $stmt = mysqli_prepare($dbcontroller->getConn(),
+                "UPDATE personne
+                SET demandesAmi_personne = ?
+                WHERE id_personne = ?");
+            mysqli_stmt_bind_param($stmt,'ss',$tmpJoin,$id_personne);
+            $dbcontroller->executeQuery($stmt);    
 
             $dbcontroller->closeQuery();
         }
