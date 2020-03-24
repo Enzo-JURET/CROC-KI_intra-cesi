@@ -361,7 +361,7 @@
 
         function fil_actualite()//
         {
-            $valeur_comp5 = $_POST["valeur_comp5"];
+           
             $tabRetour = [];//tableau a retourner
             $dbcontroller = new dbController();
 
@@ -384,6 +384,7 @@
 
             $dbcontroller->closeQuery();
             return json_encode($tabRetour);
+          
         
         }
         function ajout_actualite()

@@ -60,10 +60,12 @@
                                 <div class="form-group">
                                     <textarea class="form-control" id="description" placeholder="description" rows="3"></textarea>
                                 </div>
-
+                              
                             </p>
-                            <p class="card-text"><small id="date" class="text-muted"></small></p>
-
+                            <p class="card-text"><small id="date" class="text-muted"></small>
+                            <button id="EnvoieInformation"  type="button" class="btn btn-light boutonEnvoi">Terminer <img src="../public/images/icones/iconeEnvoiNoir.png"></button>
+                        </p>  
+                            
                         </div>
                     </div>
                 </div>

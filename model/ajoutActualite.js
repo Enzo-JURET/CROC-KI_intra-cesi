@@ -7,6 +7,24 @@ $(document).ready(function () {
 
     $id_personne = getCookie("id");
     chargement_page_profil($id_personne);
+
+    document.getElementById('EnvoieInformation').addEventListener('click', function(e) {
+              ajout_actualite("actu", 
+              document.getElementById("titre").value ,
+              document.getElementById("description").value, 
+              getCookie("id"), 
+               '');
+        });
+
+        document.getElementById('EnvoieEvenement').addEventListener('click', function(e) {
+            ajout_actualite("actu", 
+            document.getElementById("titre").value ,
+            document.getElementById("description").value, 
+            getCookie("id"), 
+            document.getElementById("dateEvent").value);
+      });
+
+
 });
 
 
