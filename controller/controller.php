@@ -298,6 +298,20 @@
                         $dbcontroller->closeQuery();
                         return json_encode($tabRetour);
                     break;
+                    case "recherchePersonne":
+                        $email = $_POST["email"];
+
+                        $dbcontroller = new dbController();
+                        $stmt = mysqli_prepare($dbcontroller->getConn(),
+                            "SELECT id_personne
+                            FROM personne
+                            WHERE e_mail_personne = ?");
+                        mysqli_stmt_bind_param($stmt,'s',$email);
+                        $resultat = $dbcontroller->executeSelectQuery($stmt);
+                        $id_personne = $resultat[0]["id_personne"];
+                        $dbcontroller->closeQuery();
+                        return json_encode($id_personne);
+                    break;
                 }
                 return $result;
             }
