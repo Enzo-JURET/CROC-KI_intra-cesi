@@ -270,6 +270,6 @@ Ce chat utilise uniquement la base de donnée et du rafraichissement de contenu 
 - Avatar de groupe
 - Personnalisation des couleurs etc...
 
-#### > Beaucoup de grosses et petites fonctionnalités (comme celles citées ci-dessus) sont manquantes par manque de temps <
+#### > Beaucoup de grosses et petites fonctionnalités (comme celles citées ci-dessus) sont manquantes par manque de temps
 
 
